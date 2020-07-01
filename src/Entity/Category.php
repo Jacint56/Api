@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -21,6 +22,8 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+    use TimestampableEntity;
+    
 
     public function getId(): ?int
     {
@@ -38,4 +41,6 @@ class Category
 
         return $this;
     }
+
+
 }
