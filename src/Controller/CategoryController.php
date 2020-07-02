@@ -57,15 +57,15 @@ class CategoryController extends AbstractController
         ]);
     }
     /**
-     * @Route("/categories", methods={"GET"}, name="api_viewAll_category")
+     * @Route("/categories", methods={"GET"}, name="api_index_category")
      */
-    function viewAll()
+    function index()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
         foreach($entityManager->getRepository(Category::class)->findAll() as $category)
         {
-            $response[$category->getId()] = [
+            $response[] = [
                 "id"=>$category->getId(),
                 "name"=>$category->getName(),
                 "slug"=>$category->getSlug()
