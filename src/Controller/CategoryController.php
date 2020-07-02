@@ -9,21 +9,31 @@ use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category", name="category")
+     * @Route("/categories", methods={"POST"}, name="api_create_category")
      */
-    public function createController() : Response
+    function create(Request $request)
     {
+        $content = json_decode($request->getContent(), true);
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $category = new Category();
-        $category->setName("RTS");
-        $category->setSlug("aszom");
+        $category->setName($content["name"]);
 
         $entityManager->persist($category);
         $entityManager->flush();
-        return new Response('Done: '.$category->getId());
+
+        return new JsonResponse([
+            "id"=>$category->getId(),
+            "name"=>$category->getName(),
+            "slug"=>$category->getSlug()
+        ]);
     }
 }
