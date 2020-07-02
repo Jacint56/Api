@@ -36,4 +36,24 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
+    /**
+     * @Route("/categories", methods={"PUT"}, name="api_create_category")
+     */
+    function update(Request $request)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $category = $entityManager->getRepository(Category::class)->find($content["id"]);
+
+        $category->setName($content["name"]);
+
+        $entityManager->flush();
+
+        return new JsonResponse([
+            "id"=>$category->getId(),
+            "name"=>$category->getName(),
+            "slug"=>$category->getSlug()
+        ]);
+    }
 }
