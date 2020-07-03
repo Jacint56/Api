@@ -74,7 +74,7 @@ class CategoryController extends AbstractController
         return new JsonResponse($response);
     }
     /**
-     * @Route("/categories/{id}", methods={"GET"}, name="api_view_category")
+     * @Route("/categories/id/{id}", methods={"GET"}, name="api_view_category")
      */
     function view($id)
     {
@@ -88,7 +88,7 @@ class CategoryController extends AbstractController
         ]);
     }
     /**
-     * @Route("/categories/{id}", methods={"DELETE"}, name="api_delete_category")
+     * @Route("/categories/id/{id}", methods={"DELETE"}, name="api_delete_category")
      */
     function delete(Request $request, $id)
     {
@@ -107,5 +107,23 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
-    //new comment
+    /**
+     * @Route("/categories/search", methods={"GET"}, name="api_search_category")
+     */
+    function search(Request $request)
+    {
+        $content = json_decode($request->getContent(), true);
+        $entityManager = $this->getDoctrine()->getManager();
+        $response = array();
+
+        foreach($entityManager->getRepository(Category::class)->findBy($content) as $category)
+        {
+            $response[] = [
+                "id"=>$category->getId(),
+                "name"=>$category->getName(),
+                "slug"=>$category->getSlug()
+                ];
+        }
+        return new JsonResponse($response);
+    }
 }
