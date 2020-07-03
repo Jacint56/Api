@@ -107,4 +107,5 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
+    //new comment
 }
