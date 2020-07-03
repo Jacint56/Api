@@ -56,7 +56,37 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
+    /**
+     * @Route("/categories", methods={"GET"}, name="api_index_category")
+     */
+    function index()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $response = array();
+        foreach($entityManager->getRepository(Category::class)->findAll() as $category)
+        {
+            $response[] = [
+                "id"=>$category->getId(),
+                "name"=>$category->getName(),
+                "slug"=>$category->getSlug()
+            ];
+        }
+        return new JsonResponse($response);
+    }
+    /**
+     * @Route("/categories/{id}", methods={"GET"}, name="api_view_category")
+     */
+    function view($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $category = $entityManager->getRepository(Category::class)->find($id);
 
+        return new JsonResponse([
+            "id"=>$category->getId(),
+            "name"=>$category->getName(),
+            "slug"=>$category->getSlug()
+        ]);
+    }
     /**
      * @Route("/categories/{id}", methods={"DELETE"}, name="api_delete_category")
      */
