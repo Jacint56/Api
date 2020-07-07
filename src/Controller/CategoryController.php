@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+use App\Entity\Appointments;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 class CategoryController extends AbstractController
 {
@@ -59,11 +62,10 @@ class CategoryController extends AbstractController
     /**
      * @Route("/categories", methods={"GET"}, name="api_index_category")
      */
-    function index(Request $request)
+    function index(Request $request, PaginatorInterface $paginator)
     {
-        $id = $request->query->get('id');
         $name = $request->query->get('name');
-        $slug = $request->query->get('slug');
+        $page = $request->query->getInt('page', 1);
 
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
@@ -71,7 +73,7 @@ class CategoryController extends AbstractController
         if(empty($name))
         {
             
-            foreach($entityManager->getRepository(Category::class)->findAll() as $category)
+            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findAll(), $page, 5) as $category)
             {
                 $response[] = [
                     "id"=>$category->getId(),
@@ -82,7 +84,7 @@ class CategoryController extends AbstractController
         }
         else
         {
-            foreach($entityManager->getRepository(Category::class)->findBy(["name" => $name]) as $category)
+            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findBy(["name" => $name]), $page, 5) as $category)
             {
                 $response[] = [
                     "id"=>$category->getId(),
@@ -91,7 +93,10 @@ class CategoryController extends AbstractController
                 ];
             }
         }
+
         return new JsonResponse($response);
+//        return new JsonResponse($paginator->paginate($response, $page, 5));
+//        return $paginator->paginate(new JsonResponse($response), $page, 5);
     }
     /**
      * @Route("/categories/id/{id}", methods={"GET"}, name="api_view_category")
