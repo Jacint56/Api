@@ -66,6 +66,7 @@ class CategoryController extends AbstractController
     {
         $name = $request->query->get('name');
         $page = $request->query->getInt('page', 1);
+        $size = $request->query->getInt('size', 1);
 
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
@@ -73,7 +74,7 @@ class CategoryController extends AbstractController
         if(empty($name))
         {
             
-            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findAll(), $page, 5) as $category)
+            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findAll(), $page, $size) as $category)
             {
                 $response[] = [
                     "id"=>$category->getId(),
@@ -84,7 +85,7 @@ class CategoryController extends AbstractController
         }
         else
         {
-            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findBy(["name" => $name]), $page, 5) as $category)
+            foreach($paginator->paginate($entityManager->getRepository(Category::class)->findBy(["name" => $name]), $page, $size) as $category)
             {
                 $response[] = [
                     "id"=>$category->getId(),
