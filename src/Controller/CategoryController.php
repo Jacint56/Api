@@ -64,10 +64,11 @@ class CategoryController extends AbstractController
         $id = $request->query->get('id');
         $name = $request->query->get('name');
         $slug = $request->query->get('slug');
+
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
         $repository = $this->getDoctrine()->getRepository(Category::class);
-        if(!($name))
+        if(empty($name))
         {
             
             foreach($entityManager->getRepository(Category::class)->findAll() as $category)
@@ -81,7 +82,6 @@ class CategoryController extends AbstractController
         }
         else
         {
-            
             foreach($entityManager->getRepository(Category::class)->findBy(["name" => $name]) as $category)
             {
                 $response[] = [
