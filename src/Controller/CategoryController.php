@@ -59,17 +59,37 @@ class CategoryController extends AbstractController
     /**
      * @Route("/categories", methods={"GET"}, name="api_index_category")
      */
-    function index()
+    function index(Request $request)
     {
+        $id = $request->query->get('id');
+        $name = $request->query->get('name');
+        $slug = $request->query->get('slug');
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
-        foreach($entityManager->getRepository(Category::class)->findAll() as $category)
+        $repository = $this->getDoctrine()->getRepository(Category::class);
+        if(!($name))
         {
-            $response[] = [
-                "id"=>$category->getId(),
-                "name"=>$category->getName(),
-                "slug"=>$category->getSlug()
-            ];
+            
+            foreach($entityManager->getRepository(Category::class)->findAll() as $category)
+            {
+                $response[] = [
+                    "id"=>$category->getId(),
+                    "name"=>$category->getName(),
+                    "slug"=>$category->getSlug()
+                ];
+            }
+        }
+        else
+        {
+            
+            foreach($entityManager->getRepository(Category::class)->findBy(["name" => $name]) as $category)
+            {
+                $response[] = [
+                    "id"=>$category->getId(),
+                    "name"=>$category->getName(),
+                    "slug"=>$category->getSlug()
+                ];
+            }
         }
         return new JsonResponse($response);
     }
@@ -78,8 +98,9 @@ class CategoryController extends AbstractController
      */
     function view($id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $category = $entityManager->getRepository(Category::class)->find($id);
+        $category = $this->getDoctrine()
+        ->getRepository(Category::class)
+        ->find($id);
 
         return new JsonResponse([
             "id"=>$category->getId(),
@@ -110,20 +131,5 @@ class CategoryController extends AbstractController
     /**
      * @Route("/categories/search", methods={"GET"}, name="api_search_category")
      */
-    function search(Request $request)
-    {
-        $content = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-        $response = array();
 
-        foreach($entityManager->getRepository(Category::class)->findBy($content) as $category)
-        {
-            $response[] = [
-                "id"=>$category->getId(),
-                "name"=>$category->getName(),
-                "slug"=>$category->getSlug()
-                ];
-        }
-        return new JsonResponse($response);
-    }
 }
