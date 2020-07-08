@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "antishov/doctrine-extensions-bundle": "^1.4",
         "knplabs/knp-paginator-bundle": "^5.2",
+        "overblog/graphiql-bundle": "^0.2.1",
         "overblog/graphql-bundle": "^0.13.2",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "5.1.*",

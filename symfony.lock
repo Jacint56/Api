@@ -126,6 +126,18 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "overblog/graphiql-bundle": {
+        "version": "0.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.1",
+            "ref": "fe8d172f2480efc598f5a8be0e732656d3594cec"
+        },
+        "files": [
+            "config/routes/dev/graphiql.yaml"
+        ]
+    },
     "overblog/graphql-bundle": {
         "version": "0.12",
         "recipe": {
@@ -332,6 +344,23 @@
     },
     "symfony/translation-contracts": {
         "version": "v2.1.2"
+    },
+    "symfony/twig-bridge": {
+        "version": "v5.1.2"
+    },
+    "symfony/twig-bundle": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "fab9149bbaa4d5eca054ed93f9e1b66cc500895d"
+        },
+        "files": [
+            "config/packages/test/twig.yaml",
+            "config/packages/twig.yaml",
+            "templates/base.html.twig"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v5.1.2"
