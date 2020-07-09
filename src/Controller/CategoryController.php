@@ -134,9 +134,5 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
-    /**
-     * @Route("/categories/search", methods={"GET"}, name="api_search_category")
-     */
 
 }
-//comment

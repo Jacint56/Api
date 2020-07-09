@@ -1,0 +1,9 @@
+type Query{
+    Category(id: ID): category
+}
+
+type category {
+    id: ID
+    name: String!
+    slug: String!
+}
