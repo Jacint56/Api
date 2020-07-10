@@ -46,6 +46,11 @@ class CategoryRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
 
+    
+    */
+    public function findAll()
+    {
+        return ;
+    }
 }

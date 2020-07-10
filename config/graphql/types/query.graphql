@@ -1,8 +1,8 @@
 type Query{
-    Category(id: ID): category
+    categories: [Category!]
 }
 
-type category {
+type Category {
     id: ID
     name: String!
     slug: String!
