@@ -49,8 +49,4 @@ class CategoryRepository extends ServiceEntityRepository
 
     
     */
-    public function findAll()
-    {
-        return ;
-    }
 }
