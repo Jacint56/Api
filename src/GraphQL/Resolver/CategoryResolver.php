@@ -27,11 +27,11 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         $categories = array();
         if(empty($args["name"]))
         {
-            $categories = $this->em->getRepository(Category::class)->findBy([], [], $args["limit"]);
+            $categories = $this->em->getRepository(Category::class)->findBy([], [], $args["limit"], ($args["page"] - 1) * $args["limit"]);
         }
         else
         {
-            $categories = $this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]], [], $args["limit"]);
+            $categories = $this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]], [], $args["limit"], ($args["page"] - 1) * $args["limit"]);
         }
         return [
             "categories" => $categories
