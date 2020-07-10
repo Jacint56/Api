@@ -8,13 +8,17 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 class CategoryResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
+    private $paginator;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
+        $this->paginator = $paginator;
     }
 
     public function resolve(Argument $args)
@@ -27,11 +31,11 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         $categories = array();
         if(empty($args["name"]))
         {
-            $categories = $this->em->getRepository(Category::class)->findBy([], [], $args["limit"], ($args["page"] - 1) * $args["limit"]);
+            $categories = $this->paginator->paginate($this->em->getRepository(Category::class)->findAll(), $args["page"], $args["limit"]);
         }
         else
         {
-            $categories = $this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]], [], $args["limit"], ($args["page"] - 1) * $args["limit"]);
+            $categories = $this->paginator->paginate($this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]]), $args["page"], $args["limit"]);
         }
         return [
             "categories" => $categories
@@ -44,5 +48,5 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             "list" => "allCategories"
         );
     }
-    
+
 }
