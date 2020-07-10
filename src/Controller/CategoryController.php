@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Appointments;
 use Knp\Component\Pager\PaginatorInterface;
 
-
 class CategoryController extends AbstractController
 {
     /**

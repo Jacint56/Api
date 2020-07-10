@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Resolver;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class CategoryMap
 {
+
     function index()
     {
         $page = 1;
@@ -25,9 +26,8 @@ class CategoryMap
 
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
-        $repository = $this->getDoctrine()->getRepository(Category::class);
-      
-        foreach($paginator->paginate($entityManager->getRepository(Category::class)->findAll(), $page, $size) as $category)
+        $repository = $this->getDoctrine()->getRepository(CategoryController::class);
+        foreach($entityManager->getRepository(CategoryController::class)->findAll() as $category)
         {
             $response[] = [
                 "id"=>$category->getId(),
@@ -36,7 +36,7 @@ class CategoryMap
             ];
         }
 
-        return $response;
+        return new JsonResponse($response);
 
     }
 
