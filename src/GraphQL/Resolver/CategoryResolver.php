@@ -44,4 +44,5 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             "list" => "allCategories"
         );
     }
+    
 }
