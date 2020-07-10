@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Appointments;
 use Knp\Component\Pager\PaginatorInterface;
 
-
 class CategoryController extends AbstractController
 {
     /**
@@ -134,9 +133,5 @@ class CategoryController extends AbstractController
             "slug"=>$category->getSlug()
         ]);
     }
-    /**
-     * @Route("/categories/search", methods={"GET"}, name="api_search_category")
-     */
 
 }
-//comment

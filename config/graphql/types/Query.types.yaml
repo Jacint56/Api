@@ -1,0 +1,20 @@
+Query:
+    type: object
+    config:
+        fields:
+            category:
+                type: Category
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Category', [args])"
+            allCategories:
+                type: CategoryCollection
+                args:
+                    limit:
+                        type: Int
+                    name:
+                        type: String
+                    page:
+                        type: Int
+                resolve: "@=resolver('allCategories', [args])"
