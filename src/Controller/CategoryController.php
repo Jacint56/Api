@@ -135,4 +135,24 @@ class CategoryController extends AbstractController
         ]);
     }
 
+
+    function indexForMap()
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $response = array();
+      
+        foreach($entityManager->getRepository(Category::class)->findAll() as $category)
+        {
+            $response[$category->getId()] = [
+                "id"=>$category->getId(),
+                "name"=>$category->getName(),
+                "slug"=>$category->getSlug()
+            ];
+        }
+
+        return $response;
+
+    }
+
 }

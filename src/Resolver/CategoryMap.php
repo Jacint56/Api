@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Resolver;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,20 +16,17 @@ use App\Entity\Appointments;
 use Knp\Component\Pager\PaginatorInterface;
 
 
-class CategoryMap
+class CategoryMap extends AbstractController
 {
     function index()
     {
-        $page = 1;
-        $size = 10;
 
         $entityManager = $this->getDoctrine()->getManager();
         $response = array();
-        $repository = $this->getDoctrine()->getRepository(Category::class);
       
-        foreach($paginator->paginate($entityManager->getRepository(Category::class)->findAll(), $page, $size) as $category)
+        foreach($entityManager->getRepository(Category::class)->findAll() as $category)
         {
-            $response[] = [
+            $response[$category->getId()] = [
                 "id"=>$category->getId(),
                 "name"=>$category->getName(),
                 "slug"=>$category->getSlug()
