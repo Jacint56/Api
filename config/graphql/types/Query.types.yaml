@@ -17,12 +17,8 @@ Query:
                         type: String
                     page:
                         type: Int
-                    sort:
+                    order:
+                        type: String
+                    column:
                         type: String
                 resolve: "@=resolver('allCategories', [args])"
-            counter:
-                type: CountedT
-                args:
-                    name:
-                        type: String
-                resolve: "@=resolver('counter', [args])"

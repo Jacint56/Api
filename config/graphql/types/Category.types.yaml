@@ -14,10 +14,4 @@ CategoryCollection:
     config:
         fields:
             categories: "[Category]"
-
-CountedT:
-    type: object
-    config:
-        fields:
-            number:
-                type: Int
+            total: Int

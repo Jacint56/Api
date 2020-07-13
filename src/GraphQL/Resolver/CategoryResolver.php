@@ -29,39 +29,39 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
     public function list(Argument $args)
     {
         $categories = array();
-        if(empty($args["name"]))
+        $where = array();
+        $column = "id";
+        $order = "ASC";
+        if(!empty($args["name"]))
         {
-            $categories = $this->paginator->paginate($this->em->getRepository(Category::class)->findAll(), $args["page"], $args["limit"]);
+            $where["name"] = $args["name"];
         }
-        else
+        if(!empty($args["column"]) && !empty($args["order"]))
         {
-            $categories = $this->paginator->paginate($this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]]), $args["page"], $args["limit"]);
+            $column = $args["column"];
+            $order = $args["order"];
         }
+        $categories = $this->paginator->paginate(
+            $this->em->getRepository(Category::class)->findBy(
+                $where,
+                array($column => $order)
+            ),
+            $args["page"],
+            $args["limit"]
+        );
+        
         return [
-            "categories" => $categories
-        ];
-    }
-    public function counterF(Argument $args){
-        $categories = array();
-        if(empty($args["name"]))
-        {
-            $categories = $this->em->getRepository(Category::class)->findAll();
-        }
-        else
-        {
-            $categories = $this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]]);
-        }
-        return [
-            "number" => count($categories)
+            "categories" => $categories,
+            "total" =>$categories->getTotalItemCount()
         ];
     }
 
+
     public static function getAliases(): array
     {
-        return array(
+        return  array(
             "resolve" => "Category",
             "list" => "allCategories",
-            "counterF" => "counter"
         );
     }
 
