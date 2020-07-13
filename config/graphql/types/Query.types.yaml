@@ -17,8 +17,6 @@ Query:
                         type: String
                     page:
                         type: Int
-                    order:
-                        type: String
                     column:
                         type: String
                 resolve: "@=resolver('allCategories', [args])"

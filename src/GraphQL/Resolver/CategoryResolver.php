@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class CategoryResolver implements ResolverInterface, AliasedInterface
 {
@@ -32,15 +33,25 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         $where = array();
         $column = "id";
         $order = "ASC";
+
         if(!empty($args["name"]))
         {
             $where["name"] = $args["name"];
         }
-        if(!empty($args["column"]) && !empty($args["order"]))
+
+        if(!empty($args["column"]))
         {
-            $column = $args["column"];
-            $order = $args["order"];
+            if(substr($args["column"], 0, 1) == '-')
+            {
+                $column = substr($args["column"], 1);
+                $order = "DESC";
+            }
+            else
+            {
+                $column = $args["column"];
+            }
         }
+        
         $categories = $this->paginator->paginate(
             $this->em->getRepository(Category::class)->findBy(
                 $where,
@@ -59,7 +70,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
     public static function getAliases(): array
     {
-        return  array(
+        return array(
             "resolve" => "Category",
             "list" => "allCategories",
         );
