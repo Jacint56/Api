@@ -15,4 +15,6 @@ Query:
                         type: Int
                     name:
                         type: String
+                    page:
+                        type: Int
                 resolve: "@=resolver('allCategories', [args])"
