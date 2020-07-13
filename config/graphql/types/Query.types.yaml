@@ -17,4 +17,12 @@ Query:
                         type: String
                     page:
                         type: Int
+                    sort:
+                        type: String
                 resolve: "@=resolver('allCategories', [args])"
+            counter:
+                type: CountedT
+                args:
+                    name:
+                        type: String
+                resolve: "@=resolver('counter', [args])"

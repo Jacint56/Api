@@ -41,11 +41,27 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             "categories" => $categories
         ];
     }
+    public function counterF(Argument $args){
+        $categories = array();
+        if(empty($args["name"]))
+        {
+            $categories = $this->em->getRepository(Category::class)->findAll();
+        }
+        else
+        {
+            $categories = $this->em->getRepository(Category::class)->findBy(["name"=>$args["name"]]);
+        }
+        return [
+            "number" => count($categories)
+        ];
+    }
+
     public static function getAliases(): array
     {
         return array(
             "resolve" => "Category",
-            "list" => "allCategories"
+            "list" => "allCategories",
+            "counterF" => "counter"
         );
     }
 
