@@ -19,7 +19,13 @@ class CategoryMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
+        $category = new Category();
+        $category->setName($args["category"]["name"]);
 
+        $this->em->persist($category);
+        $this->em->flush();
+
+        return 1;
     }
 
     public static function getAliases(): array

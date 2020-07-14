@@ -95,8 +95,7 @@ class CategoryController extends AbstractController
         }
 
         return new JsonResponse($response);
-//        return new JsonResponse($paginator->paginate($response, $page, 5));
-//        return $paginator->paginate(new JsonResponse($response), $page, 5);
+        
     }
     /**
      * @Route("/categories/id/{id}", methods={"GET"}, name="api_view_category")
