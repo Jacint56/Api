@@ -7,3 +7,9 @@ Mutation:
                 resolve: "@=mutation('createCategory', [args])"
                 args:
                     category: "CategoryInput"
+                    
+            updateCategory:
+                type: "Category"
+                resolve: "@=mutation('updateCategory', [args])"
+                args:
+                    category: "CategoryInput"

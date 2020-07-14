@@ -28,12 +28,24 @@ class CategoryMutation implements MutationInterface, AliasedInterface
         return $category;
     }
 
-    
+    public function update(Argument $args)
+    {
+        $category = new Category();
+        $category = $this->em->getRepository(Category::class)->find($args["category"]["id"]);
+        $category->setName($args["category"]["name"]);
+
+        $this->em->persist($category);
+        $this->em->flush();
+
+        return $category;
+
+    }
 
     public static function getAliases(): array
     {
         return array(
             "create" => "createCategory",
-        );
+            "update" => "updateCategory"
+            );
     }
 }
