@@ -25,7 +25,9 @@ class CategoryMutation implements MutationInterface, AliasedInterface
         $this->em->persist($category);
         $this->em->flush();
 
-        return 1;
+        return 
+            ["name" => $args['category']['name']]
+        ;
     }
 
     public static function getAliases(): array
