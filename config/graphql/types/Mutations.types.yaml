@@ -13,3 +13,4 @@ Mutation:
                 resolve: "@=mutation('updateCategory', [args])"
                 args:
                     category: "CategoryInput"
+                    id: ID!
