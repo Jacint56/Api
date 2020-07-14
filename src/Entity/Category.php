@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Category
 {
+    use TimestampableEntity;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,7 +27,6 @@ class Category
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
-    use TimestampableEntity;
 
     public function getId(): ?int
     {

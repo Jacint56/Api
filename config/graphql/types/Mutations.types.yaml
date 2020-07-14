@@ -14,3 +14,9 @@ Mutation:
                 args:
                     category: "CategoryInput"
                     id: ID!
+
+            deleteCategory:
+                type: "Category"
+                resolve: "@=mutation('deleteCategory', [args])"
+                args:
+                    id: ID!
