@@ -15,3 +15,10 @@ CategoryCollection:
         fields:
             categories: "[Category]"
             total: Int
+
+CategoryInput:
+    type: input-object
+    config:
+        fields:
+            name:
+                type: String!

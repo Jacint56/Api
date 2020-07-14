@@ -1,0 +1,9 @@
+Mutation:
+    type: object
+    config:
+        fields:
+            createCategory:
+                type: "Category"
+                resolve: "@=mutation('createCategory', [args])"
+                args:
+                    category: "CategoryInput"
