@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\GamesRepository;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=GamesRepository::class)
  */
 class Games
 {
+    use TimestampableEntity;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -23,9 +25,14 @@ class Games
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=category::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=category::class, cascade={"persist", "remove"})
      */
     private $category;
+     /**
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -54,5 +61,9 @@ class Games
         $this->category = $category;
 
         return $this;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 }
