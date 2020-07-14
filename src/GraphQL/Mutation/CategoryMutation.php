@@ -27,19 +27,31 @@ class CategoryMutation implements MutationInterface, AliasedInterface
 
         return $category;
     }
+//    mutation {
+//        createCategory(category:{name: "Shanyi"}) {
+//          id
+//          name
+//        }
+//      }
+      
 
     public function update(Argument $args)
     {
-        $category = new Category();
         $category = $this->em->getRepository(Category::class)->find($args["category"]["id"]);
         $category->setName($args["category"]["name"]);
 
-        $this->em->persist($category);
         $this->em->flush();
 
         return $category;
 
     }
+//    mutation {
+//        updateCategory(category:{name: "Shanyi", id: 9}) {
+//          id
+//          name
+//        }
+//      }
+      
 
     public static function getAliases(): array
     {
