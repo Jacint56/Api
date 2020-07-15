@@ -3,14 +3,14 @@
 namespace App\GraphQL\Mutation;
 
 use App\Entity\Category;
-use App\Entity\Games;
+use App\Entity\Game;
 use App\GraphQL\Resolver\CategoryResolver;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 
-class GamesMutation implements MutationInterface, AliasedInterface
+class GameMutation implements MutationInterface, AliasedInterface
 {
     private $em;
     private $categoryResolver;
@@ -23,7 +23,7 @@ class GamesMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        $game = new Games();
+        $game = new Game();
         $game->setName($args["game"]["name"]);
         $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
 
@@ -42,7 +42,7 @@ class GamesMutation implements MutationInterface, AliasedInterface
 
     public function update(Argument $args)
     {
-        $game = $this->em->getRepository(Games::class)->find($args["id"]);
+        $game = $this->em->getRepository(Game::class)->find($args["id"]);
 
         if(!empty($args["game"]["name"]))
         {
@@ -68,7 +68,7 @@ class GamesMutation implements MutationInterface, AliasedInterface
       
     public function delete(Argument $args)
     {
-        $game = $this->em->getRepository(Games::class)->find($args["id"]);
+        $game = $this->em->getRepository(Game::class)->find($args["id"]);
 
         $this->em->remove($game);
 
@@ -87,9 +87,9 @@ class GamesMutation implements MutationInterface, AliasedInterface
     public static function getAliases(): array
     {
         return array(
-            "create" => "createGames",
-            "update" => "updateGames",
-            "delete" => "deleteGames"
+            "create" => "createGame",
+            "update" => "updateGame",
+            "delete" => "deleteGame"
             );
     }
 }

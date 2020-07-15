@@ -23,19 +23,19 @@ Mutation:
 
             createGame:
                 type: "Game"
-                resolve: "@=mutation('createGames', [args])"
+                resolve: "@=mutation('createGame', [args])"
                 args:
                     game: "GameInput"
                     
             updateGame:
                 type: "Game"
-                resolve: "@=mutation('updateGames', [args])"
+                resolve: "@=mutation('updateGame', [args])"
                 args:
                     game: "GameInput"
                     id: ID!
 
             deleteGame:
                 type: "Game"
-                resolve: "@=mutation('deleteGames', [args])"
+                resolve: "@=mutation('deleteGame', [args])"
                 args:
                     id: ID!

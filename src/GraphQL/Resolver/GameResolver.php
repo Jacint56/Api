@@ -3,7 +3,7 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\Category;
-use App\Entity\Games;
+use App\Entity\Game;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -12,7 +12,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
-class GamesResolver implements ResolverInterface, AliasedInterface
+class GameResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
     private $paginator;
@@ -25,7 +25,7 @@ class GamesResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        return $this->em->getRepository(Games::class)->find($args["id"]);
+        return $this->em->getRepository(Game::class)->find($args["id"]);
     }
 
     public function list(Argument $args)
@@ -43,7 +43,7 @@ class GamesResolver implements ResolverInterface, AliasedInterface
         if(!empty($args["category"]))
         {
             $where["category"] = $args["category"];
-        }
+              }
 
         if(!empty($args["column"]))
         {
@@ -58,8 +58,8 @@ class GamesResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $categories = $this->paginator->paginate(
-            $this->em->getRepository(Games::class)->findBy(
+        $games = $this->paginator->paginate(
+            $this->em->getRepository(Game::class)->findBy(
                 $where,
                 array($column => $order)
             ),
@@ -69,7 +69,7 @@ class GamesResolver implements ResolverInterface, AliasedInterface
         
         return [
             "games" => $games,
-            "total" =>$categories->getTotalItemCount()
+            "total" =>$games->getTotalItemCount()
         ];
     }
 

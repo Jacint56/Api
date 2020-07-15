@@ -28,6 +28,12 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $available;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -50,4 +56,15 @@ class Category
         return $this->slug;
     }
 
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(string $available): self
+    {
+        $this->available = $available;
+
+        return $this;
+    }
 }

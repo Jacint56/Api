@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\GamesRepository;
+use App\Repository\GameRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
- * @ORM\Entity(repositoryClass=GamesRepository::class)
+ * @ORM\Entity(repositoryClass=GameRepository::class)
  */
-class Games
+class Game
 {
     use TimestampableEntity;
     /**
@@ -33,6 +33,11 @@ class Games
      * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $available;
 
     public function getId(): ?int
     {
@@ -65,5 +70,17 @@ class Games
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(string $available): self
+    {
+        $this->available = $available;
+
+        return $this;
     }
 }

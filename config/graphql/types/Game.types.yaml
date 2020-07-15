@@ -8,13 +8,13 @@ Game:
                 type: String
             slug:
                 type: String
-            category: "[Category]"
+            category: "Category"
 
 GameCollection:
     type: object
     config:
         fields:
-            categories: "[Game]"
+            games: "[Game]"
             total: Int
 
 GameInput:
