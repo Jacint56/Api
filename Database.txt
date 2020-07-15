@@ -1,27 +1,29 @@
+INSERT INTO `category` (`id`, `slug`, `name`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 'moba', 'MOBA', 1, '2020-07-15 09:27:22', '2020-07-15 09:27:22'),
+	(2, 'fps', 'FPS', 1, '2020-07-15 09:27:51', '2020-07-15 09:27:51'),
+	(3, 'tps', 'TPS', 1, '2020-07-15 09:27:59', '2020-07-15 09:27:59'),
+	(4, 'party', 'Party', 1, '2020-07-15 09:28:06', '2020-07-15 09:28:06'),
+	(5, 'survival', 'Survival', 1, '2020-07-15 09:28:19', '2020-07-15 09:28:19'),
+	(6, 'platformer', 'Platformer', 1, '2020-07-15 09:28:28', '2020-07-15 09:28:28'),
+	(7, 'racing', 'Racing', 1, '2020-07-15 09:28:42', '2020-07-15 09:28:42'),
+	(8, 'rts', 'RTS', 1, '2020-07-15 11:29:19', '2020-07-15 11:29:19'),
+	(9, 'sport', 'Sport', 0, '2020-07-15 13:39:19', '2020-07-15 13:41:52');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
-INSERT INTO `category` (`id`, `slug`, `name`, `created_at`, `updated_at`) VALUES
-	(1, 'moba', 'MOBA', '2020-07-15 09:27:22', '2020-07-15 09:27:22'),
-	(2, 'fps', 'FPS', '2020-07-15 09:27:51', '2020-07-15 09:27:51'),
-	(3, 'tps', 'TPS', '2020-07-15 09:27:59', '2020-07-15 09:27:59'),
-	(4, 'party', 'Party', '2020-07-15 09:28:06', '2020-07-15 09:28:06'),
-	(5, 'survival', 'Survival', '2020-07-15 09:28:19', '2020-07-15 09:28:19'),
-	(6, 'platformer', 'Platformer', '2020-07-15 09:28:28', '2020-07-15 09:28:28'),
-	(7, 'racing', 'Racing', '2020-07-15 09:28:42', '2020-07-15 09:28:42'),
-	(8, 'rts', 'RTS', '2020-07-15 11:29:19', '2020-07-15 11:29:19');
-
-INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'League of Legends', 'league-of-legends', '2020-07-15 09:33:47', '2020-07-15 09:33:47'),
-	(2, 2, 'Counter Strike: Global Offensive', 'counter-strike-global-offensive', '2020-07-15 09:37:20', '2020-07-15 09:47:01'),
-	(3, 4, 'Skribblio', 'skribblio', '2020-07-15 09:37:55', '2020-07-15 09:47:38'),
-	(4, 2, 'Call of Duty: Warzone', 'call-of-duty-warzone', '2020-07-15 09:39:44', '2020-07-15 09:48:24'),
-	(5, 5, 'Minecraft', 'minecraft', '2020-07-15 09:39:57', '2020-07-15 09:48:57'),
-	(6, 6, 'Terraria', 'terraria', '2020-07-15 09:42:49', '2020-07-15 09:49:53'),
-	(7, 5, 'Dying Light', 'dying-light', '2020-07-15 09:44:30', '2020-07-15 09:50:17'),
-	(8, 7, 'Assetto Corsa', 'assetto-corsa', '2020-07-15 09:51:47', '2020-07-15 10:07:38'),
-	(9, 7, 'The Crew', 'the-crew', '2020-07-15 10:08:57', '2020-07-15 10:08:57'),
-	(10, 4, 'Pummel Party', 'pummel-party', '2020-07-15 10:09:39', '2020-07-15 10:09:39'),
-	(11, 5, 'The Forest', 'the-forest', '2020-07-15 10:10:02', '2020-07-15 10:10:02'),
-	(12, 8, 'Homeworld Remastered', 'homeworld-remastered', '2020-07-15 10:10:09', '2020-07-15 11:30:50'),
-	(13, 3, 'Grand Theft Auto: Online', 'grand-theft-auto-online', '2020-07-15 10:10:45', '2020-07-15 10:10:45'),
-	(14, 3, 'Red Dead Redemption Online', 'red-dead-redemption-online', '2020-07-15 11:37:18', '2020-07-15 11:37:18'),
-	(15, 3, 'Fortnite', 'fortnite', '2020-07-15 12:15:46', '2020-07-15 12:15:46');
+INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'League of Legends', 'league-of-legends', 1, '2020-07-15 09:33:47', '2020-07-15 09:33:47'),
+	(2, 2, 'Counter Strike: Global Offensive', 'counter-strike-global-offensive', 1, '2020-07-15 09:37:20', '2020-07-15 09:47:01'),
+	(3, 4, 'Skribblio', 'skribblio', 1, '2020-07-15 09:37:55', '2020-07-15 09:47:38'),
+	(4, 2, 'Call of Duty: Warzone', 'call-of-duty-warzone', 1, '2020-07-15 09:39:44', '2020-07-15 09:48:24'),
+	(5, 5, 'Minecraft', 'minecraft', 1, '2020-07-15 09:39:57', '2020-07-15 09:48:57'),
+	(6, 6, 'Terraria', 'terraria', 1, '2020-07-15 09:42:49', '2020-07-15 09:49:53'),
+	(7, 5, 'Dying Light', 'dying-light', 1, '2020-07-15 09:44:30', '2020-07-15 09:50:17'),
+	(8, 7, 'Assetto Corsa', 'assetto-corsa', 1, '2020-07-15 09:51:47', '2020-07-15 10:07:38'),
+	(9, 7, 'The Crew', 'the-crew', 1, '2020-07-15 10:08:57', '2020-07-15 10:08:57'),
+	(10, 4, 'Pummel Party', 'pummel-party', 1, '2020-07-15 10:09:39', '2020-07-15 10:09:39'),
+	(11, 5, 'The Forest', 'the-forest', 1, '2020-07-15 10:10:02', '2020-07-15 10:10:02'),
+	(12, 8, 'Homeworld Remastered', 'homeworld-remastered', 1, '2020-07-15 10:10:09', '2020-07-15 11:30:50'),
+	(13, 3, 'Grand Theft Auto: Online', 'grand-theft-auto-online', 1, '2020-07-15 10:10:45', '2020-07-15 10:10:45'),
+	(14, 3, 'Red Dead Redemption Online', 'red-dead-redemption-online', 1, '2020-07-15 11:37:18', '2020-07-15 11:37:18'),
+	(15, 3, 'Fortnite', 'fortnite', 0, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
+	(16, 9, 'FIFA21', 'fifa21', 0, '2020-07-15 13:39:58', '2020-07-15 13:41:04');

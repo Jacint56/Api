@@ -21,6 +21,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
     {
         $category = new Category();
         $category->setName($args["category"]["name"]);
+        $category->setAvailable(true);
 
         $this->em->persist($category);
         $this->em->flush();
@@ -61,14 +62,20 @@ class CategoryMutation implements MutationInterface, AliasedInterface
     {
         $category = $this->em->getRepository(Category::class)->find($args["id"]);
 
-        $this->em->remove($category);
+        $category->setAvailable(false);
 
         $this->em->flush();
 
         return 1;
 
     }
-    //Még nem megy.
+    /*
+    mutation {
+  deleteCategory(id: 9) {
+    id
+  }
+}
+    */
 
     public static function getAliases(): array
     {

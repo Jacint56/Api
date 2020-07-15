@@ -25,7 +25,11 @@ class GameResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        return $this->em->getRepository(Game::class)->find($args["id"]);
+        $game = $this->em->getRepository(Game::class)->find($args["id"]);
+        if($game->getAvailable())
+        {
+            return $game;
+        }
     }
     /*
     {
@@ -49,6 +53,8 @@ class GameResolver implements ResolverInterface, AliasedInterface
         $where = array();
         $column = "id";
         $order = "ASC";
+
+        $where["available"] = true;
 
         if(!empty($args["name"]))
         {

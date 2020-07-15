@@ -26,6 +26,7 @@ class GameMutation implements MutationInterface, AliasedInterface
         $game = new Game();
         $game->setName($args["game"]["name"]);
         $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
+        $game->setAvailable(true);
 
         $this->em->persist($game);
         $this->em->flush();
@@ -87,14 +88,20 @@ class GameMutation implements MutationInterface, AliasedInterface
     {
         $game = $this->em->getRepository(Game::class)->find($args["id"]);
 
-        $this->em->remove($game);
+        $game->setAvailable(false);
 
         $this->em->flush();
 
         return 1;
 
     }
-    //Még nem megy.
+    /*
+    mutation {
+  deleteGame(id: 16) {
+    id
+  }
+}
+    */
 
     public static function getAliases(): array
     {

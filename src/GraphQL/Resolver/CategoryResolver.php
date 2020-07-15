@@ -24,7 +24,11 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        return $this->em->getRepository(Category::class)->find($args["id"]);
+        $category =  $this->em->getRepository(Category::class)->find($args["id"]);
+        if($category->getAvailable())
+        {
+            return $category;
+        }
     }
     /*
     {
@@ -43,6 +47,8 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         $where = array();
         $column = "id";
         $order = "ASC";
+
+        $where["available"] = true;
 
         if(!empty($args["name"]))
         {
