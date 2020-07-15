@@ -26,6 +26,16 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
     {
         return $this->em->getRepository(Category::class)->find($args["id"]);
     }
+    /*
+    {
+  category(id: 2) {
+    id
+    name
+    slug
+  }
+}
+
+    */
 
     public function list(Argument $args)
     {
@@ -66,7 +76,19 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             "total" =>$categories->getTotalItemCount()
         ];
     }
+    /*
+    {
+  allCategories(limit: 10, page: 1) {
+    categories {
+      id
+      name
+      slug
+    }
+    total
+  }
+}
 
+    */
 
     public static function getAliases(): array
     {

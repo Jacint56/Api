@@ -32,12 +32,20 @@ class GameMutation implements MutationInterface, AliasedInterface
 
         return $game;
     }
-//    mutation {
-//        createCategory(category:{name: "Shanyi"}) {
-//          id
-//          name
-//        }
-//      }
+    /*
+    mutation {
+  createGame(game: {name: "FIFA21", category: 9}) {
+    id
+    name
+    slug
+    category {
+      id
+      name
+      slug
+    }
+  }
+}
+    */
       
 
     public function update(Argument $args)
@@ -59,12 +67,21 @@ class GameMutation implements MutationInterface, AliasedInterface
         return $game;
 
     }
-//    mutation {
-//        updateCategory(category:{name: "Shanyi"}, id: 9) {
-//          id
-//          name
-//        }
-//      }
+    /*
+    mutation {
+  updateGame(game: {name: "MMA2k21"}, id: 16) {
+    id
+    name
+    slug
+    category {
+      id
+      name
+      slug
+    }
+  }
+}
+
+    */
       
     public function delete(Argument $args)
     {
@@ -77,12 +94,7 @@ class GameMutation implements MutationInterface, AliasedInterface
         return 1;
 
     }
-//    mutation {
-//        deleteCategory(id: 9) {
-//          id
-//          name
-//        }
-//      }
+    //Még nem megy.
 
     public static function getAliases(): array
     {

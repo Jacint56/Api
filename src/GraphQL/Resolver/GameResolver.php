@@ -27,6 +27,21 @@ class GameResolver implements ResolverInterface, AliasedInterface
     {
         return $this->em->getRepository(Game::class)->find($args["id"]);
     }
+    /*
+    {
+  game(id: 4) {
+    id
+    name
+    slug
+    category {
+      id
+      name
+      slug
+    }
+  }
+}
+
+    */
 
     public function list(Argument $args)
     {
@@ -72,7 +87,24 @@ class GameResolver implements ResolverInterface, AliasedInterface
             "total" =>$games->getTotalItemCount()
         ];
     }
+    /*
+    {
+  allGames(limit: 10, page: 1) {
+    games {
+      id
+      name
+      slug
+      category {
+        id
+        name
+        slug
+      }
+    }
+    total
+  }
+}
 
+    */
 
     public static function getAliases(): array
     {

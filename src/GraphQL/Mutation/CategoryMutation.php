@@ -27,12 +27,14 @@ class CategoryMutation implements MutationInterface, AliasedInterface
 
         return $category;
     }
-//    mutation {
-//        createCategory(category:{name: "Shanyi"}) {
-//          id
-//          name
-//        }
-//      }
+    /*
+    mutation {
+        createCategory(category:{name: "Shanyi"}) {
+          id
+          name
+        }
+      }
+      */
       
 
     public function update(Argument $args)
@@ -46,12 +48,14 @@ class CategoryMutation implements MutationInterface, AliasedInterface
         return $category;
 
     }
-//    mutation {
-//        updateCategory(category:{name: "Shanyi"}, id: 9) {
-//          id
-//          name
-//        }
-//      }
+    /*
+    mutation {
+        updateCategory(category:{name: "Shanyi"}, id: 9) {
+          id
+          name
+        }
+      }
+      */
       
     public function delete(Argument $args)
     {
@@ -64,12 +68,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
         return 1;
 
     }
-//    mutation {
-//        deleteCategory(id: 9) {
-//          id
-//          name
-//        }
-//      }
+    //Még nem megy.
 
     public static function getAliases(): array
     {
