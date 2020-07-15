@@ -3,6 +3,7 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\Category;
+use App\Entity\Game;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -11,7 +12,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
-class CategoryResolver implements ResolverInterface, AliasedInterface
+class GameResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
     private $paginator;
@@ -24,18 +25,23 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        $category =  $this->em->getRepository(Category::class)->find($args["id"]);
-        if($category->getAvailable())
+        $game = $this->em->getRepository(Game::class)->find($args["id"]);
+        if($game->getAvailable())
         {
-            return $category;
+            return $game;
         }
     }
     /*
     {
-  category(id: 2) {
+  game(id: 4) {
     id
     name
     slug
+    category {
+      id
+      name
+      slug
+    }
   }
 }
 
@@ -43,7 +49,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
     public function list(Argument $args)
     {
-        $categories = array();
+        $games = array();
         $where = array();
         $column = "id";
         $order = "ASC";
@@ -54,6 +60,11 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         {
             $where["name"] = $args["name"];
         }
+
+        if(!empty($args["category"]))
+        {
+            $where["category"] = $args["category"];
+              }
 
         if(!empty($args["column"]))
         {
@@ -68,8 +79,8 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $categories = $this->paginator->paginate(
-            $this->em->getRepository(Category::class)->findBy(
+        $games = $this->paginator->paginate(
+            $this->em->getRepository(Game::class)->findBy(
                 $where,
                 array($column => $order)
             ),
@@ -78,17 +89,22 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         );
         
         return [
-            "categories" => $categories,
-            "total" =>$categories->getTotalItemCount()
+            "games" => $games,
+            "total" =>$games->getTotalItemCount()
         ];
     }
     /*
     {
-  allCategories(limit: 10, page: 1) {
-    categories {
+  allGames(limit: 10, page: 1) {
+    games {
       id
       name
       slug
+      category {
+        id
+        name
+        slug
+      }
     }
     total
   }
@@ -99,8 +115,8 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return array(
-            "resolve" => "Category",
-            "list" => "allCategories",
+            "resolve" => "Game",
+            "list" => "allGames",
         );
     }
 

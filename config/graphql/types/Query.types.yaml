@@ -8,6 +8,7 @@ Query:
                     id:
                         type: ID
                 resolve: "@=resolver('Category', [args])"
+
             allCategories:
                 type: CategoryCollection
                 args:
@@ -20,3 +21,23 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allCategories', [args])"
+
+            game:
+                type: Game
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Game', [args])"
+                
+            allGames:
+                type: GameCollection
+                args:
+                    limit:
+                        type: Int
+                    name:
+                        type: String
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allGames', [args])"

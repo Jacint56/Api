@@ -20,3 +20,22 @@ Mutation:
                 resolve: "@=mutation('deleteCategory', [args])"
                 args:
                     id: ID!
+
+            createGame:
+                type: "Game"
+                resolve: "@=mutation('createGame', [args])"
+                args:
+                    game: "GameInput"
+                    
+            updateGame:
+                type: "Game"
+                resolve: "@=mutation('updateGame', [args])"
+                args:
+                    game: "GameInput"
+                    id: ID!
+
+            deleteGame:
+                type: "Game"
+                resolve: "@=mutation('deleteGame', [args])"
+                args:
+                    id: ID!
