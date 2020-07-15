@@ -1,0 +1,26 @@
+Game:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            name:
+                type: String
+            slug:
+                type: String
+            category: "[Category]"
+
+GameCollection:
+    type: object
+    config:
+        fields:
+            categories: "[Game]"
+            total: Int
+
+GameInput:
+    type: input-object
+    config:
+        fields:
+            name:
+                type: String
+            category: Int
