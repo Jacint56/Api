@@ -41,3 +41,24 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allGames', [args])"
+
+            room:
+                type: Room
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Room', [args])"
+                
+            allRooms:
+                type: RoomCollection
+                args:
+                    limit:
+                        type: Int
+                    game:
+                        type: String
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allGames', [args])"
+            

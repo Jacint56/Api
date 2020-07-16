@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Game;
 use App\Repository\RoomRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
