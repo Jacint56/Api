@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Game;
 use App\Repository\RoomRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -78,7 +79,7 @@ class Room
         return $this->isPrivate;
     }
 
-    public function setIsPrivate(string $isPrivate): self
+    public function setIsPrivate(bool $isPrivate): self
     {
         $this->isPrivate = $isPrivate;
 
