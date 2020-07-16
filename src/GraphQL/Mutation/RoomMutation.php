@@ -33,6 +33,22 @@ class RoomMutation implements MutationInterface, AliasedInterface
 
         return $room;
     }
+    /*
+    mutation {
+  createRoom(room: {game: 3, isPrivate: true, name: "Random Szoba név"}) {
+    id
+    slug
+    game {
+      id
+      name
+      category {
+        id
+        name
+      }
+    }
+  }
+}
+*/
       
 
     public function update(Argument $args)
@@ -41,12 +57,12 @@ class RoomMutation implements MutationInterface, AliasedInterface
 
         if(!empty($args["room"]["game"]))
         {
-            $room->setCategory($this->em->getRepository(Category::class)->find($args["room"]["game"]));
+            $room->setGame($this->em->getRepository(Game::class)->find($args["room"]["game"]));
         }
 
         if(!empty($args["room"]["name"]))
         {
-            $room->setIsPrivate($args["room"]["name"]);
+            $room->setName($args["room"]["name"]);
         }
 
         if(!empty($args["room"]["isPrivate"]))
@@ -59,6 +75,18 @@ class RoomMutation implements MutationInterface, AliasedInterface
         return $room;
 
     }
+    /*
+    mutation {
+  updateRoom(id: 1, room: {name: "Miháj Sumáher", game: 8}) {
+    name
+    id
+    slug
+    game {
+      name
+    }
+  }
+}
+*/
       
     public function delete(Argument $args)
     {
@@ -71,6 +99,13 @@ class RoomMutation implements MutationInterface, AliasedInterface
         return 1;
 
     }
+    /*
+    mutation {
+  deleteRoom(id: 9) {
+    id
+  }
+}
+*/
 
     public static function getAliases(): array
     {

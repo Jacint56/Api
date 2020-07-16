@@ -25,7 +25,7 @@ class GameMutation implements MutationInterface, AliasedInterface
         $game->setName($args["game"]["name"]);
         $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
         $game->setAvailable(true);
-
+        
         $this->em->persist($game);
         $this->em->flush();
 
