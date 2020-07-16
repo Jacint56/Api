@@ -8,7 +8,6 @@ INSERT INTO `category` (`id`, `slug`, `name`, `available`, `created_at`, `update
 	(7, 'racing', 'Racing', 1, '2020-07-15 09:28:42', '2020-07-15 09:28:42'),
 	(8, 'rts', 'RTS', 1, '2020-07-15 11:29:19', '2020-07-15 11:29:19'),
 	(9, 'sport', 'Sport', 0, '2020-07-15 13:39:19', '2020-07-15 13:41:52');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
 INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'League of Legends', 'league-of-legends', 1, '2020-07-15 09:33:47', '2020-07-15 09:33:47'),
