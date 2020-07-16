@@ -39,3 +39,22 @@ Mutation:
                 resolve: "@=mutation('deleteGame', [args])"
                 args:
                     id: ID!
+
+            createUser:
+                type: "User"
+                resolve: "@=mutation('createUser', [args])"
+                args:
+                    user: "UserInput"
+                    
+            updateUser:
+                type: "User"
+                resolve: "@=mutation('updateUser', [args])"
+                args:
+                    user: "UserInput"
+                    id: ID!
+
+            deleteUser:
+                type: "User"
+                resolve: "@=mutation('deleteUser', [args])"
+                args:
+                    id: ID!
