@@ -61,3 +61,23 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allUsers', [args])"
+
+            room:
+                type: Room
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Room', [args])"
+                
+            allRooms:
+                type: RoomCollection
+                args:
+                    limit:
+                        type: Int
+                    name:
+                        type: String
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allRooms', [args])"

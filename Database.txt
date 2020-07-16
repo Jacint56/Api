@@ -1,3 +1,4 @@
+
 INSERT INTO `category` (`id`, `slug`, `name`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 'moba', 'MOBA', 1, '2020-07-15 09:27:22', '2020-07-15 09:27:22'),
 	(2, 'fps', 'FPS', 1, '2020-07-15 09:27:51', '2020-07-15 09:27:51'),
@@ -26,6 +27,11 @@ INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_a
 	(14, 3, 'Red Dead Redemption Online', 'red-dead-redemption-online', 1, '2020-07-15 11:37:18', '2020-07-15 11:37:18'),
 	(15, 3, 'Fortnite', 'fortnite', 0, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
 	(16, 9, 'FIFA21', 'fifa21', 0, '2020-07-15 13:39:58', '2020-07-15 13:41:04');
+
+INSERT INTO `room` (`id`, `game_id`, `slug`, `is_private`, `available`, `created_at`, `updated_at`) VALUES
+	(1, NULL, NULL, NULL, 1, '2020-07-16 12:20:10', '2020-07-16 12:20:10'),
+	(2, 3, NULL, 1, 1, '2020-07-16 12:31:46', '2020-07-16 12:31:46'),
+	(3, 3, NULL, 1, 1, '2020-07-16 12:33:06', '2020-07-16 12:33:06');
 
 INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, `slug`, `available`, `stats`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'ChonHTailor', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),

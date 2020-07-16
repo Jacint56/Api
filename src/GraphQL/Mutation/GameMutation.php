@@ -13,12 +13,10 @@ use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 class GameMutation implements MutationInterface, AliasedInterface
 {
     private $em;
-    private $categoryResolver;
 
     public function __construct(EntityManager $em, CategoryResolver $categoryResolver)
     {
         $this->em = $em;
-        $this->categoryResolver = $categoryResolver;
     }
 
     public function create(Argument $args)
