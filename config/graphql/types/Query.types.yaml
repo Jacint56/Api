@@ -52,6 +52,7 @@ Query:
             allUsers:
                 type: UserCollection
                 args:
+                    room: Int
                     limit:
                         type: Int
                     name:

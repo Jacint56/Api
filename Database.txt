@@ -28,14 +28,20 @@ INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_a
 	(15, 3, 'Fortnite', 'fortnite', 0, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
 	(16, 9, 'FIFA21', 'fifa21', 0, '2020-07-15 13:39:58', '2020-07-15 13:41:04');
 
-INSERT INTO `room` (`id`, `game_id`, `slug`, `is_private`, `available`, `created_at`, `updated_at`) VALUES
-	(1, NULL, NULL, NULL, 1, '2020-07-16 12:20:10', '2020-07-16 12:20:10'),
-	(2, 3, NULL, 1, 1, '2020-07-16 12:31:46', '2020-07-16 12:31:46'),
-	(3, 3, NULL, 1, 1, '2020-07-16 12:33:06', '2020-07-16 12:33:06');
+INSERT INTO `room` (`id`, `game_id`, `slug`, `name`, `is_private`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 8, 'mihaj-sumaher', 'Miháj Sumáher', 1, 1, '2020-07-16 12:49:21', '2020-07-16 13:16:18'),
+	(2, 3, 'random-szoba-nev', 'Random Szoba név', 1, 1, '2020-07-16 12:50:37', '2020-07-16 12:50:37'),
+	(3, 13, 'szuplaj-szkvad', 'Szupláj Szkvad', 0, 1, '2020-07-16 12:53:51', '2020-07-16 12:53:51'),
+	(4, 4, 'kamikaze-squad', 'Kamikaze Squad', 1, 1, '2020-07-16 12:55:50', '2020-07-16 12:55:50'),
+	(5, 6, 'rozsaszin', 'Rózsaszín', 0, 1, '2020-07-16 12:56:46', '2020-07-16 12:56:46'),
+	(6, 6, 'zod', 'Ződ', 0, 1, '2020-07-16 12:57:32', '2020-07-16 12:57:32'),
+	(7, 1, 'kek', 'Kék', 1, 1, '2020-07-16 12:57:58', '2020-07-16 12:57:58'),
+	(8, 1, 'lila', 'Lila', 1, 1, '2020-07-16 12:58:04', '2020-07-16 12:58:04'),
+	(9, 2, 'cyka-blyat', 'Cyka Blyat', 0, 0, '2020-07-16 12:58:59', '2020-07-16 13:21:13'),
+	(10, 2, 'suka-bliat', 'сука блять', 0, 1, '2020-07-16 13:07:19', '2020-07-16 13:07:19');
 
 INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, `slug`, `available`, `stats`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'ChonHTailor', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),
 	(2, NULL, 'ifuckedyourmother69', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 0, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
 	(3, NULL, 'Jacint1990', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
 	(4, NULL, 'Mindegy', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22');
-	

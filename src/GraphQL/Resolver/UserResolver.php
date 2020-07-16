@@ -3,7 +3,7 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
-use App\Entity\Game;
+use App\Entity\Room;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -39,6 +39,12 @@ class UserResolver implements ResolverInterface, AliasedInterface
     slug
     password
     email
+    room{
+        name
+        game{
+            name
+        }
+    }
   }
 }
 */
@@ -51,6 +57,11 @@ class UserResolver implements ResolverInterface, AliasedInterface
         $order = "ASC";
 
         $where["available"] = true;
+
+        if(!empty($args["room"]))
+        {
+            $where["room"] = $this->em->getRepository(Room::class)->find($args["room"]);
+        }
 
         if(!empty($args["userName"]))
         {

@@ -8,7 +8,7 @@ User:
                 type: String
             slug:
                 type: String
-#            room: "Room"
+            room: "Room"
             password: String
             email: String
             stats: Boolean
@@ -26,6 +26,6 @@ UserInput:
         fields:
             userName:
                 type: String
-#            room: "Room"
+            room: Int
             password: String
             email: String
