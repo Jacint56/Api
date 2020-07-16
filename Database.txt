@@ -26,3 +26,10 @@ INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_a
 	(14, 3, 'Red Dead Redemption Online', 'red-dead-redemption-online', 1, '2020-07-15 11:37:18', '2020-07-15 11:37:18'),
 	(15, 3, 'Fortnite', 'fortnite', 0, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
 	(16, 9, 'FIFA21', 'fifa21', 0, '2020-07-15 13:39:58', '2020-07-15 13:41:04');
+
+INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, `slug`, `available`, `stats`, `created_at`, `updated_at`) VALUES
+	(1, NULL, 'ChonHTailor', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),
+	(2, NULL, 'ifuckedyourmother69', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 0, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
+	(3, NULL, 'Jacint1990', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
+	(4, NULL, 'Mindegy', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22');
+	
