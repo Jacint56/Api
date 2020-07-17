@@ -1,0 +1,31 @@
+User:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            userName:
+                type: String
+            slug:
+                type: String
+            room: "Room"
+            password: String
+            email: String
+            stats: Boolean
+
+UserCollection:
+    type: object
+    config:
+        fields:
+            users: "[User]"
+            total: Int
+
+UserInput:
+    type: input-object
+    config:
+        fields:
+            userName:
+                type: String
+            room: Int
+            password: String
+            email: String

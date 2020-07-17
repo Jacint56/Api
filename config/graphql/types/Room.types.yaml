@@ -1,0 +1,25 @@
+Room:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            slug:
+                type: String
+            game: "Game"
+            name: String
+
+RoomCollection:
+    type: object
+    config:
+        fields:
+            rooms: "[Room]"
+            total: Int
+
+RoomInput:
+    type: input-object
+    config:
+        fields:
+            game: Int
+            isPrivate: Boolean
+            name: String

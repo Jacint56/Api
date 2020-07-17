@@ -27,9 +27,14 @@ class Room
 
      /**
      * @ORM\Column(type="string", length=100, unique=true, nullable=true)
-     * @Gedmo\Slug(fields={"id"})
+     * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -67,9 +72,21 @@ class Room
         return $this->available;
     }
 
-    public function setAvailable(string $available): self
+    public function setAvailable(bool $available): self
     {
         $this->available = $available;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
