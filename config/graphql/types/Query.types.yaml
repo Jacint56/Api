@@ -82,3 +82,25 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allRooms', [args])"
+
+            post:
+                type: Post
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Post', [args])"
+                
+            allPosts:
+                type: PostCollection
+                args:
+                    limit:
+                        type: Int
+                    title:
+                        type: String
+                    poster:
+                        type: Int
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allPosts', [args])"

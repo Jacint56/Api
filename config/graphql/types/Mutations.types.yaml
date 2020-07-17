@@ -77,3 +77,22 @@ Mutation:
                 resolve: "@=mutation('deleteRoom', [args])"
                 args:
                     id: ID!
+
+            createPost:
+                type: "Post"
+                resolve: "@=mutation('createPost', [args])"
+                args:
+                    post: "PostInput"
+                    
+            updatePost:
+                type: "Post"
+                resolve: "@=mutation('updatePost', [args])"
+                args:
+                    post: "PostInput"
+                    id: ID!
+
+            deletePost:
+                type: "Post"
+                resolve: "@=mutation('deletePost', [args])"
+                args:
+                    id: ID!
