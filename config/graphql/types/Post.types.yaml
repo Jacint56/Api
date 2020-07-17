@@ -1,0 +1,29 @@
+Post:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            title:
+                type: String
+            content:
+                type: String
+            slug: String
+            poster: "User"
+
+PostCollection:
+    type: object
+    config:
+        fields:
+            posts: "[Post]"
+            total: Int
+
+PostInput:
+    type: input-object
+    config:
+        fields:
+            title:
+                type: String
+            poster: Int
+            content:
+                type: String

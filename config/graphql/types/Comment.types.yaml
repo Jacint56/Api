@@ -1,0 +1,26 @@
+Comment:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            content:
+                type: String
+            poster: "User"
+            post: "Post"
+
+CommentCollection:
+    type: object
+    config:
+        fields:
+            comments: "[Comment]"
+            total: Int
+
+CommentInput:
+    type: input-object
+    config:
+        fields:
+            poster: Int
+            post: Int
+            content:
+                type: String
