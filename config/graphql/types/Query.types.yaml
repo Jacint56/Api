@@ -83,6 +83,7 @@ Query:
                         type: String
                 resolve: "@=resolver('allRooms', [args])"
 
+<<<<<<< HEAD
             post:
                 type: Post
                 args:
@@ -99,10 +100,25 @@ Query:
                         type: String
                     poster:
                         type: Int
+=======
+            friendship:
+                type: Friendship
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Friendship', [args])"
+                
+            allFriendships:
+                type: FriendshipCollection
+                args:
+                    limit:
+                        type: Int
+>>>>>>> FriendShips
                     page:
                         type: Int
                     column:
                         type: String
+<<<<<<< HEAD
                 resolve: "@=resolver('allPosts', [args])"
 
             Comment:
@@ -126,3 +142,8 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allComments', [args])"
+=======
+                    user: 
+                        type: Int
+                resolve: "@=resolver('allFriendships', [args])"
+>>>>>>> FriendShips

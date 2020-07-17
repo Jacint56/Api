@@ -1,0 +1,24 @@
+Friendship:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            user1: "User"
+            user2: "User"
+            status: Int
+
+FriendshipCollection:
+    type: object
+    config:
+        fields:
+            friendship: "[Friendship]"
+            total: Int
+
+FriendshipInput:
+    type: input-object
+    config:
+        fields:
+            user1: Int
+            user2: Int
+            status: Boolean
