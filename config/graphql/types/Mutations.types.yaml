@@ -77,3 +77,15 @@ Mutation:
                 resolve: "@=mutation('deleteRoom', [args])"
                 args:
                     id: ID!
+            
+            createFriendship:
+                type: "Friendship"
+                resolve: "@=mutation('createFriendship', [args])"
+                args:
+                    friendship: "FriendshipInput"
+
+            deleteFriendship:
+                type: "Friendship"
+                resolve: "@=mutation('deleteFriendship', [args])"
+                args:
+                    id: ID!

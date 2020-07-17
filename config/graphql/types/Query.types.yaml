@@ -82,3 +82,23 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allRooms', [args])"
+
+            friendship:
+                type: Friendship
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Friendship', [args])"
+                
+            allFriendships:
+                type: FriendshipCollection
+                args:
+                    limit:
+                        type: Int
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                    user: 
+                        type: Int
+                resolve: "@=resolver('allFriendships', [args])"
