@@ -104,3 +104,25 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allPosts', [args])"
+
+            Comment:
+                type: Comment
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('Comment', [args])"
+                
+            allComments:
+                type: CommentCollection
+                args:
+                    limit:
+                        type: Int
+                    poster:
+                        type: Int
+                    post:
+                        type: Int
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allComments', [args])"

@@ -96,3 +96,22 @@ Mutation:
                 resolve: "@=mutation('deletePost', [args])"
                 args:
                     id: ID!
+
+            createComment:
+                type: "Comment"
+                resolve: "@=mutation('createComment', [args])"
+                args:
+                    comment: "CommentInput"
+                    
+            updateComment:
+                type: "Comment"
+                resolve: "@=mutation('updateComment', [args])"
+                args:
+                    comment: "CommentInput"
+                    id: ID!
+
+            deleteComment:
+                type: "Comment"
+                resolve: "@=mutation('deleteComment', [args])"
+                args:
+                    id: ID!

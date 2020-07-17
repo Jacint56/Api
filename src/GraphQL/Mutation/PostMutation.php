@@ -34,6 +34,20 @@ class PostMutation implements MutationInterface, AliasedInterface
 
         return $post;
     }
+    /*
+    mutation {
+  createPost(post: {poster: 3, content: "Fasz", title: "Rád gondótam"}) {
+    id
+    title
+    slug
+    content
+    poster {
+      id
+      userName
+    }
+  }
+}
+*/
 
     public function update(Argument $args)
     {
@@ -54,7 +68,21 @@ class PostMutation implements MutationInterface, AliasedInterface
         return $post;
 
     }
-      
+    /*
+    mutation {
+  updatePost(id: 2 post: {content: "Péló"}) {
+    id
+    title
+    slug
+    content
+    poster {
+      id
+      userName
+    }
+  }
+}
+*/
+
     public function delete(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
@@ -66,6 +94,13 @@ class PostMutation implements MutationInterface, AliasedInterface
         return 1;
 
     }
+    /*
+    mutation {
+  deletePost(id: 2) {
+    id
+  }
+}
+*/
 
     public static function getAliases(): array
     {

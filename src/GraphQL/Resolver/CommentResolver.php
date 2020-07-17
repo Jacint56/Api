@@ -4,6 +4,7 @@ namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -12,7 +13,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
-class PostResolver implements ResolverInterface, AliasedInterface
+class CommentResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
     private $paginator;
@@ -25,7 +26,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        $post = $this->em->getRepository(Post::class)->find($args["id"]);
+        $post = $this->em->getRepository(Comment::class)->find($args["id"]);
         if($post->getAvailable())
         {
             return $post;
@@ -33,13 +34,13 @@ class PostResolver implements ResolverInterface, AliasedInterface
     }
     /*
     {
-  post(id: 3) {
+  Comment(id: 2) {
     id
-    title
-    slug
     content
+    post {
+      title
+    }
     poster {
-      id
       userName
     }
   }
@@ -55,14 +56,14 @@ class PostResolver implements ResolverInterface, AliasedInterface
 
         $where["available"] = true;
 
-        if(!empty($args["title"]))
+        if(!empty($args["post"]))
         {
-            $where["title"] = $args["title"];
+            $where["post"] = $this->em->getRepository(Post::class)->find($args["post"]);
         }
 
         if(!empty($args["poster"]))
         {
-            $where["poster"] = $this->em->getRepository(User::class)->find($args["id"]);
+            $where["poster"] = $this->em->getRepository(User::class)->find($args["poster"]);
         }
 
         if(!empty($args["column"]))
@@ -78,8 +79,8 @@ class PostResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $posts = $this->paginator->paginate(
-            $this->em->getRepository(Post::class)->findBy(
+        $comments = $this->paginator->paginate(
+            $this->em->getRepository(Comment::class)->findBy(
                 $where,
                 array($column => $order)
             ),
@@ -88,17 +89,26 @@ class PostResolver implements ResolverInterface, AliasedInterface
         );
         
         return [
-            "posts" => $posts,
-            "total" =>$posts->getTotalItemCount()
+            "comments" => $comments,
+            "total" =>$comments->getTotalItemCount()
         ];
     }
     /*
     {
-  allPosts(limit: 10, page: 1) {
-    posts {
+  post(id: 1) {
+    id
+    title
+    slug
+    content
+    poster {
       id
-      title
-      slug
+      userName
+    }
+  }
+  allComments(limit: 10, page: 1, post: 1) {
+    total
+    comments {
+      id
       content
       poster {
         id
@@ -112,8 +122,8 @@ class PostResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return array(
-            "resolve" => "Post",
-            "list" => "allPosts",
+            "resolve" => "Comment",
+            "list" => "allComments",
         );
     }
 
