@@ -73,30 +73,27 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
                 $column = $args["column"];
             }
         }
-        if (!empty($args["user"])) {
-            $user1["user1"]["id"] = $args["user"];
-            $user2["user2"]["id"] = $args["user"];
-            $temp = array();
-            $friendship = $this->paginator->paginate(
-                array_merge(
-                    $this->em->getRepository(Friendship::class)->findBy(
-                        array_merge(
-                            $where,
-                            $user1
-                        ),
-                        array($column => $order)
+        $user1["user1"]["id"] = $args["user"];
+        $user2["user2"]["id"] = $args["user"];
+        $friendship = $this->paginator->paginate(
+            array_merge(
+                $this->em->getRepository(Friendship::class)->findBy(
+                    array_merge(
+                        $where,
+                        $user1
                     ),
-                    $this->em->getRepository(Friendship::class)->findBy(
-                        array_merge(
-                            $where,
-                            $user2
-                        )
-                    )
+                    array($column => $order)
                 ),
-                $args["page"],
-                $args["limit"]
-            );
-        }
+                $this->em->getRepository(Friendship::class)->findBy(
+                    array_merge(
+                        $where,
+                        $user2
+                    )
+                )
+            ),
+            $args["page"],
+            $args["limit"]
+        );
         
         return [
             "friendship" => $friendship,
