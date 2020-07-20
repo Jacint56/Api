@@ -46,6 +46,10 @@ INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, 
 	(3, NULL, 'Jacint1990', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
 	(4, NULL, 'Mindegy', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22');
 
+INSERT INTO `friendship` (`id`, `user1_id`, `user2_id`, `status`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 1, 3, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03'),
+	(2, 3, 4, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03');
+
 INSERT INTO `post` (`id`, `poster_id`, `title`, `content`, `slug`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'Black Ops 2 story', 'Sponge compared to Modern Warfares and Black Ops 1.', 'black-ops-2-story', 1, '2020-07-17 11:26:22', '2020-07-17 11:26:22'),
 	(2, 3, 'Rád gondótam', 'Péló', 'rad-gondotam', 0, '2020-07-17 11:50:40', '2020-07-17 11:54:18'),
@@ -57,3 +61,4 @@ INSERT INTO `comment` (`id`, `poster_id`, `post_id`, `content`, `available`, `cr
 	(3, 4, 1, 'Random komment', 1, '2020-07-17 11:31:56', '2020-07-17 11:31:56'),
 	(4, 1, 1, 'Let\'s face it. No-one can take Menendez seriously.', 1, '2020-07-17 11:32:23', '2020-07-17 11:32:23'),
 	(5, 3, 3, 'Gondolkodok, tehát vagyok.', 0, '2020-07-17 11:58:37', '2020-07-17 12:03:16');
+

@@ -5,6 +5,7 @@ namespace App\GraphQL\Resolver;
 use App\Entity\User;
 use App\Entity\Friendship;
 use Doctrine\ORM\EntityManager;
+
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -73,6 +74,7 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
                 $column = $args["column"];
             }
         }
+
         $user1["user1"]["id"] = $args["user"];
         $user2["user2"]["id"] = $args["user"];
         $friendship = $this->paginator->paginate(
@@ -88,7 +90,8 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
                     array_merge(
                         $where,
                         $user2
-                    )
+                    ),
+                    array($column => $order)
                 )
             ),
             $args["page"],

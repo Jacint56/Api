@@ -5,6 +5,7 @@ namespace App\GraphQL\Resolver;
 use App\Entity\User;
 use App\Entity\Room;
 use Doctrine\ORM\EntityManager;
+
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
