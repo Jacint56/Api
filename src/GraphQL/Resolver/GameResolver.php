@@ -116,7 +116,7 @@ class GameResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "Game",
-            "list" => "allGames",
+            "list" => "allGames"
         );
     }
 

@@ -100,7 +100,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "Category",
-            "list" => "allCategories",
+            "list" => "allCategories"
         );
     }
 
