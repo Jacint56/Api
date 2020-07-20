@@ -123,7 +123,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "Comment",
-            "list" => "allComments",
+            "list" => "allComments"
         );
     }
 

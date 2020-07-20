@@ -25,7 +25,6 @@ class Friendship
      */
     private $user1;
 
-
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */

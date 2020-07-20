@@ -106,7 +106,7 @@ class RoomResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "Room",
-            "list" => "allRooms",
+            "list" => "allRooms"
         );
     }
 

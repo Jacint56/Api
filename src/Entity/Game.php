@@ -29,6 +29,7 @@ class Game
      * @ORM\ManyToOne(targetEntity=category::class, cascade={"persist", "remove"})
      */
     private $category;
+    
      /**
      * @ORM\Column(type="string", length=100, unique=true, nullable=true)
      * @Gedmo\Slug(fields={"name"})

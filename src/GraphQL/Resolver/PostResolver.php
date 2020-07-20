@@ -113,7 +113,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "Post",
-            "list" => "allPosts",
+            "list" => "allPosts"
         );
     }
 

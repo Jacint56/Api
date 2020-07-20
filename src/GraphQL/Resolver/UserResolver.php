@@ -105,7 +105,7 @@ class UserResolver implements ResolverInterface, AliasedInterface
     {
         return array(
             "resolve" => "User",
-            "list" => "allUsers",
+            "list" => "allUsers"
         );
     }
 
