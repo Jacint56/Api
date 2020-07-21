@@ -55,7 +55,7 @@ Query:
                     room: Int
                     limit:
                         type: Int
-                    name:
+                    userName:
                         type: String
                     page:
                         type: Int
