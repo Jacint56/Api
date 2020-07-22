@@ -18,6 +18,8 @@ security:
             anonymous: true
             lazy: true
             provider: app_user_provider
+            x509:
+                provider: app_user_provider
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

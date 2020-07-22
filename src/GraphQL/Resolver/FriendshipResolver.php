@@ -37,11 +37,11 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
     {
   friendship(id: 1) {
     id
-    user1 {
+    sender {
       id
       userName
     }
-    user2 {
+    reciver {
       id
       userName
     }
@@ -54,8 +54,8 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
     public function list(Argument $args)
     {
         $friendship = array();
-        $user1 = array();
-        $user2 = array();
+        $sender = array();
+        $reciver = array();
         $where = array();
         $column = "id";
         $order = "ASC";
@@ -75,21 +75,21 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
             }
         }
 
-        $user1["user1"]["id"] = $args["user"];
-        $user2["user2"]["id"] = $args["user"];
+        $sender["sender"]["id"] = $args["user"];
+        $reciver["reciver"]["id"] = $args["user"];
         $friendship = $this->paginator->paginate(
             array_merge(
                 $this->em->getRepository(Friendship::class)->findBy(
                     array_merge(
                         $where,
-                        $user1
+                        $sender
                     ),
                     array($column => $order)
                 ),
                 $this->em->getRepository(Friendship::class)->findBy(
                     array_merge(
                         $where,
-                        $user2
+                        $reciver
                     ),
                     array($column => $order)
                 )
@@ -109,11 +109,11 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
     total
     friendship {
       id
-      user1 {
+      sender {
         id
         userName
       }
-      user2 {
+      reciver {
         id
         userName
       }

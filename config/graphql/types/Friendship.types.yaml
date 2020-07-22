@@ -4,8 +4,8 @@ Friendship:
         fields:
             id:
                 type: ID
-            user1: "User"
-            user2: "User"
+            sender: "User"
+            reciver: "User"
             status: Int
 
 FriendshipCollection:
@@ -19,6 +19,6 @@ FriendshipInput:
     type: input-object
     config:
         fields:
-            user1: Int
-            user2: Int
+            sender: Int
+            reciver: Int
             status: Boolean
