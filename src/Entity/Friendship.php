@@ -48,23 +48,23 @@ class Friendship
 
     public function getSender(): ?user
     {
-        return $this->user1;
+        return $this->sender;
     }
 
     public function setSender(?user $user): self
     {
-        $this->user1 = $user;
+        $this->sender = $user;
 
         return $this;
     }
     public function getReciver(): ?user
     {
-        return $this->user2;
+        return $this->reciver;
     }
 
     public function setReciver(?user $user): self
     {
-        $this->user2 = $user;
+        $this->reciver = $user;
 
         return $this;
     }

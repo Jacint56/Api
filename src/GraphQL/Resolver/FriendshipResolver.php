@@ -75,28 +75,42 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
             }
         }
 
-        $sender["sender"]["id"] = $args["user"];
-        $reciver["reciver"]["id"] = $args["user"];
-        $friendship = $this->paginator->paginate(
-            array_merge(
-                $this->em->getRepository(Friendship::class)->findBy(
-                    array_merge(
-                        $where,
-                        $sender
+        if(!empty($args["user"]))
+        {
+            $sender["sender"]["id"] = $args["user"];
+            $reciver["reciver"]["id"] = $args["user"];
+            $friendship = $this->paginator->paginate(
+                array_merge(
+                    $this->em->getRepository(Friendship::class)->findBy(
+                        array_merge(
+                            $where,
+                            $sender
+                        ),
+                        array($column => $order)
                     ),
+                    $this->em->getRepository(Friendship::class)->findBy(
+                        array_merge(
+                            $where,
+                            $reciver
+                        ),
+                        array($column => $order)
+                    )
+                ),
+                $args["page"],
+                $args["limit"]
+            );
+        }
+        else
+        {
+            $friendship = $this->paginator->paginate(
+                $this->em->getRepository(Friendship::class)->findBy(
+                    $where,
                     array($column => $order)
                 ),
-                $this->em->getRepository(Friendship::class)->findBy(
-                    array_merge(
-                        $where,
-                        $reciver
-                    ),
-                    array($column => $order)
-                )
-            ),
-            $args["page"],
-            $args["limit"]
-        );
+                $args["page"],
+                $args["limit"]
+            );
+        }
         
         return [
             "friendship" => $friendship,
