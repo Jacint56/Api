@@ -5,6 +5,7 @@ namespace App\GraphQL\Resolver;
 use App\Entity\Category;
 use App\Entity\Game;
 use Doctrine\ORM\EntityManager;
+
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -64,7 +65,7 @@ class GameResolver implements ResolverInterface, AliasedInterface
         if(!empty($args["category"]))
         {
             $where["category"] = $args["category"];
-              }
+        }
 
         if(!empty($args["column"]))
         {
