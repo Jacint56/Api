@@ -23,7 +23,7 @@ class Friendship
     /**
      * @ORM\ManyToOne(targetEntity=user::class, cascade={"persist", "remove"})
      */
-    private $user1;
+    private $sender;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -34,7 +34,7 @@ class Friendship
      * @ORM\ManyToOne(targetEntity=user::class, cascade={"persist", "remove"})
      */
 
-    private $user2;
+    private $reciver;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -46,25 +46,25 @@ class Friendship
         return $this->id;
     }
 
-    public function getUser1(): ?user
+    public function getSender(): ?user
     {
-        return $this->user1;
+        return $this->sender;
     }
 
-    public function setUser1(?user $user): self
+    public function setSender(?user $user): self
     {
-        $this->user1 = $user;
+        $this->sender = $user;
 
         return $this;
     }
-    public function getUser2(): ?user
+    public function getReciver(): ?user
     {
-        return $this->user2;
+        return $this->reciver;
     }
 
-    public function setUser2(?user $user): self
+    public function setReciver(?user $user): self
     {
-        $this->user2 = $user;
+        $this->reciver = $user;
 
         return $this;
     }
