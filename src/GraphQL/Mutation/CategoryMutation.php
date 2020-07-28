@@ -61,13 +61,13 @@ class CategoryMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $category = $this->em->getRepository(Category::class)->find($args["id"]);
-
-        $category->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($category) && $category->getAvailable())
+        {
+            $category->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {

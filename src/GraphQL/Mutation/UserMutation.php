@@ -97,13 +97,13 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $user = $this->em->getRepository(User::class)->find($args["id"]);
-
-        $user->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($user) && $user->getAvailable())
+        {
+            $user->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {
