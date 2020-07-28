@@ -16,7 +16,7 @@ Mutation:
                     id: ID!
 
             deleteCategory:
-                type: "Category"
+                type: Int
                 resolve: "@=mutation('deleteCategory', [args])"
                 args:
                     id: ID!
@@ -35,7 +35,7 @@ Mutation:
                     id: ID!
 
             deleteGame:
-                type: "Game"
+                type: Int
                 resolve: "@=mutation('deleteGame', [args])"
                 args:
                     id: ID!
@@ -54,7 +54,7 @@ Mutation:
                     id: ID!
 
             deleteUser:
-                type: "User"
+                type: Int
                 resolve: "@=mutation('deleteUser', [args])"
                 args:
                     id: ID!
@@ -73,7 +73,7 @@ Mutation:
                     id: ID!
 
             deleteRoom:
-                type: "Room"
+                type: Int
                 resolve: "@=mutation('deleteRoom', [args])"
                 args:
                     id: ID!
@@ -92,7 +92,7 @@ Mutation:
                     id: ID!
 
             deletePost:
-                type: "Post"
+                type: Int
                 resolve: "@=mutation('deletePost', [args])"
                 args:
                     id: ID!
@@ -111,7 +111,7 @@ Mutation:
                     id: ID!
 
             deleteComment:
-                type: "Comment"
+                type: Int
                 resolve: "@=mutation('deleteComment', [args])"
                 args:
                     id: ID!
@@ -123,7 +123,7 @@ Mutation:
                     friendship: "FriendshipInput"
 
             deleteFriendship:
-                type: "Friendship"
+                type: Int
                 resolve: "@=mutation('deleteFriendship', [args])"
                 args:
                     id: ID!

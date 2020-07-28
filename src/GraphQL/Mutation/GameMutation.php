@@ -81,17 +81,17 @@ class GameMutation implements MutationInterface, AliasedInterface
 }
 
     */
-      
+
     public function delete(Argument $args)
     {
         $game = $this->em->getRepository(Game::class)->find($args["id"]);
-
-        $game->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($game) && $game->getAvailable())
+        {
+            $game->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {

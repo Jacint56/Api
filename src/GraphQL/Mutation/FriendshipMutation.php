@@ -53,13 +53,13 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $friendship = $this->em->getRepository(Friendship::class)->find($args["id"]);
-
-        $friendship->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($friendship) && $friendship->getAvailable())
+        {
+            $friendship->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {

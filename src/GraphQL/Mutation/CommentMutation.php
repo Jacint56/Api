@@ -77,13 +77,13 @@ class CommentMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $comment = $this->em->getRepository(Comment::class)->find($args["id"]);
-
-        $comment->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($comment) && $comment->getAvailable())
+        {
+            $comment->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {

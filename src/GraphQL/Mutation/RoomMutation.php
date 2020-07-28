@@ -91,13 +91,13 @@ class RoomMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $room = $this->em->getRepository(Room::class)->find($args["id"]);
-
-        $room->setAvailable(false);
-
-        $this->em->flush();
-
-        return 1;
-
+        if(!empty($room) && $room->getAvailable())
+        {
+            $room->setAvailable(false);
+            $this->em->flush();
+            return true;
+        }
+        return false;
     }
     /*
     mutation {
