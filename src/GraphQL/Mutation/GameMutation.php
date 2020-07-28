@@ -50,35 +50,37 @@ class GameMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $game = $this->em->getRepository(Game::class)->find($args["id"]);
-
-        if(!empty($args["game"]["name"]))
+        if(!empty($game) && $game->getAvailable())
         {
-            $game->setName($args["game"]["name"]);
+            if(!empty($args["game"]["name"]))
+            {
+                $game->setName($args["game"]["name"]);
+            }
+
+            if(!empty($args["game"]["category"]))
+            {
+                $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
+            }
+
+            $this->em->flush();
+
+            return $game;
         }
-
-        if(!empty($args["game"]["category"]))
-        {
-            $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
-        }
-
-        $this->em->flush();
-
-        return $game;
+        return null;
 
     }
     /*
-    mutation {
-  updateGame(game: {name: "MMA2k21"}, id: 16) {
+mutation {
+  updateGame(id: 9, game: {name: "The Crew 2"}) {
     id
     name
     slug
     category {
-      id
       name
-      slug
     }
   }
 }
+
 
     */
 
@@ -95,9 +97,7 @@ class GameMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteGame(id: 16) {
-    id
-  }
+  deleteGame(id: 16)
 }
     */
 

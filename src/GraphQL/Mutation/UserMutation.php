@@ -59,28 +59,31 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $user = $this->em->getRepository(User::class)->find($args["id"]);
-
-        if(!empty($args["user"]["userName"]))
+        if(!empty($user) && $user->getAvailable())
         {
-            $user->setUsername($args["user"]["userName"]);
+            if(!empty($args["user"]["userName"]))
+            {
+                $user->setUsername($args["user"]["userName"]);
+            }
+
+            if(!empty($args["user"]["password"]))
+            {
+                $user->setPassword($this->passwordEncoder->encodePassword(
+                    $user,
+                    $args["user"]["password"]
+                ));
+            }
+
+            if(!empty($args["user"]["email"]))
+            {
+                $user->setEmail($args["user"]["email"]);
+            }
+
+            $this->em->flush();
+
+            return $user;
         }
-
-        if(!empty($args["user"]["password"]))
-        {
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $args["user"]["password"]
-            ));
-        }
-
-        if(!empty($args["user"]["email"]))
-        {
-            $user->setEmail($args["user"]["email"]);
-        }
-
-        $this->em->flush();
-
-        return $user;
+        return null;
     }
     /*
     mutation {
@@ -107,9 +110,7 @@ class UserMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-      deleteUser(id: 2) {
-        id
-      }
+      deleteUser(id: 2)
     }
     */    
 

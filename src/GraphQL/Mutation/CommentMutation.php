@@ -49,16 +49,18 @@ class CommentMutation implements MutationInterface, AliasedInterface
 */
     public function update(Argument $args)
     {
-        $post = $this->em->getRepository(Comment::class)->find($args["id"]);
-
-        if(!empty($args["comment"]["content"]))
+        $comment = $this->em->getRepository(Comment::class)->find($args["id"]);
+        if(!empty($comment) && $comment->getAvailable())
         {
-            $post->setContent($args["comment"]["content"]);
+            if(!empty($args["comment"]["content"]))
+            {
+                $comment->setContent($args["comment"]["content"]);
+            }
+            $this->em->flush();
+
+            return $comment;
         }
-
-        $this->em->flush();
-
-        return $post;
+        return null;
 
     }
     /*
@@ -87,14 +89,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteComment(id: 5) {
-    id
-    content
-    poster {
-      id
-      userName
-    }
-  }
+  deleteComment(id: 5)
 }
 */
 

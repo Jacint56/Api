@@ -52,20 +52,23 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
-
-        if(!empty($args["post"]["content"]))
+        if(!empty($post) && $post->getAvailable())
         {
-            $post->setContent($args["post"]["content"]);
+            if(!empty($args["post"]["content"]))
+            {
+                $post->setContent($args["post"]["content"]);
+            }
+
+            if(!empty($args["post"]["title"]))
+            {
+                $post->setTitle($args["post"]["title"]);
+            }
+
+            $this->em->flush();
+
+            return $post;
         }
-
-        if(!empty($args["post"]["title"]))
-        {
-            $post->setTitle($args["post"]["title"]);
-        }
-
-        $this->em->flush();
-
-        return $post;
+        return null;
 
     }
     /*
@@ -96,9 +99,7 @@ class PostMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deletePost(id: 2) {
-    id
-  }
+  deletePost(id: 2)
 }
 */
 

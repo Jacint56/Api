@@ -63,13 +63,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteFriendship(id: 1) {
-    id
-    user {
-      id
-    }
-    status
-  }
+  deleteFriendship(id: 1)
 }
 
 */
