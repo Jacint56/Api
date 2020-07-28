@@ -54,25 +54,28 @@ class RoomMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $room = $this->em->getRepository(Room::class)->find($args["id"]);
-
-        if(!empty($args["room"]["game"]))
+        if(!empty($category) && $category->getAvailable())
         {
-            $room->setGame($this->em->getRepository(Game::class)->find($args["room"]["game"]));
+            if(!empty($args["room"]["game"]))
+            {
+                $room->setGame($this->em->getRepository(Game::class)->find($args["room"]["game"]));
+            }
+
+            if(!empty($args["room"]["name"]))
+            {
+                $room->setName($args["room"]["name"]);
+            }
+
+            if(!empty($args["room"]["isPrivate"]))
+            {
+                $room->setIsPrivate($args["room"]["isPrivate"]);
+            }
+
+            $this->em->flush();
+
+            return $room;
         }
-
-        if(!empty($args["room"]["name"]))
-        {
-            $room->setName($args["room"]["name"]);
-        }
-
-        if(!empty($args["room"]["isPrivate"]))
-        {
-            $room->setIsPrivate($args["room"]["isPrivate"]);
-        }
-
-        $this->em->flush();
-
-        return $room;
+        return null;
 
     }
     /*
@@ -101,9 +104,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteRoom(id: 9) {
-    id
-  }
+  deleteRoom(id: 9)
 }
 */
 

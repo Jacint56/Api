@@ -4,7 +4,6 @@ namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
 use App\Entity\Post;
-use App\GraphQL\Resolver\CategoryResolver;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -14,7 +13,7 @@ class PostMutation implements MutationInterface, AliasedInterface
 {
     private $em;
 
-    public function __construct(EntityManager $em, CategoryResolver $categoryResolver)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
@@ -52,20 +51,23 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
-
-        if(!empty($args["post"]["content"]))
+        if(!empty($post) && $post->getAvailable())
         {
-            $post->setContent($args["post"]["content"]);
+            if(!empty($args["post"]["content"]))
+            {
+                $post->setContent($args["post"]["content"]);
+            }
+
+            if(!empty($args["post"]["title"]))
+            {
+                $post->setTitle($args["post"]["title"]);
+            }
+
+            $this->em->flush();
+
+            return $post;
         }
-
-        if(!empty($args["post"]["title"]))
-        {
-            $post->setTitle($args["post"]["title"]);
-        }
-
-        $this->em->flush();
-
-        return $post;
+        return null;
 
     }
     /*
@@ -96,9 +98,7 @@ class PostMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deletePost(id: 2) {
-    id
-  }
+  deletePost(id: 2)
 }
 */
 

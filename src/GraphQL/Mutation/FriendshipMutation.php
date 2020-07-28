@@ -4,7 +4,6 @@ namespace App\GraphQL\Mutation;
 
 use App\Entity\Friendship;
 use App\Entity\User;
-use App\GraphQL\Resolver\FriendshipResolver;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -63,13 +62,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteFriendship(id: 1) {
-    id
-    user {
-      id
-    }
-    status
-  }
+  deleteFriendship(id: 1)
 }
 
 */
