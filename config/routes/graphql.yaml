@@ -1,4 +1,2 @@
 overblog_graphql_endpoint:
     resource: "@OverblogGraphQLBundle/Resources/config/routing/graphql.yml"
-api_login_check:
-    path: /api/login_check

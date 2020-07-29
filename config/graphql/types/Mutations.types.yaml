@@ -127,3 +127,10 @@ Mutation:
                 resolve: "@=mutation('deleteFriendship', [args])"
                 args:
                     id: ID!
+
+            login:
+                type: "String"
+                resolve: "@=mutation('login', [args])"
+                args:
+                    password: String
+                    userName: String
