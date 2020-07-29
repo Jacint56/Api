@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Exception;
 
 class GameMutation implements MutationInterface, AliasedInterface
 {
@@ -65,7 +66,7 @@ class GameMutation implements MutationInterface, AliasedInterface
 
             return $game;
         }
-        return null;
+        throw new Exception("");
 
     }
     /*
@@ -92,7 +93,7 @@ mutation {
             $this->em->flush();
             return true;
         }
-        return false;
+        throw new Exception("");
     }
     /*
     mutation {
