@@ -3,12 +3,12 @@
 namespace App\GraphQL\Mutation;
 
 use App\Entity\Category;
+use Doctrine\DBAL\Exception\ServerException as ExceptionServerException;
 use Doctrine\ORM\EntityManager;
-use ErrorException;
-use Exception;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpClient\Exception\ServerException;
 
 class CategoryMutation implements MutationInterface, AliasedInterface
@@ -50,7 +50,8 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return $category;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
+
     }
     /*
     mutation {
@@ -70,7 +71,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
     }
     /*
     mutation {

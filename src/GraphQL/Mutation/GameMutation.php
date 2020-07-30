@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Exception;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class GameMutation implements MutationInterface, AliasedInterface
 {
@@ -66,7 +66,7 @@ class GameMutation implements MutationInterface, AliasedInterface
 
             return $game;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
 
     }
     /*
@@ -93,7 +93,7 @@ mutation {
             $this->em->flush();
             return true;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
     }
     /*
     mutation {

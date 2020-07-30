@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Exception;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class RoomMutation implements MutationInterface, AliasedInterface
 {
@@ -76,7 +76,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
 
             return $room;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
 
     }
     /*
@@ -101,7 +101,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new Exception("");
+        throw new InternalErrorException();
     }
     /*
     mutation {

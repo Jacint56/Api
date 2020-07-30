@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserMutation implements MutationInterface, AliasedInterface
@@ -80,7 +79,7 @@ class UserMutation implements MutationInterface, AliasedInterface
 
             return $user;
         }
-        throw new Exception("");
+        return null;
     }
     /*
     mutation {
@@ -103,7 +102,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new Exception("");
+        return false;
     }
     /*
     mutation {
