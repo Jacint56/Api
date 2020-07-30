@@ -2,13 +2,13 @@
 
 namespace App\GraphQL\Mutation;
 
-use App\Entity\Game;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class UserMutation implements MutationInterface, AliasedInterface
 {
@@ -79,7 +79,7 @@ class UserMutation implements MutationInterface, AliasedInterface
 
             return $user;
         }
-        return null;
+        throw new InternalErrorException();
     }
     /*
     mutation {
@@ -102,7 +102,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        return false;
+        throw new InternalErrorException();
     }
     /*
     mutation {
