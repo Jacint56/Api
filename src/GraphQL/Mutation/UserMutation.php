@@ -45,7 +45,7 @@ class UserMutation implements MutationInterface, AliasedInterface
         }
         else
         {
-            return false;
+            throw new \GraphQL\Error\UserError('Fuck you');
         }
     }
     /*
@@ -83,13 +83,13 @@ class UserMutation implements MutationInterface, AliasedInterface
             }
             else
             {
-                return null;
+                throw new \GraphQL\Error\UserError('Fuck you');
             }
             $this->em->flush();
 
             return $user;
         }
-        return null;
+        throw new \GraphQL\Error\UserError('Fuck you');
     }
     /*
     mutation {
