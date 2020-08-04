@@ -2,13 +2,14 @@
 
 namespace App\GraphQL\Mutation;
 
+use App\Entity\Game;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class UserMutation implements MutationInterface, AliasedInterface
 {
@@ -23,22 +24,29 @@ class UserMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        $user = new User();
-        $user->setUsername($args["user"]["userName"]);
-        $user->setEmail($args["user"]["email"]);
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            $args["user"]["password"]
-        ));
+        $registering = $this->em->getRepository(User::class)->find($args["user"]["email"]);
+        if (!empty($registering["user"]["email"])) {
+            $user = new User();
+            $user->setUsername($args["user"]["userName"]);
+            $user->setEmail($args["user"]["email"]);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                $args["user"]["password"]
+            ));
 
-        $user->setRoles(['User']);
-        $user->setAvailable(true);
+            $user->setRoles(['User']);
+            $user->setAvailable(true);
 
 
-        $this->em->persist($user);
-        $this->em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
-        return $user;
+            return $user;
+        }
+        else
+        {
+            return false;
+        }
     }
     /*
     mutation {
@@ -69,17 +77,19 @@ class UserMutation implements MutationInterface, AliasedInterface
                     $args["user"]["password"]
                 ));
             }
-
-            if(!empty($args["user"]["email"]))
+            if(!empty($args["user"]["email"]) && !empty($this->em->getRepository(User::class)->find($args["user"]["email"])["user"]["email"]))
             {
                 $user->setEmail($args["user"]["email"]);
             }
-
+            else
+            {
+                return null;
+            }
             $this->em->flush();
 
             return $user;
         }
-        throw new InternalErrorException();
+        return null;
     }
     /*
     mutation {
@@ -102,7 +112,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new InternalErrorException();
+        return false;
     }
     /*
     mutation {
