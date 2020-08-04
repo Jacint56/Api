@@ -24,10 +24,10 @@ class UserMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        $registering = $this->em->getRepository(User::class)->find($args["user"]["email"]);
-        $registerin = $this->em->getRepository(User::class)->find($args["user"]["userName"]);
-        if (!empty($registering["user"]["userName"])) {
-            if (!empty($registering["user"]["email"])) {
+        $registering_email = $this->em->getRepository(User::class)->find($args["user"]["email"]);
+        $registering_name = $this->em->getRepository(User::class)->find($args["user"]["userName"]);
+        if (!empty($registering_name["user"]["userName"])) {
+            if (!empty($registering_email["user"]["email"])) {
                 $user = new User();
                 $user->setUsername($args["user"]["userName"]);
                 $user->setEmail($args["user"]["email"]);
