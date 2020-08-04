@@ -2,20 +2,30 @@
 
 namespace App\GraphQL\Mutation;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\GraphQL\Resolver\UserResolver;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class Login implements MutationInterface, AliasedInterface
 {
     private $em;
+    private $jwtManager;
+    private $passwordEncoder;
 
-    public function __construct(EntityManager $em)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManager $em, JWTTokenManagerInterface $jwtManager)
     {
         $this->em = $em;
+        $this->jwtManager = $jwtManager;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function login(Argument $args)
@@ -40,7 +50,7 @@ class Login implements MutationInterface, AliasedInterface
         $output = curl_exec($ch);
         curl_close ($ch);
         return $output;*/
-
+/*
         $client = HttpClient::create([
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -57,8 +67,54 @@ class Login implements MutationInterface, AliasedInterface
             ]
         );
         $content = $response->getContent();
-        return $content;
-
+        return $content;*/
+/*
+        $curl = curl_init();
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => "http://localhost/api/login_check",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS =>"{\r\n    \"username\": \"János\",\r\n    \"password\": \"asd\"\r\n}",
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: application/json"
+                ),
+            )
+        );
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+        */
+//        $JWTManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
+//        $where = array();
+  //      $where["userName"] = $args["userName"];
+  /*
+        $users = $this->em->getRepository(User::class)->findBy(
+            Array("userName" => $args["userName"])
+        );
+        $user = $users[0];
+        */
+        $user = $this->em->getRepository(User::class)->find(6);
+        if($user->getAvailable())
+        {
+            /*
+            $password = $this->passwordEncoder->encodePassword(
+                $user,
+                $args["password"]
+            );
+            */
+//            if($user->getPassword() == $password)
+            if($this->passwordEncoder->isPasswordValid($user, $args["password"]))
+            {
+                return $this->jwtManager->create($user);
+            }
+        }
     }
 
     public static function getAliases(): array
