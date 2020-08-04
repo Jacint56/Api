@@ -25,28 +25,32 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function create(Argument $args)
     {
         $registering = $this->em->getRepository(User::class)->find($args["user"]["email"]);
-        if (!empty($registering["user"]["email"])) {
-            $user = new User();
-            $user->setUsername($args["user"]["userName"]);
-            $user->setEmail($args["user"]["email"]);
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $args["user"]["password"]
-            ));
+        $registerin = $this->em->getRepository(User::class)->find($args["user"]["userName"]);
+        if (!empty($registering["user"]["userName"])) {
+            if (!empty($registering["user"]["email"])) {
+                $user = new User();
+                $user->setUsername($args["user"]["userName"]);
+                $user->setEmail($args["user"]["email"]);
+                $user->setPassword($this->passwordEncoder->encodePassword(
+                    $user,
+                    $args["user"]["password"]
+                ));
 
-            $user->setRoles(['User']);
-            $user->setAvailable(true);
+                $user->setRoles(['User']);
+                $user->setAvailable(true);
 
 
-            $this->em->persist($user);
-            $this->em->flush();
+                $this->em->persist($user);
+                $this->em->flush();
 
-            return $user;
+                return $user;
+            }
+            else {
+                throw new \GraphQL\Error\UserError('This email is exist!');
+            }
         }
         else
-        {
-            throw new \GraphQL\Error\UserError('This email is exist!');
-        }
+        {throw new \GraphQL\Error\UserError('This username is exist!');}
     }
     /*
     mutation {
