@@ -21,10 +21,14 @@ class GameMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["game"]["name"])))) {
-            throw new \GraphQL\Error\UserError('This game does exist!');
+        if (!empty($this->em->getRepository(Game::class)->findBy(Array(
+            "name" => $args["game"]["name"]
+        ))))
+        {
+            throw new \GraphQL\Error\Error('This game exists!');
             exit();
-        } else {
+        }
+        else {
             $game = new Game();
             $game->setName($args["game"]["name"]);
             $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
@@ -59,12 +63,17 @@ class GameMutation implements MutationInterface, AliasedInterface
         {
             if(!empty($args["game"]["name"]))
             {
-              if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["game"]["name"])))) {
-                throw new \GraphQL\Error\UserError('This game does exist!');
-                exit();
-              } else {
-                  $game->setName($args["game"]["name"]);
-              }
+                if (!empty($this->em->getRepository(Game::class)->findBy(Array(
+                        "name" => $args["game"]["name"]
+                ))))
+                {
+                    throw new \GraphQL\Error\Error('This game exists!');
+                    exit();
+                }
+                else
+                {
+                    $game->setName($args["game"]["name"]);
+                }
             }
 
             if(!empty($args["game"]["category"]))
@@ -76,7 +85,7 @@ class GameMutation implements MutationInterface, AliasedInterface
 
             return $game;
         }
-        throw new \GraphQL\Error\Error('Something is wrong');
+        throw new \GraphQL\Error\Error('This game is unavailable!');
 
     }
     /*
@@ -103,7 +112,7 @@ mutation {
             $this->em->flush();
             return true;
         }
-        throw new \GraphQL\Error\Error('Shit! Something is wrong');
+        throw new \GraphQL\Error\Error('This game does not exist!');
     }
     /*
     mutation {

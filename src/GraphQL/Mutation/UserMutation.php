@@ -28,29 +28,28 @@ class UserMutation implements MutationInterface, AliasedInterface
             throw new \GraphQL\Error\UserError('This username is exist!');
             exit();
         }
+
         if (!empty($this->em->getRepository(User::class)->findBy(Array("email"=>$args["user"]["email"])))) {
             throw new \GraphQL\Error\UserError('This email is exist!');
             exit();
         }
-        else
-        {
-            $user = new User();
-            $user->setUsername($args["user"]["userName"]);
-            $user->setEmail($args["user"]["email"]);
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $args["user"]["password"]
-            ));
+        $user = new User();
+        $user->setUsername($args["user"]["userName"]);
+        $user->setEmail($args["user"]["email"]);
+        $user->setPassword($this->passwordEncoder->encodePassword(
+            $user,
+            $args["user"]["password"]
+        ));
 
-            $user->setRoles(['User']);
-            $user->setAvailable(true);
+        $user->setRoles(['User']);
+        $user->setAvailable(true);
 
 
-            $this->em->persist($user);
-            $this->em->flush();
+        $this->em->persist($user);
+        $this->em->flush();
 
-            return $user;
-        }
+            
+        return $user;
 
     }
     /*
@@ -75,29 +74,25 @@ class UserMutation implements MutationInterface, AliasedInterface
             throw new \GraphQL\Error\UserError('This email is exist!');
             exit();
         }
-        else
-        {
-            $user = $this->em->getRepository(User::class)->find($args["id"]);
-            if (!empty($user) && $user->getAvailable()) {
-                if (!empty($args["user"]["userName"])) {
-                    $user->setUsername($args["user"]["userName"]);
-                }
-
-                if (!empty($args["user"]["password"])) {
-                    $user->setPassword($this->passwordEncoder->encodePassword(
-                        $user,
-                        $args["user"]["password"]
-                    ));
-                }
-                if (!empty($args["user"]["email"])) {
-                    $user->setEmail($args["user"]["email"]);
-                }
-                $this->em->flush();
-
-                return $user;
+        $user = $this->em->getRepository(User::class)->find($args["id"]);
+        if (!empty($user) && $user->getAvailable()) {
+            if (!empty($args["user"]["userName"])) {
+                $user->setUsername($args["user"]["userName"]);
             }
-            throw new \GraphQL\Error\Error('This user does not exist!');
+
+            if (!empty($args["user"]["password"])) {
+                $user->setPassword($this->passwordEncoder->encodePassword(
+                    $user,
+                    $args["user"]["password"]
+                ));
+            }
+            if (!empty($args["user"]["email"])) {
+                $user->setEmail($args["user"]["email"]);
+            }
+            $this->em->flush();
+            return $user;
         }
+        throw new \GraphQL\Error\Error('This user does not exist!');
     }
     /*
     mutation {
