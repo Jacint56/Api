@@ -51,6 +51,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
         $where["available"] = true;
 
+
         if(!empty($args["name"]))
         {
             $where["name"] = $args["name"];
@@ -68,19 +69,30 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
                 $column = $args["column"];
             }
         }
-        
-        $categories = $this->paginator->paginate(
-            $this->em->getRepository(Category::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $categories = $this->em->getRepository(Category::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $categories,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "categories" => $categories,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "categories" => $categories,
-            "total" =>$categories->getTotalItemCount()
+            "categories" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*
