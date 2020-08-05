@@ -94,13 +94,12 @@ class Login implements MutationInterface, AliasedInterface
 //        $JWTManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
 //        $where = array();
   //      $where["userName"] = $args["userName"];
-  /*
+        $users = Array();
         $users = $this->em->getRepository(User::class)->findBy(
             Array("userName" => $args["userName"])
         );
         $user = $users[0];
-        */
-        $user = $this->em->getRepository(User::class)->find(6);
+//        $user = $this->em->getRepository(User::class)->find($args["userName"]);
         if($user->getAvailable())
         {
             /*
