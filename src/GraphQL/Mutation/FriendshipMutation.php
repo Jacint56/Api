@@ -24,7 +24,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
         $friendship = new Friendship();
         $friendship->setSender($this->em->getRepository(User::class)->find($args["friendship"]["sender"]));
         $friendship->setReciver($this->em->getRepository(User::class)->find($args["friendship"]["reciver"]));
-        $friendship->setStatus($args["friendship"]["status"]);
+        $friendship->setStatus(false);
 
         $friendship->setAvailable(true);
 
@@ -48,6 +48,17 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
 }
 
 */
+    public function accept(Argument $args)
+    {
+        $friendship = $this->em->getRepository(Friendship::class)->find($args["id"]);
+        
+        if($friendship->getAvailable())
+        {
+            $friendship->setStatus(true);
+            $this->em->flush();
+            return $friendship;
+        }
+    }
 
    
     public function delete(Argument $args)
@@ -72,6 +83,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     {
         return array(
             "create" => "createFriendship",
+            "accept" => "acceptFriendship",
             "delete" => "deleteFriendship"
             );
     }

@@ -127,3 +127,9 @@ Mutation:
                 resolve: "@=mutation('deleteFriendship', [args])"
                 args:
                     id: ID!
+
+            acceptFriendship:
+                type: "Friendship"
+                resolve: "@=mutation('acceptFriendship', [args])"
+                args:
+                    id: ID!

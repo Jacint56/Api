@@ -21,4 +21,3 @@ FriendshipInput:
         fields:
             sender: Int
             reciver: Int
-            status: Boolean
