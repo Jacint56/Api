@@ -60,7 +60,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
 
             return $comment;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
 
     }
     /*
@@ -85,7 +85,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
     }
     /*
     mutation {

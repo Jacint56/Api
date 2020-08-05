@@ -55,7 +55,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $room = $this->em->getRepository(Room::class)->find($args["id"]);
-        if(!empty($category) && $category->getAvailable())
+        if(!empty($room) && $room->getAvailable())
         {
             if(!empty($args["room"]["game"]))
             {
@@ -76,7 +76,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
 
             return $room;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
 
     }
     /*
@@ -101,7 +101,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
     }
     /*
     mutation {

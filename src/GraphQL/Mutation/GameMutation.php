@@ -66,7 +66,7 @@ class GameMutation implements MutationInterface, AliasedInterface
 
             return $game;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
 
     }
     /*
@@ -93,7 +93,7 @@ mutation {
             $this->em->flush();
             return true;
         }
-        throw new InternalErrorException();
+        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
     }
     /*
     mutation {
