@@ -61,7 +61,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             return $category;
           }
         }
-        throw new \GraphQL\Error\Error('Something is wrong or invalid!');
+        throw new \GraphQL\Error\Error('This category does not exist!');
 
     }
     /*

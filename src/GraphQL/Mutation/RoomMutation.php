@@ -76,7 +76,7 @@ class RoomMutation implements MutationInterface, AliasedInterface
 
             return $room;
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\Error('Shit! Something is wrong');
 
     }
     /*
