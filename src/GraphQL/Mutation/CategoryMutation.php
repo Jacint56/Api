@@ -61,7 +61,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             return $category;
           }
         }
-        throw new \GraphQL\Error\UserError('Something is wrong or invalid!');
+        throw new \GraphQL\Error\Error('Something is wrong or invalid!');
 
     }
     /*
@@ -82,7 +82,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new \GraphQL\Error\UserError('Something is wrong!');
+        throw new \GraphQL\Error\Error('Something is wrong!');
     }
     /*
     mutation {

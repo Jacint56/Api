@@ -98,7 +98,7 @@ class UserMutation implements MutationInterface, AliasedInterface
 
                 return $user;
             }
-            throw new \GraphQL\Error\UserError('This ID does not exist!');
+            throw new \GraphQL\Error\Error('This user does not exist!');
         }
     }
     /*
