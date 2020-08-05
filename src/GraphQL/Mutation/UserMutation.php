@@ -98,7 +98,7 @@ class UserMutation implements MutationInterface, AliasedInterface
 
                 return $user;
             }
-            throw new \GraphQL\Error\UserError('This user does not exist!');
+            throw new \GraphQL\Error\UserError('This ID does not exist!');
         }
     }
     /*
@@ -116,6 +116,7 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $user = $this->em->getRepository(User::class)->find($args["id"]);
+
         if(!empty($user) && $user->getAvailable())
         {
             $user->setAvailable(false);
