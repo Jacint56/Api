@@ -89,7 +89,7 @@ class UserMutation implements MutationInterface, AliasedInterface
                         $args["user"]["password"]
                     ));
                 }
-                if (!empty($args["user"]["email"]) && !empty($this->em->getRepository(User::class)->find($args["user"]["email"])["user"]["email"])) {
+                if (!empty($args["user"]["email"]) && empty($this->em->getRepository(User::class)->findBy(Array("email"=>$args["user"]["email"])))) {
                     $user->setEmail($args["user"]["email"]);
                 } else {
                     throw new \GraphQL\Error\UserError('This email is exist!');
