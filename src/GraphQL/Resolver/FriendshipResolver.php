@@ -79,7 +79,7 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
         {
             $sender["sender"]["id"] = $args["user"];
             $reciver["reciver"]["id"] = $args["user"];
-            $friendship = $this->paginator->paginate(
+            $friendship = 
                 array_merge(
                     $this->em->getRepository(Friendship::class)->findBy(
                         array_merge(
@@ -95,26 +95,38 @@ class FriendshipResolver implements ResolverInterface, AliasedInterface
                         ),
                         array($column => $order)
                     )
-                ),
-                $args["page"],
-                $args["limit"]
-            );
+                )
+            ;
         }
         else
         {
-            $friendship = $this->paginator->paginate(
+            $friendship = 
                 $this->em->getRepository(Friendship::class)->findBy(
                     $where,
                     array($column => $order)
-                ),
-                $args["page"],
-                $args["limit"]
-            );
+                )
+            ;
         }
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $friendship,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "friendship" => $friendship,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "friendship" => $friendship,
-            "total" =>$friendship->getTotalItemCount()
+            "friendship" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*

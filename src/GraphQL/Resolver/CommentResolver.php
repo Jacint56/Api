@@ -80,18 +80,30 @@ class CommentResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $comments = $this->paginator->paginate(
-            $this->em->getRepository(Comment::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $comments = $this->em->getRepository(Comment::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $comments,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "comments" => $comments,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "comments" => $comments,
-            "total" =>$comments->getTotalItemCount()
+            "comments" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*

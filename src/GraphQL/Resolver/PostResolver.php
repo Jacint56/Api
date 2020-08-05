@@ -78,19 +78,30 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $column = $args["column"];
             }
         }
-        
-        $posts = $this->paginator->paginate(
-            $this->em->getRepository(Post::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $posts = $this->em->getRepository(Post::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $posts,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "posts" => $posts,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "posts" => $posts,
-            "total" =>$posts->getTotalItemCount()
+            "posts" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*

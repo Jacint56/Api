@@ -73,18 +73,30 @@ class RoomResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $rooms = $this->paginator->paginate(
-            $this->em->getRepository(Room::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $rooms = $this->em->getRepository(Room::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $rooms,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "rooms" => $rooms,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "rooms" => $rooms,
-            "total" =>$rooms->getTotalItemCount()
+            "rooms" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*

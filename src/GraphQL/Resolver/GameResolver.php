@@ -80,18 +80,30 @@ class GameResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $games = $this->paginator->paginate(
-            $this->em->getRepository(Game::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $games = $this->em->getRepository(Category::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $games,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "games" => $games,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "games" => $games,
-            "total" =>$games->getTotalItemCount()
+            "games" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
     /*

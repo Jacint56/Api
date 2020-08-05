@@ -87,18 +87,30 @@ class UserResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $users = $this->paginator->paginate(
-            $this->em->getRepository(User::class)->findBy(
-                $where,
-                array($column => $order)
-            ),
-            $args["page"],
-            $args["limit"]
+        $users = $this->em->getRepository(User::class)->findBy(
+            $where,
+            array($column => $order)
         );
-        
+        $limit = $args["limit"];
+        if($args["limit"] == 0)
+        {
+            $limit = 1;
+        }
+        $result = $this->paginator->paginate(
+            $users,
+            $args["page"],
+            $limit
+        );
+        if($args["limit"] == 0)
+        {
+            return [
+                "users" => $users,
+                "total" => $result->getTotalItemCount()
+            ];
+        }
         return [
-            "users" => $users,
-            "total" =>$users->getTotalItemCount()
+            "users" => $result,
+            "total" => $result->getTotalItemCount()
         ];
     }
 
