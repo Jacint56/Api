@@ -70,7 +70,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('Something is wrong');
     }
     /*
     mutation {

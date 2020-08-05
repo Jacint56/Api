@@ -21,15 +21,20 @@ class GameMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        $game = new Game();
-        $game->setName($args["game"]["name"]);
-        $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
-        $game->setAvailable(true);
+        if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["game"]["name"])))) {
+            throw new \GraphQL\Error\UserError('This game does exist!');
+            exit();
+        } else {
+            $game = new Game();
+            $game->setName($args["game"]["name"]);
+            $game->setCategory($this->em->getRepository(Category::class)->find($args["game"]["category"]));
+            $game->setAvailable(true);
         
-        $this->em->persist($game);
-        $this->em->flush();
+            $this->em->persist($game);
+            $this->em->flush();
 
-        return $game;
+            return $game;
+        }
     }
     /*
     mutation {
@@ -54,7 +59,12 @@ class GameMutation implements MutationInterface, AliasedInterface
         {
             if(!empty($args["game"]["name"]))
             {
-                $game->setName($args["game"]["name"]);
+              if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["game"]["name"])))) {
+                throw new \GraphQL\Error\UserError('This game does exist!');
+                exit();
+              } else {
+                  $game->setName($args["game"]["name"]);
+              }
             }
 
             if(!empty($args["game"]["category"]))
@@ -66,7 +76,7 @@ class GameMutation implements MutationInterface, AliasedInterface
 
             return $game;
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('Something is wrong');
 
     }
     /*
