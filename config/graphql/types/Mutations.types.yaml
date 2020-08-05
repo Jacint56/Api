@@ -133,3 +133,10 @@ Mutation:
                 resolve: "@=mutation('acceptFriendship', [args])"
                 args:
                     id: ID!
+
+            login:
+                type: "String"
+                resolve: "@=mutation('login', [args])"
+                args:
+                    password: String
+                    userName: String
