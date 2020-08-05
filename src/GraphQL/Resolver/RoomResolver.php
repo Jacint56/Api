@@ -53,7 +53,7 @@ class RoomResolver implements ResolverInterface, AliasedInterface
         $order = "ASC";
 
         $where["available"] = true;
-        $where["isPrivate"] = false;
+        //$where["isPrivate"] = false;
 
         if(!empty($args["name"]))
         {

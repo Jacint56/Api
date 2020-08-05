@@ -8,7 +8,7 @@ Room:
                 type: String
             game: "Game"
             name: String
-
+            isPrivate: Int
 RoomCollection:
     type: object
     config:
