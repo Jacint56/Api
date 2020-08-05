@@ -22,14 +22,19 @@ class CategoryMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        $category = new Category();
-        $category->setName($args["category"]["name"]);
-        $category->setAvailable(true);
+        if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["category"]["name"])))) {
+            throw new \GraphQL\Error\UserError('This category does exist!');
+            exit();
+        } else {
+            $category = new Category();
+            $category->setName($args["category"]["name"]);
+            $category->setAvailable(true);
 
-        $this->em->persist($category);
-        $this->em->flush();
+            $this->em->persist($category);
+            $this->em->flush();
 
-        return $category;
+            return $category;
+        }
     }
     /*
     mutation {
@@ -43,14 +48,20 @@ class CategoryMutation implements MutationInterface, AliasedInterface
 
     public function update(Argument $args)
     {
+      
         $category = $this->em->getRepository(Category::class)->find($args["id"]);
         if(!empty($category) && $category->getAvailable())
         {
+          if (!empty($this->em->getRepository(Category::class)->findBy(array("name"=>$args["category"]["name"])))) {
+            throw new \GraphQL\Error\UserError('This category does exist!');
+            exit();
+          } else {
             $category->setName($args["category"]["name"]);
             $this->em->flush();
             return $category;
+          }
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('Something is wrong or invalid!');
 
     }
     /*
@@ -71,7 +82,7 @@ class CategoryMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('Something is wrong!');
     }
     /*
     mutation {
