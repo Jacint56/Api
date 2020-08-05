@@ -121,7 +121,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        return false;
+        throw new \GraphQL\Error\Error('Error!');
     }
     /*
     mutation {
