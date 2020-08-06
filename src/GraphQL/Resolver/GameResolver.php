@@ -80,7 +80,7 @@ class GameResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $games = $this->em->getRepository(Category::class)->findBy(
+        $games = $this->em->getRepository(Game::class)->findBy(
             $where,
             array($column => $order)
         );
