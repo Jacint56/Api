@@ -6,7 +6,7 @@ Friendship:
                 type: ID
             sender: "User"
             reciver: "User"
-            status: Int
+            status: Boolean
 
 FriendshipCollection:
     type: object

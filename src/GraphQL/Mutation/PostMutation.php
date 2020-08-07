@@ -69,7 +69,7 @@ class PostMutation implements MutationInterface, AliasedInterface
             return $post;
         }
         return null;
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('This post does not exist or it was removed!');
     }
     /*
     mutation {
@@ -95,7 +95,7 @@ class PostMutation implements MutationInterface, AliasedInterface
             $this->em->flush();
             return true;
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('');
     }
     /*
     mutation {
@@ -112,3 +112,4 @@ class PostMutation implements MutationInterface, AliasedInterface
             );
     }
 }
+
