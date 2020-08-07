@@ -52,15 +52,20 @@ class CommentMutation implements MutationInterface, AliasedInterface
         $comment = $this->em->getRepository(Comment::class)->find($args["id"]);
         if(!empty($comment) && $comment->getAvailable())
         {
-            if(!empty($args["comment"]["content"]))
-            {
-                $comment->setContent($args["comment"]["content"]);
-            }
-            $this->em->flush();
+          if ($this->em->getRepository(User::class)->find($args["editor"])==$comment->getPoster()) {
+              if (!empty($args["comment"]["content"])) {
+                  $comment->setContent($args["comment"]["content"]);
+              }
+              $this->em->flush();
 
-            return $comment;
+              return $comment;
+          }
+          else
+          {
+            throw new \GraphQL\Error\UserError('Error! This comment is not yours!');
+          }
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('This comment does not exist or it was removed!');
 
     }
     /*

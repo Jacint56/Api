@@ -109,6 +109,7 @@ Mutation:
                 resolve: "@=mutation('updateComment', [args])"
                 args:
                     comment: "CommentInput"
+                    editor: ID!
                     id: ID!
 
             deleteComment:
