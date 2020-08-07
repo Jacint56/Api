@@ -49,7 +49,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
               }
               else
               {
-                throw new \GraphQL\Error\Error("You are friends or this user sent to you a request!");
+                throw new \GraphQL\Error\Error("You are friends or this user sent a request to you!");
               }
         }
         else
