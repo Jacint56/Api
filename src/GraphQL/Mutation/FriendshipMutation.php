@@ -22,30 +22,55 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     public function create(Argument $args)
     {
         $friendship = new Friendship();
-        $friendship->setSender($this->em->getRepository(User::class)->find($args["friendship"]["sender"]));
-        $friendship->setReciver($this->em->getRepository(User::class)->find($args["friendship"]["reciver"]));
-        $friendship->setStatus(false);
+        if (!((int)$args["friendship"]["sender"] == (int)$args["friendship"]["reciver"])) {
+          if (empty($this->em->getRepository(Friendship::class)->
+              findby(
+                array(
+                  "sender"=>$args["friendship"]["sender"],
+                  "reciver"=>$args["friendship"]["reciver"],
+                  "available"=>true)))&&
+              empty($this->em->getRepository(Friendship::class)->
+              findby(
+                array(
+                  "reciver"=>$args["friendship"]["sender"],
+                  "sender"=>$args["friendship"]["reciver"],
+                  "available"=>true)))
+            ) {
+                    $friendship->setSender($this->em->getRepository(User::class)->find($args["friendship"]["sender"]));
+                    $friendship->setReciver($this->em->getRepository(User::class)->find($args["friendship"]["reciver"]));
+                    $friendship->setStatus(false);
 
-        $friendship->setAvailable(true);
+                    $friendship->setAvailable(true);
 
-        $this->em->persist($friendship);
-        $this->em->flush();
+                    $this->em->persist($friendship);
+                    $this->em->flush();
 
-        return $friendship;
+                    return $friendship;
+              }
+              else
+              {
+                throw new \GraphQL\Error\Error("You are friends or this user sent to you a request!");
+              }
+        }
+        else
+        {
+            throw new \GraphQL\Error\Error('You cannot send a friend request to yourself!');
+        }
     }
     /*
     mutation {
-  createFriendship(friendship: {user1: 2, user2: 5, status: true}) {
+  createFriendship(friendship: {sender: 4, reciver: 2}) {
     id
-    user1 {
+    sender {
       id
     }
-    user2 {
+    reciver {
       id
     }
     status
   }
 }
+
 
 */
     public function accept(Argument $args)
@@ -59,8 +84,21 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
             return $friendship;
         }
     }
-
-   
+    /*
+    mutation{
+      acceptFriendship(id:13)
+      {
+        sender {
+          id
+        }
+        id
+        reciver {
+          id
+        }
+      }
+    }
+   */
+  
     public function delete(Argument $args)
     {
         $friendship = $this->em->getRepository(Friendship::class)->find($args["id"]);
