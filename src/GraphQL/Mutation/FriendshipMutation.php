@@ -22,7 +22,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
     public function create(Argument $args)
     {
         $friendship = new Friendship();
-        if (!((int)$args["friendship"]["sender"] == (int)$args["friendship"]["reciver"])) {
+        if ($args["friendship"]["sender"] != $args["friendship"]["reciver"]) {
           if (empty($this->em->getRepository(Friendship::class)->
               findby(
                 array(
@@ -98,7 +98,7 @@ class FriendshipMutation implements MutationInterface, AliasedInterface
       }
     }
    */
-  
+
     public function delete(Argument $args)
     {
         $friendship = $this->em->getRepository(Friendship::class)->find($args["id"]);
