@@ -74,7 +74,7 @@ class PostMutation implements MutationInterface, AliasedInterface
           }
         }
         //return null;
-        throw new \GraphQL\Error\UserError('This post does not exist or it was removed!');
+        throw new \GraphQL\Error\UserError('This post does not exist');
     }
     /*
     mutation {
