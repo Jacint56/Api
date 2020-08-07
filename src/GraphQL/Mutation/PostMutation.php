@@ -22,7 +22,7 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function create(Argument $args)
     {
         $post = new Post();
-
+        //$post->setPoster
         $post->setTitle($args["post"]["title"]);
         $post->setPoster($this->em->getRepository(User::class)->find($args["post"]["poster"]));
         $post->setContent($args["post"]["content"]);
@@ -52,23 +52,28 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
+        
         if(!empty($post) && $post->getAvailable())
         {
-            if(!empty($args["post"]["content"]))
-            {
-                $post->setContent($args["post"]["content"]);
-            }
+          if ($this->em->getRepository(User::class)->find($args["editor"])==$post->getPoster()) {
+              if (!empty($args["post"]["content"])) {
+                  $post->setContent($args["post"]["content"]);
+              }
 
-            if(!empty($args["post"]["title"]))
-            {
-                $post->setTitle($args["post"]["title"]);
-            }
+              if (!empty($args["post"]["title"])) {
+                  $post->setTitle($args["post"]["title"]);
+              }
 
-            $this->em->flush();
+              $this->em->flush();
 
-            return $post;
+              return $post;
+          }
+          else
+          {
+            throw new \GraphQL\Error\UserError('This post is not yours!');
+          }
         }
-        return null;
+        //return null;
         throw new \GraphQL\Error\UserError('This post does not exist or it was removed!');
     }
     /*

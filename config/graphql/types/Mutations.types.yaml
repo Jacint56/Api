@@ -89,6 +89,7 @@ Mutation:
                 resolve: "@=mutation('updatePost', [args])"
                 args:
                     post: "PostInput"
+                    editor: ID!
                     id: ID!
 
             deletePost:
