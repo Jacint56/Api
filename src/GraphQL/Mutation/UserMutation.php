@@ -41,7 +41,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $args["user"]["password"]
         ));
 
-        $user->setRoles(['User']);
+        $user->setRoles(['ROLE_USER']);
         $user->setAvailable(true);
 
 
@@ -87,6 +87,9 @@ class UserMutation implements MutationInterface, AliasedInterface
             }
             if (!empty($args["user"]["email"])) {
                 $user->setEmail($args["user"]["email"]);
+            }
+            if (!empty($args["user"]["roles"])) {
+                $user->setRoles([$args["user"]["roles"]]);
             }
             $this->em->flush();
             return $user;

@@ -12,6 +12,7 @@ User:
             password: String
             email: String
             stats: Boolean
+#            roles: [String]
 
 UserCollection:
     type: object
@@ -29,3 +30,4 @@ UserInput:
             room: Int
             password: String
             email: String
+            roles: String
