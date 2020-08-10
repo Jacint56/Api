@@ -88,9 +88,11 @@ class UserMutation implements MutationInterface, AliasedInterface
             if (!empty($args["user"]["email"])) {
                 $user->setEmail($args["user"]["email"]);
             }
+            /*
             if (!empty($args["user"]["roles"])) {
                 $user->setRoles([$args["user"]["roles"]]);
             }
+            */
             $this->em->flush();
             return $user;
         }
@@ -126,12 +128,24 @@ class UserMutation implements MutationInterface, AliasedInterface
     }
     */    
 
+    public function setRole(Argument $args)
+    {
+        $user = $this->em->getRepository(User::class)->find($args["id"]);
+        if (!empty($user) && $user->getAvailable()) {
+            $user->setRoles([$args["role"]]);
+            $this->em->flush();
+            return $user;
+        }
+        throw new \GraphQL\Error\Error('This user does not exist!');
+    }
+
     public static function getAliases(): array
     {
         return array(
             "create" => "createUser",
             "update" => "updateUser",
+            "setRole" => "setRole",
             "delete" => "deleteUser"
-            );
+        );
     }
 }

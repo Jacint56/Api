@@ -137,9 +137,17 @@ Mutation:
                     id: ID!
 
             login:
-                access: "@=!service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MOD', 'ROLE_SUPER_ADMIN')"
+#                access: "@=service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
                 type: "String"
                 resolve: "@=mutation('login', [args])"
                 args:
                     password: String
                     userName: String
+
+            setRole:
+#                access: "@=service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
+                type: Boolean
+                resolve: "@=mutation('setRole', [args])"
+                args:
+                    id: ID!
+                    role: String!
