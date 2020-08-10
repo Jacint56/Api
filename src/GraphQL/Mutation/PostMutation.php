@@ -96,9 +96,16 @@ class PostMutation implements MutationInterface, AliasedInterface
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
         if(!empty($post) && $post->getAvailable())
         {
-            $post->setAvailable(false);
-            $this->em->flush();
-            return true;
+            if ($this->em->getRepository(User::class)->find($args["editor"])==$post->getPoster())
+            {
+                $post->setAvailable(false);
+                $this->em->flush();
+                return true;
+            }
+            else
+            {
+                throw new \GraphQL\Error\UserError('This post is not yours!');
+            }
         }
         throw new \GraphQL\Error\UserError('');
     }
