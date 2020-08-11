@@ -91,6 +91,7 @@ class UserResolver implements ResolverInterface, AliasedInterface
             $where,
             array($column => $order)
         );
+        
         $limit = $args["limit"];
         if($args["limit"] == 0)
         {
