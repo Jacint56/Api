@@ -1,0 +1,22 @@
+CommentLike:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            liker: "User"
+            comment: "Comment"
+
+CommentLikeCollection:
+    type: object
+    config:
+        fields:
+            commentLikes: "[CommentLike]"
+            total: Int
+
+CommentLikeInput:
+    type: input-object
+    config:
+        fields:
+            liker: Int
+            comment: Int

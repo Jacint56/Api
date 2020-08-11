@@ -3,8 +3,8 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
-use App\Entity\Post;
-use App\Entity\PostLike;
+use App\Entity\Comment;
+use App\Entity\CommentLike;
 use Doctrine\ORM\EntityManager;
 
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -14,7 +14,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
-class PostLikeResolver implements ResolverInterface, AliasedInterface
+class CommentLikeResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
     private $paginator;
@@ -27,12 +27,37 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
 
     public function resolve(Argument $args)
     {
-        $like = $this->em->getRepository(PostLike::class)->find($args["id"]);
+        $like = $this->em->getRepository(CommentLike::class)->find($args["id"]);
         if($like->getAvailable())
         {
             return $like;
         }
     }
+    /*
+{
+  CommentLike(id: 1) {
+    id
+    liker {
+      userName
+    }
+    comment {
+      id
+      content
+      poster {
+        userName
+      }
+      post {
+        title
+        content
+        poster {
+          userName
+        }
+      }
+    }
+  }
+}
+
+*/
 
     public function list(Argument $args)
     {
@@ -43,9 +68,9 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
 
         $where["available"] = true;
 
-        if(!empty($args["post"]))
+        if(!empty($args["comment"]))
         {
-            $where["post"] = $this->em->getRepository(Post::class)->find($args["post"]);
+            $where["comment"] = $this->em->getRepository(Comment::class)->find($args["comment"]);
         }
 
         if(!empty($args["liker"]))
@@ -66,7 +91,7 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
             }
         }
         
-        $likes = $this->em->getRepository(PostLike::class)->findBy(
+        $likes = $this->em->getRepository(CommentLike::class)->findBy(
             $where,
             array($column => $order)
         );
@@ -83,21 +108,44 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
         if($args["limit"] == 0)
         {
             return [
-                "postLikes" => $likes,
+                "commentLikes" => $likes,
                 "total" => $result->getTotalItemCount()
             ];
         }
         return [
-            "postLikes" => $result,
+            "commentLikes" => $result,
             "total" => $result->getTotalItemCount()
         ];
     }
-
+/*
+{
+  allCommentLikes(limit: 0, page: 1, liker: 1) {
+    total
+    commentLikes {
+      id
+      comment {
+        id
+        content
+        poster {
+          userName
+        }
+        post {
+          title
+          content
+          poster {
+            userName
+          }
+        }
+      }
+    }
+  }
+}
+*/
     public static function getAliases(): array
     {
         return array(
-            "resolve" => "PostLike",
-            "list" => "allPostLikes"
+            "resolve" => "CommentLike",
+            "list" => "allCommentLikes"
         );
     }
 

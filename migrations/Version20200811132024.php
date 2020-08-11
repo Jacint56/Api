@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200811095349 extends AbstractMigration
+final class Version20200811132024 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,6 +22,7 @@ final class Version20200811095349 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, slug VARCHAR(100) DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, available TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_64C19C1989D9B62 (slug), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE comment (id INT AUTO_INCREMENT NOT NULL, poster_id INT DEFAULT NULL, post_id INT DEFAULT NULL, content VARCHAR(255) DEFAULT NULL, available TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_9474526C5BB66C05 (poster_id), INDEX IDX_9474526C4B89032C (post_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE comment_like (id INT AUTO_INCREMENT NOT NULL, liker_id INT DEFAULT NULL, comment_id INT DEFAULT NULL, available TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_8A55E25F979F103A (liker_id), INDEX IDX_8A55E25FF8697D13 (comment_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE friendship (id INT AUTO_INCREMENT NOT NULL, sender_id INT DEFAULT NULL, reciver_id INT DEFAULT NULL, status TINYINT(1) DEFAULT NULL, available TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_7234A45FF624B39D (sender_id), INDEX IDX_7234A45F93173582 (reciver_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, slug VARCHAR(100) DEFAULT NULL, available TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_232B318C989D9B62 (slug), INDEX IDX_232B318C12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE oauth2_access_token (identifier CHAR(80) NOT NULL, client VARCHAR(32) NOT NULL, expiry DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', user_identifier VARCHAR(128) DEFAULT NULL, scopes TEXT DEFAULT NULL COMMENT \'(DC2Type:oauth2_scope)\', revoked TINYINT(1) NOT NULL, INDEX IDX_454D9673C7440455 (client), PRIMARY KEY(identifier)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -34,6 +35,8 @@ final class Version20200811095349 extends AbstractMigration
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, room_id INT DEFAULT NULL, user_name VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, email VARCHAR(255) DEFAULT NULL, slug VARCHAR(100) DEFAULT NULL, available TINYINT(1) DEFAULT NULL, stats TINYINT(1) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_8D93D64924A232CF (user_name), UNIQUE INDEX UNIQ_8D93D649989D9B62 (slug), INDEX IDX_8D93D64954177093 (room_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C5BB66C05 FOREIGN KEY (poster_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C4B89032C FOREIGN KEY (post_id) REFERENCES post (id)');
+        $this->addSql('ALTER TABLE comment_like ADD CONSTRAINT FK_8A55E25F979F103A FOREIGN KEY (liker_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE comment_like ADD CONSTRAINT FK_8A55E25FF8697D13 FOREIGN KEY (comment_id) REFERENCES comment (id)');
         $this->addSql('ALTER TABLE friendship ADD CONSTRAINT FK_7234A45FF624B39D FOREIGN KEY (sender_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE friendship ADD CONSTRAINT FK_7234A45F93173582 FOREIGN KEY (reciver_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
@@ -51,6 +54,7 @@ final class Version20200811095349 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE game DROP FOREIGN KEY FK_232B318C12469DE2');
+        $this->addSql('ALTER TABLE comment_like DROP FOREIGN KEY FK_8A55E25FF8697D13');
         $this->addSql('ALTER TABLE room DROP FOREIGN KEY FK_729F519BE48FD905');
         $this->addSql('ALTER TABLE oauth2_refresh_token DROP FOREIGN KEY FK_4DD90732B6A2DD68');
         $this->addSql('ALTER TABLE oauth2_access_token DROP FOREIGN KEY FK_454D9673C7440455');
@@ -59,12 +63,14 @@ final class Version20200811095349 extends AbstractMigration
         $this->addSql('ALTER TABLE post_like DROP FOREIGN KEY FK_653627B84B89032C');
         $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D64954177093');
         $this->addSql('ALTER TABLE comment DROP FOREIGN KEY FK_9474526C5BB66C05');
+        $this->addSql('ALTER TABLE comment_like DROP FOREIGN KEY FK_8A55E25F979F103A');
         $this->addSql('ALTER TABLE friendship DROP FOREIGN KEY FK_7234A45FF624B39D');
         $this->addSql('ALTER TABLE friendship DROP FOREIGN KEY FK_7234A45F93173582');
         $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8D5BB66C05');
         $this->addSql('ALTER TABLE post_like DROP FOREIGN KEY FK_653627B8979F103A');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE comment');
+        $this->addSql('DROP TABLE comment_like');
         $this->addSql('DROP TABLE friendship');
         $this->addSql('DROP TABLE game');
         $this->addSql('DROP TABLE oauth2_access_token');
