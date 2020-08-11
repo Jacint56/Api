@@ -1,0 +1,22 @@
+PostLike:
+    type: object
+    config:
+        fields:
+            id:
+                type: ID
+            liker: "User"
+            post: "Post"
+
+PostLikeCollection:
+    type: object
+    config:
+        fields:
+            postLikes: "[PostLike]"
+            total: Int
+
+PostLikeInput:
+    type: input-object
+    config:
+        fields:
+            liker: Int
+            post: Int

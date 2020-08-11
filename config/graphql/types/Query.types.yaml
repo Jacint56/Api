@@ -144,3 +144,23 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allFriendships', [args])"
+
+            postLike:
+                type: PostLike
+                args:
+                    id:
+                        type: ID
+                resolve: "@=resolver('PostLike', [args])"
+                
+            allPostLikes:
+                type: PostLikeCollection
+                args:
+                    limit:
+                        type: Int
+                    liker: Int
+                    post: Int
+                    page:
+                        type: Int
+                    column:
+                        type: String
+                resolve: "@=resolver('allPostLikes', [args])"

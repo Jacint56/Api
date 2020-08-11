@@ -40,11 +40,11 @@ INSERT INTO `room` (`id`, `game_id`, `slug`, `name`, `is_private`, `available`, 
 	(10, 2, 'suka-bliat', 'сука блять', 0, 1, '2020-07-16 13:07:19', '2020-07-16 13:07:19');
 
 INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, `slug`, `available`, `stats`, `created_at`, `updated_at`) VALUES
-	(1, NULL, 'ChonHTailor', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),
-	(2, NULL, 'ifuckedyourmother69', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 0, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
-	(3, NULL, 'Jacint1990', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
-	(4, NULL, 'Mindegy', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22'),
-	(5, NULL, 'Leszarom', '["User"]', '$argon2id$v=19$m=65536,t=4,p=1$diWoED770qY4X0E/fqANYw$R0W/WUmnREGgacBoqrfl5UZKh84PjJf6R2+1jyTJRmY', 'peca@gmail.com', 'leszarom', 1, NULL, '2020-07-21 13:02:16', '2020-07-21 13:02:16');
+	(1, NULL, 'ChonHTailor', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),
+	(2, NULL, 'ifuckedyourmother69', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 0, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
+	(3, NULL, 'Jacint1990', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
+	(4, NULL, 'Mindegy', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22'),
+	(5, NULL, 'Leszarom', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$diWoED770qY4X0E/fqANYw$R0W/WUmnREGgacBoqrfl5UZKh84PjJf6R2+1jyTJRmY', 'peca@gmail.com', 'leszarom', 1, NULL, '2020-07-21 13:02:16', '2020-07-21 13:02:16');
 
 INSERT INTO `friendship` (`id`, `sender_id`, `reciver_id`, `status`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 3, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03'),
@@ -63,3 +63,7 @@ INSERT INTO `comment` (`id`, `poster_id`, `post_id`, `content`, `available`, `cr
 	(3, 4, 1, 'Random komment', 1, '2020-07-17 11:31:56', '2020-07-17 11:31:56'),
 	(4, 1, 1, 'Let\'s face it. No-one can take Menendez seriously.', 1, '2020-07-17 11:32:23', '2020-07-17 11:32:23'),
 	(5, 3, 3, 'Gondolkodok, tehát vagyok.', 0, '2020-07-17 11:58:37', '2020-07-17 12:03:16');
+
+INSERT INTO `post_like` (`id`, `liker_id`, `post_id`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 1, 1, 1, '2020-08-11 09:58:13', '2020-08-11 09:58:13'),
+	(2, 3, 1, 1, '2020-08-11 09:58:23', '2020-08-11 09:58:23');

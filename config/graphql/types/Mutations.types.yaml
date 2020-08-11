@@ -151,3 +151,16 @@ Mutation:
                 args:
                     id: ID!
                     role: String!
+
+            createPostLike:
+                type: "PostLike"
+                resolve: "@=mutation('createPostLike', [args])"
+                args:
+                    postLike: "PostLikeInput"
+
+            deletePostLike:
+                type: Int
+                resolve: "@=mutation('deletePostLike', [args])"
+                args:
+                    id: ID!
+                    editor: ID!
