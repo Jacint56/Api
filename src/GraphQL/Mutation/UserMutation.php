@@ -41,7 +41,7 @@ class UserMutation implements MutationInterface, AliasedInterface
             $args["user"]["password"]
         ));
 
-        $user->setRoles(['ROLE_USER']);
+        $user->setRoles((array)"ROLE_USER");
         $user->setAvailable(true);
 
 
