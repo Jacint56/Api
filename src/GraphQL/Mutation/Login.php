@@ -34,12 +34,16 @@ class Login implements MutationInterface, AliasedInterface
         $users = $this->em->getRepository(User::class)->findBy(
             Array("userName" => $args["userName"])
         );
-        $user = $users[0];
-        if($user->getAvailable())
+        if (empty($users)) {
+            throw new \GraphQL\Error\Error('This user does not exist!');
+        }
+        else
         {
-            if($this->passwordEncoder->isPasswordValid($user, $args["password"]))
-            {
-                return $this->jwtManager->create($user);
+            $user = $users[0];
+            if ($user->getAvailable()) {
+                if ($this->passwordEncoder->isPasswordValid($user, $args["password"])) {
+                    return $this->jwtManager->create($user);
+                }
             }
         }
     }
