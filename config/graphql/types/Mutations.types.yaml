@@ -137,7 +137,7 @@ Mutation:
                     id: ID!
 
             login:
-#                access: "@=service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
+                access: "@=!isAuthenticated()"
                 type: "String"
                 resolve: "@=mutation('login', [args])"
                 args:
@@ -145,7 +145,7 @@ Mutation:
                     userName: String
 
             setRole:
-#                access: "@=service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
+  #              access: "@=service('security.authorization_checker').isGranted('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')"
                 type: Boolean
                 resolve: "@=mutation('setRole', [args])"
                 args:
