@@ -46,6 +46,7 @@ INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, 
 	(4, NULL, 'Mindegy', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22'),
 	(5, NULL, 'Leszarom', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$diWoED770qY4X0E/fqANYw$R0W/WUmnREGgacBoqrfl5UZKh84PjJf6R2+1jyTJRmY', 'peca@gmail.com', 'leszarom', 1, NULL, '2020-07-21 13:02:16', '2020-07-21 13:02:16');
 
+
 INSERT INTO `friendship` (`id`, `sender_id`, `reciver_id`, `status`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 3, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03'),
 	(2, 3, 4, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03'),
