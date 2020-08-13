@@ -97,7 +97,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
                 throw new \GraphQL\Error\UserError('This comment is not yours!');
             }
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('This comment does not exist!');
     }
     /*
     mutation {
