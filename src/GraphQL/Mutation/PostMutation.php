@@ -107,7 +107,7 @@ class PostMutation implements MutationInterface, AliasedInterface
                 throw new \GraphQL\Error\UserError('This post is not yours!');
             }
         }
-        throw new \GraphQL\Error\UserError('');
+        throw new \GraphQL\Error\UserError('This post does not exist');
     }
     /*
     mutation {
