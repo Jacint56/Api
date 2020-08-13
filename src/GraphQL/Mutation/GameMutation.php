@@ -67,8 +67,19 @@ class GameMutation implements MutationInterface, AliasedInterface
                         "name" => $args["game"]["name"]
                 ))))
                 {
-                    throw new \GraphQL\Error\Error('This game exists!');
-                    exit();
+                    if(
+                        ($this->em->getRepository(Game::class)->findBy(array("name" => $args["game"]["name"])))[0]->getId()
+                        ==
+                        $game->getId()
+                    )
+                    {
+                        $game->setName($args["game"]["name"]);
+                    }
+                    else
+                    {
+                        throw new \GraphQL\Error\Error('This game exists!');
+                        exit();
+                    }
                 }
                 else
                 {
