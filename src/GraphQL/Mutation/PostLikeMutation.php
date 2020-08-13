@@ -22,6 +22,17 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
+        if(!empty($this->em->getRepository(PostLike::class)->findBy(
+            array(
+                "liker" => $args["postLike"]["liker"],
+                "post" => $args["postLike"]["post"]
+            )
+        )))
+        {
+            throw new \GraphQL\Error\UserError('This like already exists!');
+            exit();
+        }
+        
         $like = new PostLike();
 
         $like->setLiker($this->em->getRepository(User::class)->find($args["postLike"]["liker"]));
