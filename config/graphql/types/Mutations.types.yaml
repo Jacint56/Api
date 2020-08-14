@@ -167,11 +167,11 @@ Mutation:
          #           id: ID!
           #          editor: ID!
 
-           # createCommentLike:
-            #    type: "CommentLike"
-             #   resolve: "@=mutation('createCommentLike', [args])"
-              #  args:
-               #     commentLike: "CommentLikeInput"
+            createCommentLike:
+                type: "CommentLike"
+                resolve: "@=mutation('createCommentLike', [args])"
+                args:
+                    commentLike: "CommentLikeInput"
 
 #            deleteCommentLike:
  #               type: Int

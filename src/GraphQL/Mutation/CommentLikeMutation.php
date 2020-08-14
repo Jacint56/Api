@@ -40,7 +40,13 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
             $data[0]->setAvailable(false);
           }
           $this->em->flush();
-          return true;
+          if ($data[0]->getAvailable()) {
+              return $data[0];
+          }
+          else
+          {
+            return true;
+          }
         }
         else
         {
@@ -60,33 +66,27 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  createCommentLike(commentLike: {liker: 1, comment: 2}) {
-    id
-    liker {
-      userName
-    }
-    comment {
-      content
-      poster {
-        userName
-      }
-      post {
-        title
-        content
-        poster {
+      createCommentLike(commentLike: {liker: 1, comment: 2}) {
+        id
+        liker {
           userName
+        }
+        comment {
+          content
+          poster {
+            userName
+          }
+          post {
+            title
+            content
+            poster {
+              userName
+            }
+          }
         }
       }
     }
-  }
-}
-*/
-
-/*
-mutation {
-  deleteCommentLike(id: 3, editor: 2)
-}
-*/
+    */
     public static function getAliases(): array
     {
         return array(
