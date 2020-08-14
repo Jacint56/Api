@@ -62,7 +62,7 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
                 throw new \GraphQL\Error\UserError('This like is not yours!');
             }
         }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
+        throw new \GraphQL\Error\UserError('You cannot do that!');
     }
 
     public static function getAliases(): array

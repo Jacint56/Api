@@ -22,10 +22,10 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        if(!empty($this->em->getRepository(PostLike::class)->findBy(
+        if(!empty($this->em->getRepository(CommentLike::class)->findBy(
             array(
-                "liker" => $args["postLike"]["liker"],
-                "post" => $args["postLike"]["comment"]
+                "liker" => $args["commentLike"]["liker"],
+                "comment" => $args["commenttLike"]["comment"]
             )
         )))
         {
