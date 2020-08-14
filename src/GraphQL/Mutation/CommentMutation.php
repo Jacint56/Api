@@ -70,7 +70,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  updateComment(comment: {content: "Gondolkodok, tehát vagyok."}, id: 5) {
+  updateComment(comment: {content: "Gondolkodok, tehát vagyok."}, id: 2 editor:3) {
     id
     content
     poster {
@@ -101,7 +101,7 @@ class CommentMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deleteComment(id: 5)
+  deleteComment(id: 2 editor:3)
 }
 */
 

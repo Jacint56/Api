@@ -97,6 +97,7 @@ Mutation:
                 resolve: "@=mutation('deletePost', [args])"
                 args:
                     id: ID!
+                    editor: ID!
 
             createComment:
                 type: "Comment"
@@ -117,6 +118,7 @@ Mutation:
                 resolve: "@=mutation('deleteComment', [args])"
                 args:
                     id: ID!
+                    editor: ID!
             
             createFriendship:
                 type: "Friendship"

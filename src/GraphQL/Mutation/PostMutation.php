@@ -111,7 +111,7 @@ class PostMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  deletePost(id: 2)
+  deletePost(id: 1)
 }
 */
 

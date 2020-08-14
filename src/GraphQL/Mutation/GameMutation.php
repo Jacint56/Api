@@ -59,13 +59,14 @@ class GameMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $game = $this->em->getRepository(Game::class)->find($args["id"]);
+        $data = $this->em->getRepository(Game::class)->findBy(Array(
+            "name" => $args["game"]["name"]
+        ));
         if(!empty($game) && $game->getAvailable())
         {
             if(!empty($args["game"]["name"]))
             {
-                if (!empty($this->em->getRepository(Game::class)->findBy(Array(
-                        "name" => $args["game"]["name"]
-                ))))
+                if (!empty($data) && $data[0]->getId() != $game->getId())
                 {
                     if(
                         ($this->em->getRepository(Game::class)->findBy(array("name" => $args["game"]["name"])))[0]->getId()
@@ -99,6 +100,12 @@ class GameMutation implements MutationInterface, AliasedInterface
         throw new \GraphQL\Error\Error('This game is unavailable!');
 
     }
+    /*$category = $this->em->getRepository(Category::class)->find($args["id"]);
+        $valaki = $this->em->getRepository(Category::class)->findBy(array("name"=>$args["category"]["name"]));
+        if(!empty($category) && $category->getAvailable())
+        {
+          if ( !empty($valaki) && $valaki->getId()!= $category->getId()) {*/
+
     /*
 mutation {
   updateGame(id: 9, game: {name: "The Crew 2"}) {
