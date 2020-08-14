@@ -184,4 +184,3 @@ Mutation:
                 resolve: "@=mutation('PostLike', [args])"
                 args:
                     postLike: "PostLikeInput"
-                    editor: ID

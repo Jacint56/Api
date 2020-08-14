@@ -51,17 +51,17 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $like = $this->em->getRepository(PostLike::class)->find($args["id"]);
-        if(!empty($like) && $like->getAvailable())
+        if(!empty($like))
         {
-            if ($this->em->getRepository(User::class)->find($args["editor"])==$like->getLiker())
+            $like->setAvailable(!($like->getAvailable()));
+            $this->em->flush();
+            if($like->getAvailable())
             {
-                $like->setAvailable(false);
-                $this->em->flush();
-                return true;
+                return $like;
             }
             else
             {
-                throw new \GraphQL\Error\UserError('This like is not yours!');
+                return true;
             }
         }
         throw new \GraphQL\Error\UserError('You cannot do that!');
@@ -72,8 +72,7 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
         $likes = $this->em->getRepository(PostLike::class)->findBy(
             array(
                 "liker" => $args["postLike"]["liker"],
-                "post" => $args["postLike"]["post"],
-                "available" => true
+                "post" => $args["postLike"]["post"]
             )
         );
 
@@ -89,7 +88,7 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
     }
     /*
     mutation {
-  PostLike(postLike: {liker: 1, post: 1}, editor: 1) {
+  PostLike(postLike: {liker: 1, post: 1}) {
     id
     liker {
       userName
