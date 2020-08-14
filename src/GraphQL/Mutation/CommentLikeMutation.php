@@ -22,28 +22,41 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        if(!empty($this->em->getRepository(CommentLike::class)->findBy(
-            array(
-                "liker" => $args["commentLike"]["liker"],
-                "comment" => $args["commenttLike"]["comment"]
-            )
-        )))
+      $data = $this->em->getRepository(CommentLike::class)->findBy(
+        array(
+            "liker" => $args["commentLike"]["liker"],
+            "comment" => $args["commentLike"]["comment"]
+        )
+    );
+    /*dump($data);
+    exit();*/
+        if(!empty($data))
         {
-            throw new \GraphQL\Error\UserError('This like already exists!');
-            exit();
+          if (!($data[0]->getAvailable())) {
+              $data[0]->setAvailable(true);
+          }
+          else
+          {
+            $data[0]->setAvailable(false);
+          }
+          $this->em->flush();
+          return true;
         }
+        else
+        {
+          $like = new CommentLike();
 
-        $like = new CommentLike();
-
-        $like->setLiker($this->em->getRepository(User::class)->find($args["commentLike"]["liker"]));
-        $like->setComment($this->em->getRepository(Comment::class)->find($args["commentLike"]["comment"]));
-
-        $like->setAvailable(true);
-
-        $this->em->persist($like);
-        $this->em->flush();
-
-        return $like;
+          $like->setLiker($this->em->getRepository(User::class)->find($args["commentLike"]["liker"]));
+          $like->setComment($this->em->getRepository(Comment::class)->find($args["commentLike"]["comment"]));
+  
+          $like->setAvailable(true);
+  
+          $this->em->persist($like);
+          $this->em->flush();
+  
+          return $like;
+        }
+        
     }
     /*
     mutation {
@@ -69,24 +82,6 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
 }
 */
 
-    public function delete(Argument $args)
-    {
-        $like = $this->em->getRepository(CommentLike::class)->find($args["id"]);
-        if(!empty($like) && $like->getAvailable())
-        {
-            if ($this->em->getRepository(User::class)->find($args["editor"])==$like->getLiker())
-            {
-                $like->setAvailable(false);
-                $this->em->flush();
-                return true;
-            }
-            else
-            {
-                throw new \GraphQL\Error\UserError('This like is not yours!');
-            }
-        }
-        throw new \GraphQL\Error\UserError('Shit! Something is wrong');
-    }
 /*
 mutation {
   deleteCommentLike(id: 3, editor: 2)
@@ -95,8 +90,7 @@ mutation {
     public static function getAliases(): array
     {
         return array(
-            "create" => "createCommentLike",
-            "delete" => "deleteCommentLike"
+            "create" => "createCommentLike"
         );
     }
 }
