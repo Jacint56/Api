@@ -22,6 +22,7 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
+        /*
         if(!empty($this->em->getRepository(PostLike::class)->findBy(
             array(
                 "liker" => $args["postLike"]["liker"],
@@ -32,6 +33,7 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
             throw new \GraphQL\Error\UserError('This like already exists!');
             exit();
         }
+        */
         
         $like = new PostLike();
 
@@ -65,11 +67,48 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
         throw new \GraphQL\Error\UserError('You cannot do that!');
     }
 
+    public function postLike(Argument $args)
+    {
+        $likes = $this->em->getRepository(PostLike::class)->findBy(
+            array(
+                "liker" => $args["postLike"]["liker"],
+                "post" => $args["postLike"]["post"],
+                "available" => true
+            )
+        );
+
+        if(empty($likes))
+        {
+            return $this->create($args);
+        }
+        else
+        {
+            $args["id"] = $likes[0]->getId();
+            return $this->delete($args);
+        }
+    }
+    /*
+    mutation {
+  PostLike(postLike: {liker: 1, post: 1}, editor: 1) {
+    id
+    liker {
+      userName
+    }
+    post {
+      title
+      content
+      poster {
+        userName
+      }
+    }
+  }
+}
+*/
+
     public static function getAliases(): array
     {
         return array(
-            "create" => "createPostLike",
-            "delete" => "deletePostLike"
+            "postLike" => "PostLike"
         );
     }
 }

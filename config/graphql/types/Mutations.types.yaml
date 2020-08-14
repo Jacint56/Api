@@ -154,28 +154,34 @@ Mutation:
                     id: ID!
                     role: String!
 
-            createPostLike:
+#            createPostLike:
+ #               type: "PostLike"
+  #              resolve: "@=mutation('createPostLike', [args])"
+   #             args:
+    #                postLike: "PostLikeInput"
+
+     #       deletePostLike:
+      #          type: Int
+       #         resolve: "@=mutation('deletePostLike', [args])"
+        #        args:
+         #           id: ID!
+          #          editor: ID!
+
+           # createCommentLike:
+            #    type: "CommentLike"
+             #   resolve: "@=mutation('createCommentLike', [args])"
+              #  args:
+               #     commentLike: "CommentLikeInput"
+
+#            deleteCommentLike:
+ #               type: Int
+  #              resolve: "@=mutation('deleteCommentLike', [args])"
+   #             args:
+    #                id: ID!
+     #               editor: ID!
+            PostLike:
                 type: "PostLike"
-                resolve: "@=mutation('createPostLike', [args])"
+                resolve: "@=mutation('PostLike', [args])"
                 args:
                     postLike: "PostLikeInput"
-
-            deletePostLike:
-                type: Int
-                resolve: "@=mutation('deletePostLike', [args])"
-                args:
-                    id: ID!
-                    editor: ID!
-
-            createCommentLike:
-                type: "CommentLike"
-                resolve: "@=mutation('createCommentLike', [args])"
-                args:
-                    commentLike: "CommentLikeInput"
-
-            deleteCommentLike:
-                type: Int
-                resolve: "@=mutation('deleteCommentLike', [args])"
-                args:
-                    id: ID!
-                    editor: ID!
+                    editor: ID
