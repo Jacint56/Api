@@ -184,3 +184,7 @@ Query:
                     column:
                         type: String
                 resolve: "@=resolver('allCommentLikes', [args])"
+
+            userFromToken:
+                type: User
+                resolve: "@=resolver('UserFromToken', [args])"
