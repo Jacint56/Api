@@ -31,7 +31,7 @@ class Login implements MutationInterface, AliasedInterface
     }
 
     public function login(Argument $args)
-    {        
+    {
         $users = Array();
         $users = $this->em->getRepository(User::class)->findBy(
             Array("userName" => $args["userName"])
