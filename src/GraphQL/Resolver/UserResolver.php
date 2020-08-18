@@ -152,6 +152,16 @@ class UserResolver implements ResolverInterface, AliasedInterface
             return $user;
         }
     }
+    /*
+    {
+  userFromToken {
+    id
+    userName
+    password
+  }
+}
+*/
+//Kell, hogy legyen token, csak postmanbő működik.
 
     public static function getAliases(): array
     {
