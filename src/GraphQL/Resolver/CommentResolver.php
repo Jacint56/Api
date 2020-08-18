@@ -123,42 +123,78 @@ class CommentResolver implements ResolverInterface, AliasedInterface
             $args["page"],
             $limit
         );
-        if($args["limit"] == 0)
-        {
-            return [
-                "comments" => $comments,
-                "total" => $result->getTotalItemCount()
-            ];
+
+        $where = array();
+        $responses = array();
+        if($args["limit"] == 0){
+            foreach($comments as $source){
+                $response = new Response;
+                $response -> id = $source -> getId();
+                $response -> content = $source -> getContent();
+                $response -> poster = $source -> getPoster();
+                $response -> post = $source -> getPost();
+
+                $whereL["comment"] = $source;
+                $likes = $this->em->getRepository(CommentLike::class)->findBy(
+                    $whereL
+                );
+                $likes = $this->paginator->paginate(
+                    $likes,
+                    1,
+                    1
+                );
+                $response -> likes = $likes->getTotalItemCount();
+
+                $responses[] = $response;
+            }
         }
+
+        else{
+            foreach($result as $source){
+                $response = new Response;
+                $response -> id = $source -> getId();
+                $response -> content = $source -> getContent();
+                $response -> poster = $source -> getPoster();
+                $response -> post = $source -> getPost();
+
+                $whereL["comment"] = $source;
+                $likes = $this->em->getRepository(CommentLike::class)->findBy(
+                    $whereL
+                );
+                $likes = $this->paginator->paginate(
+                    $likes,
+                    1,
+                    1
+                );
+                $response -> likes = $likes->getTotalItemCount();
+
+                $responses[] = $response;
+            }
+        }
+
         return [
-            "comments" => $result,
+            "comments" => $responses,
             "total" => $result->getTotalItemCount()
         ];
     }
     /*
-    {
-  post(id: 1) {
-    id
-    title
-    slug
-    content
-    poster {
-      id
-      userName
-    }
-  }
-  allComments(limit: 10, page: 1, post: 1) {
+{
+  allComments(limit: 3, page: 1) {
     total
     comments {
       id
       content
+      post {
+        title
+      }
       poster {
-        id
         userName
       }
+      likes
     }
   }
 }
+
 */
 
     public static function getAliases(): array
