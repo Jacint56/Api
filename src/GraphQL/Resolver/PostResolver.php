@@ -15,7 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
 
-class Response{
+class PostResponse{
     public $id;
     public $poster;
     public $content;
@@ -37,7 +37,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
 
-        $response = new Response;
+        $response = new PostResponse;
         $response -> id = $post -> getId();
         $response -> content = $post -> getContent();
         $response -> title = $post -> getTitle();
@@ -120,19 +120,58 @@ class PostResolver implements ResolverInterface, AliasedInterface
         );
         if($args["limit"] == 0)
         {
-            return [
-                "posts" => $posts,
-                "total" => $result->getTotalItemCount()
-            ];
+            foreach($posts as $source){
+                $response = new PostResponse;
+                $response -> id = $source -> getId();
+                $response -> content = $source -> getContent();
+                $response -> title = $source -> getTitle();
+                $response -> poster = $source -> getPoster();
+
+                $whereL["post"] = $source;
+                $likes = $this->em->getRepository(PostLike::class)->findBy(
+                    $whereL
+                );
+                $likes = $this->paginator->paginate(
+                    $likes,
+                    1,
+                    1
+                );
+                $response -> likes = $likes->getTotalItemCount();
+
+                $responses[] = $response;
+            }
+        }
+
+        else{
+            foreach($result as $source){
+                $response = new PostResponse;
+                $response -> id = $source -> getId();
+                $response -> content = $source -> getContent();
+                $response -> poster = $source -> getPoster();
+                $response -> post = $source -> getPost();
+
+                $whereL["post"] = $source;
+                $likes = $this->em->getRepository(PostLike::class)->findBy(
+                    $whereL
+                );
+                $likes = $this->paginator->paginate(
+                    $likes,
+                    1,
+                    1
+                );
+                $response -> likes = $likes->getTotalItemCount();
+
+                $responses[] = $response;
+            }
         }
         return [
-            "posts" => $result,
+            "posts" => $responses,
             "total" => $result->getTotalItemCount()
         ];
     }
     /*
     {
-  allPosts(limit: 10, page: 1) {
+  allPosts(limit: 0, page: 1) {
     posts {
       id
       title
@@ -142,9 +181,12 @@ class PostResolver implements ResolverInterface, AliasedInterface
         id
         userName
       }
+      likes
     }
+    
   }
 }
+
 */
 
     public static function getAliases(): array
