@@ -33,21 +33,6 @@ class PostResolver implements ResolverInterface, AliasedInterface
         $this->paginator = $paginator;
     }
 
-
-    /*
-    {
-  post(id: 3) {
-    id
-    title
-    slug
-    content
-    poster {
-      id
-      userName
-    }
-  }
-}
-*/
     public function resolve(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
@@ -75,7 +60,19 @@ class PostResolver implements ResolverInterface, AliasedInterface
             return $response;
         }
     }
-
+    /*
+    {
+        post(id: 5) {
+          id
+          title
+          content
+          poster {
+            userName
+          }
+          likes
+        }
+      }
+      */
     public function list(Argument $args)
     {
         $posts = array();

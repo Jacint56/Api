@@ -33,7 +33,24 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
             return $like;
         }
     }
-
+/*{
+  postLike(id:3)
+  {
+    id
+    liker
+    {
+      id
+      userName
+      email
+    }
+    post
+    {
+      id
+      title
+      content
+    }
+  }
+} */
     public function list(Argument $args)
     {
         $likes = array();
@@ -92,6 +109,25 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
             "total" => $result->getTotalItemCount()
         ];
     }
+
+/*{
+  allPostLikes(limit:0 page:1 post:1 )
+  {
+    postLikes
+    {
+      id
+      liker {
+        id
+        userName
+      }
+      post {
+        id
+        title
+        content
+      }
+    }
+  }
+} */
 
     public static function getAliases(): array
     {

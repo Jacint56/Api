@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class PostMutation implements MutationInterface, AliasedInterface
 {
@@ -22,7 +21,6 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function create(Argument $args)
     {
         $post = new Post();
-        //$post->setPoster
         $post->setTitle($args["post"]["title"]);
         $post->setPoster($this->em->getRepository(User::class)->find($args["post"]["poster"]));
         $post->setContent($args["post"]["content"]);
@@ -73,7 +71,6 @@ class PostMutation implements MutationInterface, AliasedInterface
             throw new \GraphQL\Error\UserError('This post is not yours!');
           }
         }
-        //return null;
         throw new \GraphQL\Error\UserError('This post does not exist');
     }
     /*
