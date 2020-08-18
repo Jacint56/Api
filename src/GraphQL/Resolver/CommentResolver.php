@@ -5,6 +5,7 @@ namespace App\GraphQL\Resolver;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Comment;
+use App\Entity\CommentLike;
 use Doctrine\ORM\EntityManager;
 
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -13,6 +14,13 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
+
+class Response{
+    public $id;
+    public $poster;
+    public $content;
+    public $likes;
+}
 
 class CommentResolver implements ResolverInterface, AliasedInterface
 {
@@ -28,14 +36,33 @@ class CommentResolver implements ResolverInterface, AliasedInterface
     public function resolve(Argument $args)
     {
         $comment = $this->em->getRepository(Comment::class)->find($args["id"]);
+
+        $response = new Response;
+        $response -> id = $comment -> getId();
+        $response -> content = $comment -> getContent();
+        $response -> poster = $comment -> getPoster();
+        $response -> post = $comment -> getPost();
+
+        $where = array();
+        $where["comment"] = $comment;
+        $likes = $this->em->getRepository(CommentLike::class)->findBy(
+            $where
+        );
+        $result = $this->paginator->paginate(
+            $likes,
+            1,
+            1
+        );
+        $response -> likes = $result->getTotalItemCount();
+
         if($comment->getAvailable())
         {
-            return $comment;
+            return $response;
         }
     }
     /*
-    {
-  Comment(id: 2) {
+{
+  Comment(id: 1) {
     id
     content
     post {
@@ -44,8 +71,10 @@ class CommentResolver implements ResolverInterface, AliasedInterface
     poster {
       userName
     }
+    likes
   }
 }
+
 */
 
     public function list(Argument $args)

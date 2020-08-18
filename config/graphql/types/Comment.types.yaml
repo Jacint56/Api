@@ -8,6 +8,7 @@ Comment:
                 type: String
             poster: "User"
             post: "Post"
+            likes: Int
 
 CommentCollection:
     type: object
