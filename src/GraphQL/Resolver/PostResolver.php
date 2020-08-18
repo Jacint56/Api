@@ -4,6 +4,7 @@ namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\PostLike;
 use Doctrine\ORM\EntityManager;
 
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -12,6 +13,14 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
+
+
+class Response{
+    public $id;
+    public $poster;
+    public $content;
+    public $likes;
+}
 
 class PostResolver implements ResolverInterface, AliasedInterface
 {
@@ -27,26 +36,43 @@ class PostResolver implements ResolverInterface, AliasedInterface
     public function resolve(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
+
+        $response = new Response;
+        $response -> id = $post -> getId();
+        $response -> content = $post -> getContent();
+        $response -> title = $post -> getTitle();
+        $response -> poster = $post -> getPoster();
+
+        $where = array();
+        $where["post"] = $post;
+        $likes = $this->em->getRepository(PostLike::class)->findBy(
+            $where
+        );
+        $result = $this->paginator->paginate(
+            $likes,
+            1,
+            1
+        );
+        $response -> likes = $result->getTotalItemCount();
+
         if($post->getAvailable())
         {
-            return $post;
+            return $response;
         }
     }
     /*
     {
-  post(id: 3) {
-    id
-    title
-    slug
-    content
-    poster {
-      id
-      userName
-    }
-  }
-}
-*/
-
+        post(id: 5) {
+          id
+          title
+          content
+          poster {
+            userName
+          }
+          likes
+        }
+      }
+      */
     public function list(Argument $args)
     {
         $posts = array();

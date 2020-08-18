@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
+
 
 class PostLikeMutation implements MutationInterface, AliasedInterface
 {
@@ -22,18 +22,6 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-        /*
-        if(!empty($this->em->getRepository(PostLike::class)->findBy(
-            array(
-                "liker" => $args["postLike"]["liker"],
-                "post" => $args["postLike"]["post"]
-            )
-        )))
-        {
-            throw new \GraphQL\Error\UserError('This like already exists!');
-            exit();
-        }
-        */
         
         $like = new PostLike();
 

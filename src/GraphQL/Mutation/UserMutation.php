@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Mutation;
 
-use App\Entity\Game;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -90,11 +89,6 @@ class UserMutation implements MutationInterface, AliasedInterface
             if (!empty($args["user"]["email"])) {
                 $user->setEmail($args["user"]["email"]);
             }
-            /*
-            if (!empty($args["user"]["roles"])) {
-                $user->setRoles([$args["user"]["roles"]]);
-            }
-            */
             $this->em->flush();
             return $user;
         }

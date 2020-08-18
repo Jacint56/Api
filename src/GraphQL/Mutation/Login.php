@@ -3,17 +3,10 @@
 namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
-use App\Entity\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Symfony\Component\Serializer\Encoder\JsonDecode;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\User\UserInterface;
-use App\GraphQL\Resolver\UserResolver;
-//use Doctrine\Common\EventSubscriber;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
@@ -49,7 +42,6 @@ class Login implements MutationInterface, AliasedInterface
                 $this->passwordEncoder->isPasswordValid($user, $args["password"])
             )
             {
-                    //$asd = $this->em->getRepository(EventSubscriber::class)->onAuthenticationSuccess($this->jwtManager->create($user));
                     return $this->jwtManager->create($user);
             }
             else{

@@ -100,11 +100,7 @@ class GameMutation implements MutationInterface, AliasedInterface
         throw new \GraphQL\Error\Error('This game is unavailable!');
 
     }
-    /*$category = $this->em->getRepository(Category::class)->find($args["id"]);
-        $valaki = $this->em->getRepository(Category::class)->findBy(array("name"=>$args["category"]["name"]));
-        if(!empty($category) && $category->getAvailable())
-        {
-          if ( !empty($valaki) && $valaki->getId()!= $category->getId()) {*/
+
 
     /*
 mutation {

@@ -28,8 +28,6 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
             "comment" => $args["commentLike"]["comment"]
         )
     );
-    /*dump($data);
-    exit();*/
         if(!empty($data))
         {
           if (!($data[0]->getAvailable())) {

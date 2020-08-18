@@ -66,11 +66,9 @@ class RoomMutation implements MutationInterface, AliasedInterface
             {
                 $room->setName($args["room"]["name"]);
             }
-           //dump(!empty($args["room"]["isPrivate"]));
             if(isset($args["room"]["isPrivate"]))
             {
                 $room->setIsPrivate($args["room"]["isPrivate"]);
-                //dump($args["room"]["isPrivate"]);
             }
 
             $this->em->flush();

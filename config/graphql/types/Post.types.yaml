@@ -10,6 +10,7 @@ Post:
                 type: String
             slug: String
             poster: "User"
+            likes: Int
 
 PostCollection:
     type: object
