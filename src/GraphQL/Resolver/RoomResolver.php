@@ -3,7 +3,6 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\Room;
-use App\Entity\Game;
 use Doctrine\ORM\EntityManager;
 
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -11,7 +10,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 class RoomResolver implements ResolverInterface, AliasedInterface
 {
@@ -53,7 +51,6 @@ class RoomResolver implements ResolverInterface, AliasedInterface
         $order = "ASC";
 
         $where["available"] = true;
-        //$where["isPrivate"] = false;
 
         if(!empty($args["name"]))
         {

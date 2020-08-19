@@ -13,7 +13,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 
 class PostResponse{
@@ -21,6 +20,7 @@ class PostResponse{
     public $poster;
     public $content;
     public $likes;
+    public $slug;
     public $comments;
 }
 
@@ -47,6 +47,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
         $response -> content = $post -> getContent();
         $response -> title = $post -> getTitle();
         $response -> poster = $post -> getPoster();
+        $response -> slug = $post -> getSlug();
 
         $where = array();
         $where["post"] = $post;
@@ -143,6 +144,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> content = $source -> getContent();
                 $response -> title = $source -> getTitle();
                 $response -> poster = $source -> getPoster();
+                $response -> slug = $source -> getSlug();
 
                 $whereL["post"] = $source;
                 $likes = $this->em->getRepository(PostLike::class)->findBy(
@@ -164,7 +166,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                     1
                 );
                 $response -> comments = $comments->getTotalItemCount();
-                
+
                 $responses[] = $response;
             }
         }
@@ -176,6 +178,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> content = $source -> getContent();
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
+                $response -> slug = $source -> getslug();
 
                 $whereL["post"] = $source;
                 $likes = $this->em->getRepository(PostLike::class)->findBy(

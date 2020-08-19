@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Resolver;
 
-use App\Entity\Category;
 use App\Entity\Game;
 use Doctrine\ORM\EntityManager;
 
@@ -11,7 +10,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 class GameResolver implements ResolverInterface, AliasedInterface
 {

@@ -19,6 +19,7 @@ class Response{
     public $poster;
     public $content;
     public $likes;
+    public $slug;
 }
 
 class CommentResolver implements ResolverInterface, AliasedInterface
@@ -41,6 +42,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
         $response -> content = $comment -> getContent();
         $response -> poster = $comment -> getPoster();
         $response -> post = $comment -> getPost();
+        $response -> slug = $comment -> getSlug();
 
         $where = array();
         $where["comment"] = $comment;
@@ -132,6 +134,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $response -> content = $source -> getContent();
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
+                $response -> slug = $source -> getSlug();
 
                 $whereL["comment"] = $source;
                 $likes = $this->em->getRepository(CommentLike::class)->findBy(
@@ -155,7 +158,8 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $response -> content = $source -> getContent();
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
-
+                $response -> slug = $source -> getSlug();
+                
                 $whereL["comment"] = $source;
                 $likes = $this->em->getRepository(CommentLike::class)->findBy(
                     $whereL

@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Repository\PostLikeRepository;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=PostLikeRepository::class)
  */

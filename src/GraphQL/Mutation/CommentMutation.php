@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class CommentMutation implements MutationInterface, AliasedInterface
 {

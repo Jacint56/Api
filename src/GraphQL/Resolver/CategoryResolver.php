@@ -10,7 +10,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 class CategoryResolver implements ResolverInterface, AliasedInterface
 {
