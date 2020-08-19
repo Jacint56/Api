@@ -11,6 +11,7 @@ Post:
             slug: String
             poster: "User"
             likes: Int
+            comments: Int
 
 PostCollection:
     type: object

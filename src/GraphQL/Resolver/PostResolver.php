@@ -4,6 +4,7 @@ namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\Comment;
 use App\Entity\PostLike;
 use Doctrine\ORM\EntityManager;
 
@@ -20,7 +21,9 @@ class PostResponse{
     public $poster;
     public $content;
     public $likes;
+    public $comments;
 }
+
 
 class PostResolver implements ResolverInterface, AliasedInterface
 {
@@ -37,12 +40,26 @@ class PostResolver implements ResolverInterface, AliasedInterface
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
 
+        
+
         $response = new PostResponse;
         $response -> id = $post -> getId();
         $response -> content = $post -> getContent();
         $response -> title = $post -> getTitle();
         $response -> poster = $post -> getPoster();
 
+        $where = array();
+        $where["post"] = $post;
+        $comments = $this->em->getRepository(Comment::class)->findBy(
+            $where
+        );
+        $result = $this->paginator->paginate(
+            $comments,
+            1,
+            1
+        );
+        $response -> comments = $result->getTotalItemCount();
+        
         $where = array();
         $where["post"] = $post;
         $likes = $this->em->getRepository(PostLike::class)->findBy(
@@ -138,6 +155,16 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 );
                 $response -> likes = $likes->getTotalItemCount();
 
+                $comments = $this->em->getRepository(PostLike::class)->findBy(
+                    $whereL
+                );
+                 $comments= $this->paginator->paginate(
+                    $comments,
+                    1,
+                    1
+                );
+                $response -> comments = $comments->getTotalItemCount();
+                
                 $responses[] = $response;
             }
         }
@@ -160,6 +187,16 @@ class PostResolver implements ResolverInterface, AliasedInterface
                     1
                 );
                 $response -> likes = $likes->getTotalItemCount();
+
+                $comments = $this->em->getRepository(PostLike::class)->findBy(
+                    $whereL
+                );
+                 $comments= $this->paginator->paginate(
+                    $comments,
+                    1,
+                    1
+                );
+                $response -> comments = $comments->getTotalItemCount();
 
                 $responses[] = $response;
             }
