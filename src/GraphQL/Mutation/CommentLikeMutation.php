@@ -88,7 +88,7 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
     public static function getAliases(): array
     {
         return array(
-            "create" => "createCommentLike"
+            "create" => "CommentLike"
         );
     }
 }
