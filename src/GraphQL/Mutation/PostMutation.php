@@ -91,11 +91,19 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
+        $comments = $this->em->getRepository(Comment::class)->findBy(array("post" => $args["id"]));
         if(!empty($post) && $post->getAvailable())
         {
             if ($this->em->getRepository(User::class)->find($args["editor"])==$post->getPoster())
             {
                 $post->setAvailable(false);
+                if(!empty($comments))
+                {
+                    foreach($comments as $Comments)
+                    {
+                        $Comments->setAvailable(false);
+                    }
+                }
                 $this->em->flush();
                 return true;
             }
