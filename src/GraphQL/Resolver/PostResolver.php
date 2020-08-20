@@ -22,6 +22,8 @@ class PostResponse{
     public $likes;
     public $slug;
     public $comments;
+    public $createdAt;
+    public $updatedAt;
 }
 
 
@@ -48,6 +50,18 @@ class PostResolver implements ResolverInterface, AliasedInterface
         $response -> title = $post -> getTitle();
         $response -> poster = $post -> getPoster();
         $response -> slug = $post -> getSlug();
+
+        $conn = $this->em->getConnection();
+        $sql = '
+            SELECT created_at FROM post
+            WHERE post.id = :Id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['Id' => $args['id']]);
+
+        dump($stmt->fetchAll());
+
+        $response -> $stmt->fetchAll()[0]['created_at'];
 
         $where = array();
         $where["post"] = $post;

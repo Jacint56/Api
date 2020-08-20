@@ -12,6 +12,7 @@ Post:
             poster: "User"
             likes: Int
             comments: Int
+            created: String
 
 PostCollection:
     type: object
