@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\PostLike;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -91,11 +92,19 @@ class PostMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
+        $postlikes = $this->em->getRepository(PostLike::class)->findBy(Array("post" => $args["id"]));
         if(!empty($post) && $post->getAvailable())
         {
             if ($this->em->getRepository(User::class)->find($args["editor"])==$post->getPoster())
             {
                 $post->setAvailable(false);
+                if(!empty($postlikes))
+                {
+                  foreach($postlikes as $likes)
+                  {
+                    $likes->setAvailable(false);
+                  }
+                }
                 $this->em->flush();
                 return true;
             }
