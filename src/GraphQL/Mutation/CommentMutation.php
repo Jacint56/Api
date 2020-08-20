@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Post;
 use App\Entity\Comment;
 use Doctrine\ORM\EntityManager;
+use App\Entity\CommentLike;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -83,11 +84,19 @@ class CommentMutation implements MutationInterface, AliasedInterface
     public function delete(Argument $args)
     {
         $comment = $this->em->getRepository(Comment::class)->find($args["id"]);
+        $commentlikes = $this->em->getRepository(CommentLike::class)->findBy(array("comment" => $args["id"]));
         if(!empty($comment) && $comment->getAvailable())
         {
             if ($this->em->getRepository(User::class)->find($args["editor"])==$comment->getPoster())
             {
                 $comment->setAvailable(false);
+                if(!empty($commentlikes))
+                {
+                  foreach($commentlikes as $likes)
+                  {
+                    $likes->setAvailable(false);
+                  }
+                }
                 $this->em->flush();
                 return true;
             }
