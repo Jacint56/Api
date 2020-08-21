@@ -7,6 +7,6 @@ lexik_jwt_authentication:
             enabled: true
             name: BEARER
         authorization_header:
-#            enabled: true
+            enabled: true
             prefix: Bearer
             name: Authorization

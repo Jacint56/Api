@@ -187,4 +187,5 @@ Query:
 
             userFromToken:
                 type: User
+                access: "@=isAuthenticated()"
                 resolve: "@=resolver('UserFromToken', [args])"

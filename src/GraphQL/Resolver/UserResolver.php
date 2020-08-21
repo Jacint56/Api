@@ -5,7 +5,7 @@ namespace App\GraphQL\Resolver;
 use App\Entity\User;
 use App\Entity\Room;
 use Doctrine\ORM\EntityManager;
-
+use Symfony\Component\Security\Core\Security;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -18,12 +18,14 @@ class UserResolver implements ResolverInterface, AliasedInterface
     private $em;
     private $paginator;
     private $jwt;
+    private $security;
 
-    public function __construct(JWTEncoderInterface $jwt, EntityManager $em, PaginatorInterface $paginator)
+    public function __construct(JWTEncoderInterface $jwt, EntityManager $em, PaginatorInterface $paginator, Security $security)
     {
         $this->em = $em;
         $this->paginator = $paginator;
         $this->jwt = $jwt;
+        $this->security = $security;
     }
 
     public function resolve(Argument $args)
@@ -121,7 +123,8 @@ class UserResolver implements ResolverInterface, AliasedInterface
     {
         $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'];
         $token = substr($authorizationHeader, 7);
-
+        dump($this->security->getToken());
+        exit();
         if(empty($token)){
             throw new \GraphQL\Error\UserError('Can\'t find token!');
             exit();
@@ -138,10 +141,11 @@ class UserResolver implements ResolverInterface, AliasedInterface
             throw new \GraphQL\Error\UserError('Invalid token!');
             exit();
         }
-
+        
         $user = $users[0];
         if($user->getAvailable())
         {
+            
             return $user;
         }
     }

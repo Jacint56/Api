@@ -39,9 +39,10 @@ class Login implements MutationInterface, AliasedInterface
             if (
                 $user->getAvailable()
                 &&
-                $this->passwordEncoder->isPasswordValid($user, $args["password"])
+                $this->passwordEncoder->isPasswordValid($user, $args["password"]) 
             )
             {
+                    //dump($user);
                     return $this->jwtManager->create($user);
             }
             else{
