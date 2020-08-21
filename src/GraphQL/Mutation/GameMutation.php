@@ -58,17 +58,17 @@ class GameMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         $game = $this->em->getRepository(Game::class)->find($args["id"]);
-        $data = $this->em->getRepository(Game::class)->findBy(Array(
+        $data = $this->em->getRepository(Game::class)->findOneBy(Array(
             "name" => $args["game"]["name"]
         ));
         if(!empty($game) && $game->getAvailable())
         {
             if(!empty($args["game"]["name"]))
             {
-                if (!empty($data) && $data[0]->getId() != $game->getId())
+                if (!empty($data) && $data->getId() != $game->getId())
                 {
                     if(
-                        ($this->em->getRepository(Game::class)->findBy(array("name" => $args["game"]["name"])))[0]->getId()
+                        ($this->em->getRepository(Game::class)->findOneBy(array("name" => $args["game"]["name"])))->getId()
                         ==
                         $game->getId()
                     )

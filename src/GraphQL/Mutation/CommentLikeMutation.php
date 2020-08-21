@@ -22,7 +22,7 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
 
     public function create(Argument $args)
     {
-      $data = $this->em->getRepository(CommentLike::class)->findBy(
+      $data = $this->em->getRepository(CommentLike::class)->findOneBy(
         array(
             "liker" => $args["commentLike"]["liker"],
             "comment" => $args["commentLike"]["comment"]
@@ -30,16 +30,16 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
     );
         if(!empty($data))
         {
-          if (!($data[0]->getAvailable())) {
-              $data[0]->setAvailable(true);
+          if (!($data->getAvailable())) {
+              $data->setAvailable(true);
           }
           else
           {
-            $data[0]->setAvailable(false);
+            $data->setAvailable(false);
           }
           $this->em->flush();
-          if ($data[0]->getAvailable()) {
-              return $data[0];
+          if ($data->getAvailable()) {
+              return $data;
           }
           else
           {

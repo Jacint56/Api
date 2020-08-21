@@ -65,12 +65,12 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function update(Argument $args)
     {
         if (!empty($args["user"]["userName"]) && !empty($this->em->getRepository(User::class)->findBy(Array("userName"=>$args["user"]["userName"]))) && 
-         ($this->em->getRepository(User::class)->findBy(Array("userName"=>$args["user"]["userName"])))[0]->getId() != $args["id"]) {
+         ($this->em->getRepository(User::class)->findOneBy(Array("userName"=>$args["user"]["userName"])))->getId() != $args["id"]) {
             throw new \GraphQL\Error\UserError('This username is exist!');
             exit();
         }
         if (!empty($args["user"]["email"]) && !empty($this->em->getRepository(User::class)->findBy(Array("email"=>$args["user"]["email"]))) && 
-        ($this->em->getRepository(User::class)->findBy(Array("email"=>$args["user"]["email"])))[0]->getId() != $args["id"]) {
+        ($this->em->getRepository(User::class)->findOneBy(Array("email"=>$args["user"]["email"])))->getId() != $args["id"]) {
             throw new \GraphQL\Error\UserError('This email is exist!');
             exit();
         }

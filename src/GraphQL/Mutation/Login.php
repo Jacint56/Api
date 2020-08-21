@@ -25,17 +25,15 @@ class Login implements MutationInterface, AliasedInterface
 
     public function login(Argument $args)
     {
-        $users = Array();
-        $users = $this->em->getRepository(User::class)->findBy(
+        $user = $this->em->getRepository(User::class)->findOneBy(
             Array("userName" => $args["userName"])
         );
-        if (empty($users))
+        if (empty($user))
         {
             throw new \GraphQL\Error\Error('Wrong username or password!');
         }
         else
         {
-            $user = $users[0];
             if (
                 $user->getAvailable()
                 &&

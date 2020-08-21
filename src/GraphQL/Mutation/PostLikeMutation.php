@@ -57,20 +57,20 @@ class PostLikeMutation implements MutationInterface, AliasedInterface
 
     public function postLike(Argument $args)
     {
-        $likes = $this->em->getRepository(PostLike::class)->findBy(
+        $like = $this->em->getRepository(PostLike::class)->findOneBy(
             array(
                 "liker" => $args["postLike"]["liker"],
                 "post" => $args["postLike"]["post"]
             )
         );
 
-        if(empty($likes))
+        if(empty($like))
         {
             return $this->create($args);
         }
         else
         {
-            $args["id"] = $likes[0]->getId();
+            $args["id"] = $like->getId();
             return $this->delete($args);
         }
     }
