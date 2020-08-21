@@ -22,6 +22,8 @@ class PostResponse{
     public $likes;
     public $slug;
     public $comments;
+    public $created;
+    public $updated;
 }
 
 
@@ -49,6 +51,28 @@ class PostResolver implements ResolverInterface, AliasedInterface
         $response -> poster = $post -> getPoster();
         $response -> slug = $post -> getSlug();
 
+        $conn = $this->em->getConnection();
+        $sql = '
+            SELECT created_at FROM post
+            WHERE post.id = :Id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['Id' => $args['id']]);
+        foreach($stmt->fetchAll() as $data){
+            $response -> created = ($data['created_at']);
+        }
+
+        $conn = $this->em->getConnection();
+        $sql = '
+            SELECT updated_at FROM post
+            WHERE post.id = :Id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['Id' => $args['id']]);
+        foreach($stmt->fetchAll() as $data){
+            $response -> updated = ($data['updated_at']);
+        }
+
         $where = array();
         $where["post"] = $post;
         $comments = $this->em->getRepository(Comment::class)->findBy(
@@ -72,6 +96,8 @@ class PostResolver implements ResolverInterface, AliasedInterface
             1
         );
         $response -> likes = $result->getTotalItemCount();
+
+//        dump($response);
 
         if($post->getAvailable())
         {
