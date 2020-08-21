@@ -1,3 +1,4 @@
+
 INSERT INTO `category` (`id`, `slug`, `name`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 'moba', 'MOBA', 1, '2020-07-15 09:27:22', '2020-07-15 09:27:22'),
 	(2, 'fps', 'FPS', 1, '2020-07-15 09:27:51', '2020-07-15 09:27:51'),
@@ -7,12 +8,12 @@ INSERT INTO `category` (`id`, `slug`, `name`, `available`, `created_at`, `update
 	(6, 'platformer', 'Platformer', 1, '2020-07-15 09:28:28', '2020-07-15 09:28:28'),
 	(7, 'racing', 'Racing', 1, '2020-07-15 09:28:42', '2020-07-15 09:28:42'),
 	(8, 'rts', 'RTS', 1, '2020-07-15 11:29:19', '2020-07-15 11:29:19'),
-	(9, 'sport', 'Sport', 0, '2020-07-15 13:39:19', '2020-07-15 13:41:52');
+	(9, 'sport', 'Sport', 1, '2020-07-15 13:39:19', '2020-07-15 13:41:52');
 
 INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'League of Legends', 'league-of-legends', 1, '2020-07-15 09:33:47', '2020-07-15 09:33:47'),
 	(2, 2, 'Counter Strike: Global Offensive', 'counter-strike-global-offensive', 1, '2020-07-15 09:37:20', '2020-07-15 09:47:01'),
-	(3, 4, 'Skribblio', 'skribblio', 1, '2020-07-15 09:37:55', '2020-07-15 09:47:38'),
+	(3, 1, 'Scribblio', 'scribblio', 1, '2020-07-15 09:37:55', '2020-08-13 13:51:28'),
 	(4, 2, 'Call of Duty: Warzone', 'call-of-duty-warzone', 1, '2020-07-15 09:39:44', '2020-07-15 09:48:24'),
 	(5, 5, 'Minecraft', 'minecraft', 1, '2020-07-15 09:39:57', '2020-07-15 09:48:57'),
 	(6, 6, 'Terraria', 'terraria', 1, '2020-07-15 09:42:49', '2020-07-15 09:49:53'),
@@ -24,8 +25,8 @@ INSERT INTO `game` (`id`, `category_id`, `name`, `slug`, `available`, `created_a
 	(12, 8, 'Homeworld Remastered', 'homeworld-remastered', 1, '2020-07-15 10:10:09', '2020-07-15 11:30:50'),
 	(13, 3, 'Grand Theft Auto: Online', 'grand-theft-auto-online', 1, '2020-07-15 10:10:45', '2020-07-15 10:10:45'),
 	(14, 3, 'Red Dead Redemption Online', 'red-dead-redemption-online', 1, '2020-07-15 11:37:18', '2020-07-15 11:37:18'),
-	(15, 3, 'Fortnite', 'fortnite', 0, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
-	(16, 9, 'FIFA21', 'fifa21', 0, '2020-07-15 13:39:58', '2020-07-15 13:41:04');
+	(15, 3, 'Fortnite', 'fortnite', 1, '2020-07-15 12:15:46', '2020-07-15 12:15:46'),
+	(16, 9, 'FIFA21', 'fifa21', 1, '2020-07-15 13:39:58', '2020-07-15 13:41:04');
 
 INSERT INTO `room` (`id`, `game_id`, `slug`, `name`, `is_private`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 8, 'mihaj-sumaher', 'Miháj Sumáher', 1, 1, '2020-07-16 12:49:21', '2020-07-16 13:16:18'),
@@ -36,16 +37,15 @@ INSERT INTO `room` (`id`, `game_id`, `slug`, `name`, `is_private`, `available`, 
 	(6, 6, 'zod', 'Ződ', 0, 1, '2020-07-16 12:57:32', '2020-07-16 12:57:32'),
 	(7, 1, 'kek', 'Kék', 1, 1, '2020-07-16 12:57:58', '2020-07-16 12:57:58'),
 	(8, 1, 'lila', 'Lila', 1, 1, '2020-07-16 12:58:04', '2020-07-16 12:58:04'),
-	(9, 2, 'cyka-blyat', 'Cyka Blyat', 0, 0, '2020-07-16 12:58:59', '2020-07-16 13:21:13'),
+	(9, 2, 'cyka-blyat', 'Cyka Blyat', 0, 1, '2020-07-16 12:58:59', '2020-07-16 13:21:13'),
 	(10, 2, 'suka-bliat', 'сука блять', 0, 1, '2020-07-16 13:07:19', '2020-07-16 13:07:19');
 
 INSERT INTO `user` (`id`, `room_id`, `user_name`, `roles`, `password`, `email`, `slug`, `available`, `stats`, `created_at`, `updated_at`) VALUES
-	(1, NULL, 'ChonHTailor', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$yfOTBO4vx5jiBiFs2H9KUw$EuTSgtjzF0cALvcD5chcCzrcarOgxm+gdv4sTtNMUpc', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-07-16 11:28:10'),
-	(2, NULL, 'ifuckedyourmother69', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 0, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
+	(1, NULL, 'ChonHTailor', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$CyA2o/8leY2tyeBdE04Mbw$NBMVE4jPTtGX/vUWFJUPsWY6tUwCgrdFJDOAGncNMkw', 'chon.h.tailor@gmail.com', 'chonhtailor', 1, NULL, '2020-07-16 11:05:27', '2020-08-17 12:25:41'),
+	(2, NULL, 'ifuckedyourmother69', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$rVk67fvG8p3R91AgeDG/RQ$yDFHZHEb9ojjV+yRpqPTpJfaScfQPYp6Cn2295Xrks0', 'noobmaster@gmail.com', 'ifuckedyourmother69', 1, NULL, '2020-07-16 11:06:21', '2020-07-16 11:20:33'),
 	(3, NULL, 'Jacint1990', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$K1QlqA4miZNf1Y/DuRzv/A$PSTVKn5KO/0huxhL8mfY4CwdssDPF7ZXJLnXweyLmnA', 'jacint9876543210@gmail.com', 'jacint1990', 1, NULL, '2020-07-16 11:06:55', '2020-07-16 11:06:55'),
 	(4, NULL, 'Mindegy', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$R/XAKQ/hs6JrMxe7rHKDFg$wI2EN4u7hm/Y9hdKkNbDpRVy/3BdUnzr1tGMyV2mbis', 'faabi@gmail.com', 'mindegy', 1, NULL, '2020-07-16 11:07:22', '2020-07-16 11:07:22'),
 	(5, NULL, 'Leszarom', '["ROLE_USER"]', '$argon2id$v=19$m=65536,t=4,p=1$diWoED770qY4X0E/fqANYw$R0W/WUmnREGgacBoqrfl5UZKh84PjJf6R2+1jyTJRmY', 'peca@gmail.com', 'leszarom', 1, NULL, '2020-07-21 13:02:16', '2020-07-21 13:02:16');
-
 
 INSERT INTO `friendship` (`id`, `sender_id`, `reciver_id`, `status`, `available`, `created_at`, `updated_at`) VALUES
 	(1, 1, 3, 1, 1, '2020-07-17 12:46:03', '2020-07-17 12:46:03'),
@@ -54,23 +54,28 @@ INSERT INTO `friendship` (`id`, `sender_id`, `reciver_id`, `status`, `available`
 	(4, 1, 4, 1, 1, '2020-07-23 10:09:49', '2020-07-23 10:09:49');
 
 INSERT INTO `post` (`id`, `poster_id`, `title`, `content`, `slug`, `available`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Black Ops 2 story', 'Sponge compared to Modern Warfares and Black Ops 1.', 'black-ops-2-story', 1, '2020-07-17 11:26:22', '2020-07-17 11:26:22'),
-	(2, 3, 'Rád gondótam', 'Péló', 'rad-gondotam', 0, '2020-07-17 11:50:40', '2020-07-17 11:54:18'),
+	(1, 1, 'Black Ops 2 story', 'Sponge compared to Modern Warfares and Black Ops 1.', 'black-ops-2-story', 1, '2020-07-17 11:26:22', '2020-08-21 08:19:05'),
+	(2, 3, 'Rád gondótam', 'Péló', 'rad-gondotam', 1, '2020-07-17 11:50:40', '2020-07-17 11:54:18'),
 	(3, 1, 'Mindenki ismeri azt az érzést, amikor meglát egy Opressor ikont.', 'Aszom', 'mindenki-ismeri-azt-az-erzest-amikor-meglat-egy-opressor-ikont', 1, '2020-07-17 11:53:29', '2020-07-17 11:53:29');
 
-INSERT INTO `comment` (`id`, `poster_id`, `post_id`, `content`, `available`, `created_at`, `updated_at`) VALUES
-	(1, 2, 1, 'Makarov knows Yuri.', 1, '2020-07-17 11:30:51', '2020-07-17 11:30:51'),
-	(2, 3, 1, 'Still better love story than Twilight.', 1, '2020-07-17 11:31:37', '2020-07-17 11:31:37'),
-	(3, 4, 1, 'Random komment', 1, '2020-07-17 11:31:56', '2020-07-17 11:31:56'),
-	(4, 1, 1, 'Let\'s face it. No-one can take Menendez seriously.', 1, '2020-07-17 11:32:23', '2020-07-17 11:32:23'),
-	(5, 3, 3, 'Gondolkodok, tehát vagyok.', 0, '2020-07-17 11:58:37', '2020-07-17 12:03:16');
-
 INSERT INTO `post_like` (`id`, `liker_id`, `post_id`, `available`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, 1, '2020-08-11 09:58:13', '2020-08-11 09:58:13'),
-	(2, 3, 1, 1, '2020-08-11 09:58:23', '2020-08-11 09:58:23');
+	(1, 1, 1, 1, '2020-08-11 09:58:13', '2020-08-21 08:19:06'),
+	(2, 3, 1, 1, '2020-08-11 09:58:23', '2020-08-21 08:19:06'),
+	(3, 1, 3, 1, '2020-08-14 10:08:43', '2020-08-14 10:10:44'),
+	(4, 1, 1, 1, '2020-08-14 10:14:03', '2020-08-21 08:19:06'),
+	(5, 3, 3, 1, '2020-08-14 10:50:07', '2020-08-14 10:55:18');
+
+INSERT INTO `comment` (`id`, `poster_id`, `post_id`, `content`, `available`, `created_at`, `updated_at`) VALUES
+	(1, 2, 1, 'Makarov knows Yuri.', 1, '2020-07-17 11:30:51', '2020-08-21 08:19:06'),
+	(2, 3, 1, 'Still better love story than Twilight.', 1, '2020-07-17 11:31:37', '2020-08-21 08:19:06'),
+	(3, 4, 1, 'Random komment', 1, '2020-07-17 11:31:56', '2020-08-21 08:19:06'),
+	(4, 1, 1, 'Let\'s face it. No-one can take Menendez seriously.', 1, '2020-07-17 11:32:23', '2020-08-21 08:19:06'),
+	(5, 3, 3, 'Gondolkodok, tehát vagyok.', 1, '2020-07-17 11:58:37', '2020-07-17 12:03:16');
 
 INSERT INTO `comment_like` (`id`, `liker_id`, `comment_id`, `available`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, 1, '2020-08-11 13:30:28', '2020-08-11 13:30:28'),
-	(2, 3, 1, 1, '2020-08-11 13:31:04', '2020-08-11 13:31:04'),
-	(3, 2, 1, 0, '2020-08-11 13:31:27', '2020-08-11 13:33:46'),
-	(4, 1, 2, 1, '2020-08-11 13:32:04', '2020-08-11 13:32:04');
+	(1, 1, 1, 1, '2020-08-11 13:30:28', '2020-08-21 08:19:06'),
+	(2, 3, 1, 1, '2020-08-11 13:31:04', '2020-08-21 08:19:06'),
+	(3, 2, 1, 1, '2020-08-11 13:31:27', '2020-08-21 08:19:06'),
+	(4, 1, 2, 1, '2020-08-11 13:32:04', '2020-08-21 08:19:06'),
+	(5, 1, 3, 1, '2020-08-14 10:28:38', '2020-08-21 08:19:06'),
+	(6, 3, 3, 1, '2020-08-14 10:29:14', '2020-08-21 08:19:06');
