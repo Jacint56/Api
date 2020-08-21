@@ -66,8 +66,10 @@ class CommentResolver implements ResolverInterface, AliasedInterface
             $response -> updated = ($data['updated_at']);
         }
 
-        $where = array();
-        $where["comment"] = $comment;
+        $where = array(
+            "comment" => $comment,
+            "available" => true
+        );
         $likes = $this->em->getRepository(CommentLike::class)->findBy(
             $where
         );
@@ -102,7 +104,6 @@ class CommentResolver implements ResolverInterface, AliasedInterface
 
     public function list(Argument $args)
     {
-        $posts = array();
         $where = array();
         $column = "id";
         $order = "ASC";
@@ -157,7 +158,32 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
 
-                $whereL["comment"] = $source;
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT created_at FROM comment
+                    WHERE comment.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> created = ($data['created_at']);
+                }
+        
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT updated_at FROM comment
+                    WHERE comment.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> updated = ($data['updated_at']);
+                }
+
+                $whereL = array(
+                    "comment" => $source,
+                    "available" => true
+                );
                 $likes = $this->em->getRepository(CommentLike::class)->findBy(
                     $whereL
                 );
@@ -180,8 +206,33 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
                 $response -> slug = $source -> getSlug();
+
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT created_at FROM comment
+                    WHERE comment.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> created = ($data['created_at']);
+                }
+        
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT updated_at FROM comment
+                    WHERE comment.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> updated = ($data['updated_at']);
+                }
                 
-                $whereL["comment"] = $source;
+                $whereL = array(
+                    "comment" => $source,
+                    "available" => true
+                );
                 $likes = $this->em->getRepository(CommentLike::class)->findBy(
                     $whereL
                 );

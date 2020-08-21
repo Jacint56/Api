@@ -73,8 +73,10 @@ class PostResolver implements ResolverInterface, AliasedInterface
             $response -> updated = ($data['updated_at']);
         }
 
-        $where = array();
-        $where["post"] = $post;
+        $where = array(
+            "post" => $post,
+            "available" => true
+        );
         $comments = $this->em->getRepository(Comment::class)->findBy(
             $where
         );
@@ -85,8 +87,6 @@ class PostResolver implements ResolverInterface, AliasedInterface
         );
         $response -> comments = $result->getTotalItemCount();
         
-        $where = array();
-        $where["post"] = $post;
         $likes = $this->em->getRepository(PostLike::class)->findBy(
             $where
         );
@@ -119,7 +119,6 @@ class PostResolver implements ResolverInterface, AliasedInterface
       */
     public function list(Argument $args)
     {
-        $posts = array();
         $where = array();
         $column = "id";
         $order = "ASC";
@@ -172,7 +171,32 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> poster = $source -> getPoster();
                 $response -> slug = $source -> getSlug();
 
-                $whereL["post"] = $source;
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT created_at FROM post
+                    WHERE post.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> created = ($data['created_at']);
+                }
+        
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT updated_at FROM post
+                    WHERE post.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> updated = ($data['updated_at']);
+                }
+
+                $whereL = array(
+                    "post" => $source,
+                    "available" => true
+                );
                 $likes = $this->em->getRepository(PostLike::class)->findBy(
                     $whereL
                 );
@@ -183,7 +207,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 );
                 $response -> likes = $likes->getTotalItemCount();
 
-                $comments = $this->em->getRepository(PostLike::class)->findBy(
+                $comments = $this->em->getRepository(Comment::class)->findBy(
                     $whereL
                 );
                  $comments= $this->paginator->paginate(
@@ -206,7 +230,32 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> post = $source -> getPost();
                 $response -> slug = $source -> getslug();
 
-                $whereL["post"] = $source;
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT created_at FROM post
+                    WHERE post.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> created = ($data['created_at']);
+                }
+        
+                $conn = $this->em->getConnection();
+                $sql = '
+                    SELECT updated_at FROM post
+                    WHERE post.id = :Id
+                    ';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['Id' => $args['id']]);
+                foreach($stmt->fetchAll() as $data){
+                    $response -> updated = ($data['updated_at']);
+                }
+
+                $whereL = array(
+                    "post" => $source,
+                    "available" => true
+                );
                 $likes = $this->em->getRepository(PostLike::class)->findBy(
                     $whereL
                 );
@@ -217,7 +266,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 );
                 $response -> likes = $likes->getTotalItemCount();
 
-                $comments = $this->em->getRepository(PostLike::class)->findBy(
+                $comments = $this->em->getRepository(Comment::class)->findBy(
                     $whereL
                 );
                  $comments= $this->paginator->paginate(
