@@ -4,6 +4,8 @@ namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\Comment;
+use App\Entity\CommentLike;
 use App\Entity\PostLike;
 use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -94,6 +96,7 @@ class PostMutation implements MutationInterface, AliasedInterface
         $post = $this->em->getRepository(Post::class)->find($args["id"]);
         $postlikes = $this->em->getRepository(PostLike::class)->findBy(Array("post" => $args["id"]));
         $comments = $this->em->getRepository(Comment::class)->findBy(array("post" => $args["id"]));
+        $commentlikes = $this->em->getRepository(CommentLike::class)->findBy(Array("comment" => $args["id"]));
         if(!empty($post) && $post->getAvailable())
         {
             if ($this->em->getRepository(User::class)->find($args["editor"])==$post->getPoster())
@@ -110,6 +113,11 @@ class PostMutation implements MutationInterface, AliasedInterface
                 {
                     foreach($comments as $Comments)
                     {
+                        $commentLikes = $this->em->getRepository(CommentLike::class)->findBy(Array("comment" => $Comments->getId()));
+                        foreach($commentLikes as $commentLike)
+                        {
+                            $commentLike->setAvailable(false);
+                        }
                         $Comments->setAvailable(false);
                     }
                 }
