@@ -9,6 +9,8 @@ Comment:
             poster: "User"
             post: "Post"
             likes: Int
+            created: String
+            updated: String
 
 CommentCollection:
     type: object

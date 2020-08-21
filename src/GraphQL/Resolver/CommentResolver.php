@@ -19,6 +19,8 @@ class Response{
     public $poster;
     public $content;
     public $likes;
+    public $created;
+    public $updated;
 }
 
 class CommentResolver implements ResolverInterface, AliasedInterface
@@ -41,6 +43,28 @@ class CommentResolver implements ResolverInterface, AliasedInterface
         $response -> content = $comment -> getContent();
         $response -> poster = $comment -> getPoster();
         $response -> post = $comment -> getPost();
+
+        $conn = $this->em->getConnection();
+        $sql = '
+            SELECT created_at FROM comment
+            WHERE comment.id = :Id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['Id' => $args['id']]);
+        foreach($stmt->fetchAll() as $data){
+            $response -> created = ($data['created_at']);
+        }
+
+        $conn = $this->em->getConnection();
+        $sql = '
+            SELECT updated_at FROM comment
+            WHERE comment.id = :Id
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['Id' => $args['id']]);
+        foreach($stmt->fetchAll() as $data){
+            $response -> updated = ($data['updated_at']);
+        }
 
         $where = array();
         $where["comment"] = $comment;

@@ -13,6 +13,7 @@ Post:
             likes: Int
             comments: Int
             created: String
+            updated: String
 
 PostCollection:
     type: object
