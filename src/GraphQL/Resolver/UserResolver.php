@@ -13,7 +13,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
-use Symfony\Component\Security\Core\Security;
 
 class UserResolver implements ResolverInterface, AliasedInterface
 {
