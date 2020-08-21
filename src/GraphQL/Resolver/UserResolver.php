@@ -121,33 +121,7 @@ class UserResolver implements ResolverInterface, AliasedInterface
 
     public function tokenResolver(Argument $args)
     {
-        $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'];
-        $token = substr($authorizationHeader, 7);
-        dump($this->security->getToken());
-        exit();
-        if(empty($token)){
-            throw new \GraphQL\Error\UserError('Can\'t find token!');
-            exit();
-        }
-
-        $data = $this->jwt->decode($token);
-
-        $users = $this->em->getRepository(User::class)->findBy(
-            array(
-                'userName' => $data['username'])
-        );
-
-        if(empty($users)){
-            throw new \GraphQL\Error\UserError('Invalid token!');
-            exit();
-        }
-        
-        $user = $users[0];
-        if($user->getAvailable())
-        {
-            
-            return $user;
-        }
+        return $this->security->getUser();
     }
     /*
     {
