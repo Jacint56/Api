@@ -98,15 +98,15 @@ class PostLikeResolver implements ResolverInterface, AliasedInterface
         );
         if($args["limit"] == 0)
         {
-            return [
+            return array(
                 "postLikes" => $likes,
                 "total" => $result->getTotalItemCount()
-            ];
+            );
         }
-        return [
+        return array(
             "postLikes" => $result,
             "total" => $result->getTotalItemCount()
-        ];
+        );
     }
 
 /*{
