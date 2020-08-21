@@ -50,7 +50,7 @@ class CommentLikeMutation implements MutationInterface, AliasedInterface
         {
           $like = new CommentLike();
 
-          $like->setLiker($this->em->getRepository(User::class)->findB($args["commentLike"]["liker"]));
+          $like->setLiker($this->em->getRepository(User::class)->find($args["commentLike"]["liker"]));
           $like->setComment($this->em->getRepository(Comment::class)->find($args["commentLike"]["comment"]));
   
           $like->setAvailable(true);
