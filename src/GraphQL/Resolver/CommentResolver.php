@@ -161,7 +161,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $conn = $this->em->getConnection();
                 $sql = '
                     SELECT created_at FROM comment
-                    WHERE comment.id = :Id
+                    WHERE comment.id = :Id 
                     ';
                 $stmt = $conn->prepare($sql);
                 $stmt->execute(['Id' => $args['id']]);

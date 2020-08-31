@@ -101,6 +101,8 @@ Query:
                         type: Int
                     page:
                         type: Int
+                    column:
+                        type: String
                 resolve: "@=resolver('allPosts', [args])"
 
             Comment:
