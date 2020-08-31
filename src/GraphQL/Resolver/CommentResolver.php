@@ -7,7 +7,7 @@ use App\Entity\Post;
 use App\Entity\Comment;
 use App\Entity\CommentLike;
 use Doctrine\ORM\EntityManager;
-
+use Doctrine\ORM\Query\AST\Functions\LengthFunction;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -101,6 +101,21 @@ class CommentResolver implements ResolverInterface, AliasedInterface
 }
 
 */
+    function sorter($value1, $value2)
+    {
+        if($value1-> likes == $value2-> likes)
+        {
+            return 0;
+        }
+        if($value1-> likes < $value2-> likes)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
+    }
 
     public function list(Argument $args)
     {
@@ -205,7 +220,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $response -> content = $source -> getContent();
                 $response -> poster = $source -> getPoster();
                 $response -> post = $source -> getPost();
-                $response -> slug = $source -> getSlug();
+                //$response -> slug = $source -> getSlug();
 
                 $conn = $this->em->getConnection();
                 $sql = '
@@ -246,7 +261,16 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                 $responses[] = $response;
             }
         }
-
+        for($i=0; $i< count($responses)-1;$i++)
+        {
+            if($responses[$i] -> likes < $responses[$i+1] -> likes)
+            {
+                $value = $responses[$i] -> likes;
+                $responses[$i] -> likes = $responses[$i+1] -> likes;
+                $responses[$i+1] -> likes = $value;
+                $i=0;
+            }
+        }
         return [
             "comments" => $responses,
             "total" => $result->getTotalItemCount()
