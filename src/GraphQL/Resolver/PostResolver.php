@@ -171,13 +171,14 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> poster = $source -> getPoster();
                 $response -> slug = $source -> getSlug();
 
+                
                 $conn = $this->em->getConnection();
                 $sql = '
                     SELECT created_at FROM post
                     WHERE post.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> created = ($data['created_at']);
                 }
@@ -188,7 +189,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                     WHERE post.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> updated = ($data['updated_at']);
                 }
@@ -227,7 +228,6 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response -> id = $source -> getId();
                 $response -> content = $source -> getContent();
                 $response -> poster = $source -> getPoster();
-                $response -> post = $source -> getPost();
                 $response -> slug = $source -> getslug();
 
                 $conn = $this->em->getConnection();
@@ -236,7 +236,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                     WHERE post.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> created = ($data['created_at']);
                 }
@@ -247,7 +247,7 @@ class PostResolver implements ResolverInterface, AliasedInterface
                     WHERE post.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> updated = ($data['updated_at']);
                 }
