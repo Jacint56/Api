@@ -179,7 +179,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                     WHERE comment.id = :Id 
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> created = ($data['created_at']);
                 }
@@ -190,7 +190,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                     WHERE comment.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> updated = ($data['updated_at']);
                 }
