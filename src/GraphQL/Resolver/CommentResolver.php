@@ -273,7 +273,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
             }
             if($responses[$i] -> likes == $responses[$i+1] -> likes)
             {
-                if ($response[$i] -> id < $responses[$i+1] -> id) {
+                if ($responses[$i] -> id < $responses[$i+1] -> id) {
                     $value = $responses[$i];
                     $responses[$i] = $responses[$i+1];
                     $responses[$i+1]= $value;
