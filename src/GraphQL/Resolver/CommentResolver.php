@@ -264,13 +264,21 @@ class CommentResolver implements ResolverInterface, AliasedInterface
         
         for($i=0; $i< count($responses)-1;$i++)
         {
-            if($responses[$i] )
             if($responses[$i] -> likes < $responses[$i+1] -> likes)
             {
                 $value = $responses[$i];
                 $responses[$i] = $responses[$i+1];
                 $responses[$i+1]= $value;
                 $i=0;
+            }
+            if($responses[$i] -> likes == $responses[$i+1] -> likes)
+            {
+                if ($response[$i] -> id < $responses[$i+1] -> id) {
+                    $value = $responses[$i];
+                    $responses[$i] = $responses[$i+1];
+                    $responses[$i+1]= $value;
+                    $i=0;
+                }
             }
         }
         return [
