@@ -101,22 +101,6 @@ class CommentResolver implements ResolverInterface, AliasedInterface
 }
 
 */
-    function sorter($value1, $value2)
-    {
-        if($value1-> likes == $value2-> likes)
-        {
-            return 0;
-        }
-        if($value1-> likes < $value2-> likes)
-        {
-            return -1;
-        }
-        else
-        {
-            return 1;
-        }
-    }
-
     public function list(Argument $args)
     {
         $where = array();
@@ -228,7 +212,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                     WHERE comment.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> created = ($data['created_at']);
                 }
@@ -239,7 +223,7 @@ class CommentResolver implements ResolverInterface, AliasedInterface
                     WHERE comment.id = :Id
                     ';
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(['Id' => $args['id']]);
+                $stmt->execute(['Id' => $source -> getId()]);
                 foreach($stmt->fetchAll() as $data){
                     $response -> updated = ($data['updated_at']);
                 }
