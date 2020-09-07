@@ -227,8 +227,9 @@ class PostResolver implements ResolverInterface, AliasedInterface
                 $response = new PostResponse;
                 $response -> id = $source -> getId();
                 $response -> content = $source -> getContent();
+                $response -> title = $source -> getTitle();
                 $response -> poster = $source -> getPoster();
-                $response -> slug = $source -> getslug();
+                $response -> slug = $source -> getSlug();
 
                 $conn = $this->em->getConnection();
                 $sql = '
