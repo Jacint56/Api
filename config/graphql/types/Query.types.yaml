@@ -198,3 +198,13 @@ Query:
                     limit:
                         type: Int
                 resolve: "@=resolver('getRoom', [args])"
+
+            readRoom:
+                type: String
+                args:
+                    id: ID
+                    limit:
+                        type: Int
+                    liker: Int
+                    comment: Int
+                resolve: "@=resolver('ReadRoom', [args])"

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\GraphQL\Mutation;
+namespace App\GraphQL\Resolver;
 
 use App\Entity\Room;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
-class writeRoomMutation implements MutationInterface, AliasedInterface
+class writeRoomResolver implements ResolverInterface, AliasedInterface
 {
     private $em;
 
@@ -18,7 +18,7 @@ class writeRoomMutation implements MutationInterface, AliasedInterface
         $this->em = $em;
     }
 
-    public function write(Argument $args)
+    public function read(Argument $args)
     {
         $room = $this->em->getRepository(Room::class)->find($args["id"]);
         if (empty($room) || !($room->getAvailable())) {
@@ -26,44 +26,39 @@ class writeRoomMutation implements MutationInterface, AliasedInterface
             exit();
         }
 
-        $message = 
-            "\n" .
-            $args["writer"] .
-            "\n" .
-            $args["date"] .
-            "\n" .
-            $args["message"] .
-            "\n";
-
         $filePath = "rooms/" . $room->getId() . ".txt";
 
-        $chat = "";
         try{
             $myfile = fopen($filePath, "r");
             $chat = fread($myfile,filesize($filePath));
         }
-        catch(Exception $err){}
+        catch(Exception $err){
+            throw new \GraphQL\Error\UserError("Can't read room conversation!");
+            exit();
+        }
         finally{}
 
-        $chat = $message . $chat;;
-
-        $stdout = fopen($filePath, "w");
-        fwrite($stdout, $chat);
-
-        //Legutolsó üzenet
-        return true;
+        $offset = 0;
+        for ($i = 0; $i < 4 * $args['limit']; $i++){
+            $temp = stripos($chat, "\n", $offset) + 1;
+            if ($temp < $offset){
+                break;
+            }
+            $offset = $temp;
+        }
+        return substr($chat, 0, $offset);
 
     }
     /*
-    mutation{
-    writeRoom(id:3, writer:4, date:"21-25-1926", message:"anyad")
+    {
+    readRoom(limit: 1, id: 3)
 }
 */
 
     public static function getAliases(): array
     {
         return array(
-            "write" => "writeRoom"
+            "read" => "ReadRoom"
         );
     }
 }
