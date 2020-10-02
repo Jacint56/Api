@@ -191,3 +191,10 @@ Query:
                 type: User
                 access: "@=isAuthenticated()"
                 resolve: "@=resolver('UserFromToken', [args])"
+
+            getRoom:
+                type: String
+                args:
+                    limit:
+                        type: Int
+                resolve: "@=resolver('getRoom', [args])"

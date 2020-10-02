@@ -184,3 +184,13 @@ Mutation:
                 resolve: "@=mutation('PostLike', [args])"
                 args:
                     postLike: "PostLikeInput"
+
+            writeRoom:
+                type: "Room"
+                resolve: "@=mutation('WriteRoom', [args])"
+                args:
+                    id:
+                        type: ID
+                    writer: Int
+                    date: String
+                    message: String
