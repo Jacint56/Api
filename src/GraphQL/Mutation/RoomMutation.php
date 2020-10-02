@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Exception;
 
 class RoomMutation implements MutationInterface, AliasedInterface
 {
@@ -111,12 +112,52 @@ class RoomMutation implements MutationInterface, AliasedInterface
 }
 */
 
+    public function write(Argument $args)
+    {
+        $room = $this->em->getRepository(Room::class)->find($args["id"]);
+        if (empty($room) || !($room->getAvailable())) {
+            throw new \GraphQL\Error\UserError('This room doesn\'t exist!');
+            exit();
+        }
+
+        $message = 
+            $args["writer"] .
+            "\n" .
+            $args["date"] .
+            "\n" .
+            $args["message"] .
+            "\n" . "\n";
+
+        $filePath = "rooms/" . $room->getId() . ".txt";
+
+        $chat = "";
+        try{
+            $myfile = fopen($filePath, "r");
+            $chat = fread($myfile,filesize($filePath));
+            if($chat == "\n"){
+                $chat = "";
+            }
+        }
+        catch(Exception $err){
+            throw new \GraphQL\Error\UserError("Can't read room conversation!");
+            exit();
+        }
+        finally{}
+
+        $chat = $message . $chat;;
+        $stdout = fopen($filePath, "w");
+        fwrite($stdout, $chat);
+
+        return true;
+    }
+
     public static function getAliases(): array
     {
         return array(
             "create" => "createRoom",
             "update" => "updateRoom",
-            "delete" => "deleteRoom"
-            );
+            "delete" => "deleteRoom",
+            "write" => "writeRoom"
+        );
     }
 }

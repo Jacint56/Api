@@ -23,3 +23,18 @@ RoomInput:
             game: Int
             isPrivate: Boolean
             name: String
+
+MessageCollection:
+    type: object
+    config:
+        fields:
+            messages: "[Message]"
+            total: Int
+            room: "Room"
+Message:
+    type: object
+    config:
+        fields:
+            sender: "User"
+            date: String
+            content: String

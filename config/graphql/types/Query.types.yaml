@@ -200,11 +200,9 @@ Query:
                 resolve: "@=resolver('getRoom', [args])"
 
             readRoom:
-                type: String
+                type: "MessageCollection"
                 args:
                     id: ID
                     limit:
                         type: Int
-                    liker: Int
-                    comment: Int
                 resolve: "@=resolver('ReadRoom', [args])"
