@@ -31,6 +31,10 @@ class RoomMutation implements MutationInterface, AliasedInterface
         $this->em->persist($room);
         $this->em->flush();
 
+        $filePath = "rooms/" . $room->getId() . ".txt";
+        $stdout = fopen($filePath, "w");
+        fwrite($stdout, "\n");
+
         return $room;
     }
     /*

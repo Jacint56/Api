@@ -36,14 +36,24 @@ class writeRoomMutation implements MutationInterface, AliasedInterface
             "\n";
 
         $filePath = "rooms/" . $room->getId() . ".txt";
+//        dump($filePath);
 
         $chat = "";
         try{
             $myfile = fopen($filePath, "r");
             $chat = fread($myfile,filesize($filePath));
+//            dump($chat);
+            if($chat == "\n"){
+                $chat = "";
+            }
         }
-        catch(Exception $err){}
+        catch(Exception $err){
+            throw new \GraphQL\Error\UserError("Can't read room conversation!");
+            exit();
+        }
         finally{}
+//        dump($chat);
+        
 
         $chat = $message . $chat;;
 
